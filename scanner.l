@@ -24,6 +24,30 @@ LETTER		[A-Za-z]
 DIGIT 		[0-9]
 IDENT		({LETTER}({LETTER}|{DIGIT})*)
 
+CHAR 		(char)
+ELSE 		(else)
+IF 			(if)
+INT 		(int)
+NEW 		(new)
+NULL 		(null)
+RETURN 		(return)
+STRING 		(string)
+STRUCT 		(struct)
+
+
+{CHAR}		{ return yylval_token(TOK_CHAR);}
+{ELSE}		{ return yylval_token(TOK_ELSE);}
+{IF}		{ return yylval_token(TOK_IF);}
+{INT}		{ return yylval_token(TOK_INT);}
+{NEW}		{ return yylval_token(TOK_NEW);}
+{NULL}		{ return yylval_token(TOK_NULL);}
+{RETURN}	{ return yylval_token(TOK_RETURN);}
+{STRING}	{ return yylval_token(TOK_STRING);}
+{STRUCT}	{ return yylval_token(TOK_STRUCT);}
+{VOID}		{ return yylval_token(TOK_VOID);}
+{WHILE}		{ return yylval_token(TOK_WHILE);}
+
+
 "!="		{ return yylval_token(TOK_NE);}
 '!"			{ return yylval_token('!'); }
 "%"			{ return yylval_token('%'); }
@@ -43,6 +67,7 @@ IDENT		({LETTER}({LETTER}|{DIGIT})*)
 ">="		{ return yylval_token(TOK_GE); }
 ">"			{ return yylval_token('>'); }
 "["			{ return yylval_token('['); }
+"[]"		{ return yylval_token(TOK_ARRAY); }
 "]"			{ return yylval_token(']'); }
 "{"			{ return yylval_token('{'); }
 "}"			{ return yylval_token('}'); }
