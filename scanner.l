@@ -22,4 +22,27 @@
 
 LETTER		[A-Za-z]
 DIGIT 		[0-9]
-IDENT		[{LETTER}{LETTER}|{DIGIT}*]
+IDENT		({LETTER}({LETTER}|{DIGIT})*)
+
+"!="		{ return yylval_token(TOK_NE);}
+'!"			{ return yylval_token('!'); }
+"%"			{ return yylval_token('%'); }
+"("			{ return yylval_token('('); }
+")"			{ return yylval_token(')'); }
+"*"			{ return yylval_token('*'); }
+"+"			{ return yylval_token('+'); }
+","			{ return yylval_token(','); }
+"-"			{ return yylval_token('-'); }
+"."			{ return yylval_token('.'); }
+"/"			{ return yylval_token('/'); }
+";"			{ return yylval_token(';'); }
+"<="		{ return yylval_token(TOK_LE); }
+"<"			{ return yylval_token('<'); }
+"=="		{ return yylval_token(TOK_EQ); }
+"="			{ return yylval_token('='); }
+">="		{ return yylval_token(TOK_GE); }
+">"			{ return yylval_token('>'); }
+"["			{ return yylval_token('['); }
+"]"			{ return yylval_token(']'); }
+"{"			{ return yylval_token('{'); }
+"}"			{ return yylval_token('}'); }
