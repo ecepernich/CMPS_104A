@@ -1,31 +1,4 @@
-head	1.2;
-access;
-symbols;
-locks;
-comment	@// @;
 
-
-1.2
-date	2016.04.07.20.04.52;	author -;	state -;
-branches;
-next	1.1;
-
-1.1
-date	2014.10.04.01.22.05;	author -;	state -;
-branches;
-next	;
-
-
-desc
-@@
-
-
-1.2
-log
-@-
-@
-text
-@
 #include <assert.h>
 #include <errno.h>
 #include <libgen.h>
@@ -133,7 +106,7 @@ void __stubprintf (const char* file, int line, const char* func,
 
 void set_debugflags (const char* flags) {
    debugflags = flags;
-   if (strchr (debugflags, '@@') != NULL) alldebugflags = true;
+   if (strchr (debugflags, '@') != NULL) alldebugflags = true;
    DEBUGF ('x', "Debugflags = \"%s\", all = %d\n",
            debugflags, alldebugflags);
 }
@@ -155,15 +128,3 @@ void __debugprintf (char flag, const char* file, int line,
    fflush (NULL);
 }
 
-@
-
-
-1.1
-log
-@-
-@
-text
-@a130 2
-RCSC("$Id: auxlib.cc,v 1.2 2013-10-11 18:56:07-07 - - $")
-
-@
