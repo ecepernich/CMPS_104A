@@ -18,6 +18,7 @@ using namespace std;
 
 #include "auxlib.h"
 #include "string_set.h"
+#include "lyutils.h"
 
 /*public values*/
 
@@ -35,43 +36,13 @@ string a_flag=""; //The flad used for -@___
 //values for file names
 const char* file_name=NULL; //get .oc file name
 char* base_name=NULL; //get file name without suffix - use for functions
+char* tokbase_name=NULL; //get file name without suffix 
 string base_string=""; //get file name without suffix - use for string manipulation
+string base_tok="": //get file name without suffix - use for string manipulation for tok
 
-//chomp from cppstrtok.cpp
-void chomp (char* string, char delim) {
-   size_t len = strlen (string);
-   if (len == 0) return;
-   char* nlpos = string + len - 1;
-   if (*nlpos == delim) *nlpos = '\0';
-}
+//we dont need chomp from cppstrtok.cpp anymore so it was deleted
 
-//cpplines from cppstrtok.cpp
-void cpplines (FILE* pipe, const char* filename) {
-   int linenr = 1;
-   char inputname[LINESIZE];
-   strcpy (inputname, filename);
-   for (;;) {
-      char buffer[LINESIZE];
-      char* fgets_rc = fgets (buffer, LINESIZE, pipe);
-      if (fgets_rc == NULL) break;
-      chomp (buffer, '\n');                                            
-      int sscanf_rc = sscanf (buffer, "# %d \"%[^\"]\"",
-                              &linenr, inputname);
-      if (sscanf_rc == 2) {
-         continue;
-      }
-      char* savepos = NULL;
-      char* bufptr = buffer;
-      for (int tokenct = 1;; ++tokenct) {
-         char* token = strtok_r (bufptr, " \t\n", &savepos); //get each token
-         bufptr = NULL;
-         if (token == NULL) break;
-         string_set::intern (token); //intern each token into the string set
-      }
-      ++linenr; //cycle through every line until EOF
-   }
-}
-
+//we don't need cpplines from cppstrtok.cpp anymore so it was deleted
 
 int main (int argc, char** argv) {
    int x; //x is the int for the getopt function
@@ -126,10 +97,14 @@ int main (int argc, char** argv) {
    			base_string=temp_name; //put temp_name into base_string for editing
    			int len=base_string.size(); //find size of base_string for substring cut
    			base_string=base_string.substr(0,len-3); //cut the last 3 characters off
+            base_tok=base_string; //making sure tok gets only filename
    												 //the end of base_string, removing .oc
    			char* copying=new char[base_string.length()+1]; //copy string into char*
-   			strcpy(copying,base_string.c_str());
+            char* copytok=new char[base_tok.length()+1];//copy tok into char*
+            strcpy(copying,base_string.c_str());
+            strcpy(copytok,base_tok.c_tok()); 
    			base_name=copying; //update base_name so the base file name can be used in c functions
+            tokbase_name=copytok; //update tokbase_name 
    		}
    		else //the string file_name does not contain .oc
    		{
@@ -150,21 +125,32 @@ int main (int argc, char** argv) {
    		exit(1); //Failure and exit because .oc file does not exist
    }
    cpp_line=cpp+" "+d_flag+" "+file_name; //add that to the cpp 
-   FILE* pipe=popen(cpp_line.c_str(),"r"); //open a FILE caled pipe and pipe
+   yyin = popen(cpp_line.c_str(),"r"); //open a FILE called yyin for asg2 and pipe
    										   //open the /usr/bin/cpp/prog.cpp
-   if(pipe==NULL) //file does not exist
+   if(yyin==NULL) //file does not exist & changed yyin for asg2
    {
    		fprintf(stderr, "Error: %s does not exist.\n",file_name);
    		exit(1); //Failure and exit because the file was not found
    }
    else //File does exist
    {
-   		cpplines(pipe, (char*)file_name); //use cpplines on the file
-   		int closepipe=pclose(pipe); //close the pipe for the file
-   		eprint_status(cpp_line.c_str(), closepipe); //check command status
+         FILE* tok_file=popen(cpp_line.c_tok(), "r"); //open tok file
+         if (tok_file == NULL){
+            fprintf(stderr, "Error: %s is empty.\n",tok_file);
+            exit(1)
+   }else{
+         for (;;){
+            int tok = yylex(); // might have to change this
+            while((tok = yylex())){ //repeatdly call yylex() until value of YYEOF called
+            if(tok == YYEOF)
+                  break;
+            }
+         }
+         fclose(tok_file)
+      }
    }
-
    strcat(base_name,".str"); //add the .str suffix to your base filename for writing
+   strcat(base_tok,".tok");
 
    FILE* output=NULL; //create output file
    output=fopen(base_name,"w"); //open file with name program.str to write
