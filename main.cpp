@@ -39,6 +39,9 @@ string base_string=""; //get file name without suffix - use for string manipulat
 char* str_name=NULL;
 char* tok_name=NULL;
 
+FILE* strfile;
+FILE* tokfile;
+
 //chomp from cppstrtok.cpp
 void chomp (char* string, char delim) {
    size_t len = strlen (string);
@@ -167,12 +170,17 @@ int main (int argc, char** argv) {
    		fprintf(stderr, "Error: %s does not exist.\n",file_name);
    		exit(1); //Failure and exit because the file was not found
    }
-   else //File does exist
-   {
-   		cpplines(pipe, (char*)file_name); //use cpplines on the file
-   		int closepipe=pclose(pipe); //close the pipe for the file
-   		eprint_status(cpp_line.c_str(), closepipe); //check command status
-   }
+    tokfile=fopen(tok_name, "w");
+    if (!tokfile)
+    {
+    	fprintf(stderr, "Could not open a new .tok file.\n");
+    	exit(1);
+    }
+    fclose(tokfile);
+
+   	cpplines(pipe, (char*)file_name); //use cpplines on the file
+   	int closepipe=pclose(pipe); //close the pipe for the file
+   	eprint_status(cpp_line.c_str(), closepipe); //check command status
 
    FILE* output=NULL; //create output file
    output=fopen(str_name,"w"); //open file with name program.str to write
