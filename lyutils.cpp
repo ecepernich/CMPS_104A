@@ -43,6 +43,18 @@ void lexer::newline() {
    lexer::lloc.offset = 0;
 }
 
+int yylval_token(int symbol)
+{
+   int loc1=new location(filenr, linenr, offset);
+   int ast1=new astree(symbol, loc1, lexinfo);
+   fprintf(astree->symbol,
+           astree->lloc->filenr,
+           astree->lloc->linenr,
+           astree->lloc->offset,
+           astree->info);
+   return symbol;
+}
+
 void lexer::badchar (unsigned char bad) {
    char buffer[16];
    snprintf (buffer, sizeof buffer,
@@ -51,7 +63,6 @@ void lexer::badchar (unsigned char bad) {
                   buffer);
 }
 
-
 void lexer::badtoken (char* lexeme) {
    errllocprintf (lexer::lloc, "invalid token (%s)\n", lexeme);
 }
