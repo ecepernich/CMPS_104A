@@ -170,22 +170,21 @@ int main (int argc, char** argv) {
    		fprintf(stderr, "Error: %s does not exist.\n",file_name);
    		exit(1); //Failure and exit because the file was not found
    }
-    tokfile=fopen(tok_name, "w");
-    if (!tokfile)
-    {
-    	fprintf(stderr, "Could not open a new .tok file.\n");
-    	exit(1);
-    }
-    fclose(tokfile);
+   tokfile=fopen(tok_name, "w");
+   if (!tokfile)
+   {
+   	fprintf(stderr, "Could not open a new .tok file.\n");
+   	exit(1);
+   }
 
-    cpplines(yyin, (char*)file_name); //use cpplines on the file
-    int closepipe=pclose(yyin); //close the pipe for the file
-    eprint_status(cpp_line.c_str(), closepipe); //check command status
+   cpplines(yyin, (char*)file_name); //use cpplines on the file
+   int closepipe=pclose(yyin); //close the pipe for the file
+   eprint_status(cpp_line.c_str(), closepipe); //check command status
 
-   FILE* output=NULL; //create output file
-   output=fopen(str_name,"w"); //open file with name program.str to write
-   string_set::dump (output); //write the string set to the output file
-   fclose(output); //close program.str - the file is now reitten
+   strfile=fopen(str_name,"w"); //open file with name program.str to write
+   string_set::dump (strfile); //write the string set to the output file
+   fclose(strfile); //close program.str - the file is now reitten
+   fclose(tokfile);
    return EXIT_SUCCESS; //Success and exit with file written
 }
 
