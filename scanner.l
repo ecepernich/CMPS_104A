@@ -62,11 +62,11 @@ while		{ return yylval_token(TOK_WHILE);}
 "/"			{ return yylval_token('/'); }
 ";"			{ return yylval_token(';'); }
 "<="		{ return yylval_token(TOK_LE); }
-"<"			{ return yylval_token('<'); }
+"<"			{ return yylval_token(TOK_LT); }
 "=="		{ return yylval_token(TOK_EQ); }
 "="			{ return yylval_token('='); }
 ">="		{ return yylval_token(TOK_GE); }
-">"			{ return yylval_token('>'); }
+">"			{ return yylval_token(TOK_GT); }
 "["			{ return yylval_token('['); }
 "[]"		{ return yylval_token(TOK_ARRAY); }
 "]"			{ return yylval_token(']'); }
