@@ -163,9 +163,9 @@ int main (int argc, char** argv) {
 
 
    cpp_line=cpp+" "+d_flag+" "+file_name; //add that to the cpp 
-   FILE* pipe=popen(cpp_line.c_str(),"r"); //open a FILE caled pipe and pipe
+   FILE* yyin=popen(cpp_line.c_str(),"r"); //open a FILE caled pipe and pipe
    										   //open the /usr/bin/cpp/prog.cpp
-   if(pipe==NULL) //file does not exist
+   if(yyin==NULL) //file does not exist
    {
    		fprintf(stderr, "Error: %s does not exist.\n",file_name);
    		exit(1); //Failure and exit because the file was not found
@@ -178,9 +178,9 @@ int main (int argc, char** argv) {
     }
     fclose(tokfile);
 
-   	cpplines(pipe, (char*)file_name); //use cpplines on the file
-   	int closepipe=pclose(pipe); //close the pipe for the file
-   	eprint_status(cpp_line.c_str(), closepipe); //check command status
+    cpplines(yyin, (char*)file_name); //use cpplines on the file
+    int closepipe=pclose(yyin); //close the pipe for the file
+    eprint_status(cpp_line.c_str(), closepipe); //check command status
 
    FILE* output=NULL; //create output file
    output=fopen(str_name,"w"); //open file with name program.str to write
