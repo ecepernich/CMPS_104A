@@ -22,8 +22,19 @@
 LETTER		[A-Za-z]
 DIGIT 		[0-9]
 IDENT		({LETTER}({LETTER}|{DIGIT})*)
+CHAR 		(’([^\\’\n]|\\[\\’"0nt])’)
+STRING 		(\"([^\\"\n]|\\[\\’"0nt])*\")
+NUMBER 		({DIGIT}+)
+NOTIDENT	
+BADCHAR		
+BADSTRING 
 
- 
+%
+
+"#".*		{ scanner_include(); }
+[\t]+		{ IGNORE (white space) }
+\n 			{ scanner_newline(); }
+
 
 char		{ return yylval_token(TOK_CHAR);}
 else		{ return yylval_token(TOK_ELSE);}
@@ -61,3 +72,15 @@ while		{ return yylval_token(TOK_WHILE);}
 "]"			{ return yylval_token(']'); }
 "{"			{ return yylval_token('{'); }
 "}"			{ return yylval_token('}'); }
+
+{IDENT}		{ return yylval_token(TOK_IDENT); }
+{NUMBER}	{ return yylval_token(TOK_INTCON); }
+{CHAR}		{ return yylval_token(TOK_CHARCON); }
+{STRING}	{ return yylval_token(TOK_STRINGCON); }
+
+{NOTIDENT}
+{BADCHAR}
+{BADSTRING}
+.
+
+%%
