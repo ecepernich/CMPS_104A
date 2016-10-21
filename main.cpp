@@ -78,7 +78,7 @@ int main (int argc, char** argv) {
 
    //Flag checks 
    while ((x=getopt(argc, argv, "ly@:D:")) != -1) //read flags up to the argc'th arg
-   {											  //in argv, looking for l, y, D_, or @_
+   {										  //in argv, looking for l, y, D_, or @_
    	switch (x) //Check argument
    	{
    		case 'l': //l flag
@@ -126,7 +126,7 @@ int main (int argc, char** argv) {
    			base_string=temp_name; //put temp_name into base_string for editing
    			int len=base_string.size(); //find size of base_string for substring cut
    			base_string=base_string.substr(0,len-3); //cut the last 3 characters off
-   												 //the end of base_string, removing .oc
+   										 //the end of base_string, removing .oc
    			char* copying=new char[base_string.length()+1]; //copy string into char*
    			strcpy(copying,base_string.c_str());
    			base_name=copying; //update base_name so the base file name can be used in c functions
@@ -172,5 +172,4 @@ int main (int argc, char** argv) {
    fclose(output); //close program.str - the file is now reitten
    return EXIT_SUCCESS; //Success and exit with file written
 }
-
 
