@@ -18,6 +18,12 @@ astree::astree (int symbol_, const location& lloc_, const char* info) {
    // vector defaults to empty -- no children
 }
 
+location::location (size_t filenr_, size_t linenr_, size_t offset_) {
+   filenr = symbol_;
+   linenr = lloc_;
+   offset = offset_;
+}
+
 astree::~astree() {
    while (not children.empty()) {
       astree* child = children.back();
@@ -42,7 +48,6 @@ astree* astree::adopt_sym (astree* child, int symbol_) {
    return adopt (child);
 }
 
-
 void astree::dump_node (FILE* outfile) {
    fprintf (outfile, "%p->{%s %zd.%zd.%zd \"%s\":",
             this, parser::get_tname (symbol),

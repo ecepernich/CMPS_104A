@@ -13,9 +13,12 @@ struct location {
    size_t filenr;
    size_t linenr;
    size_t offset;
+
+   location(size_t filenr, size_t linenr, size_t offset);
 };
 
-struct astree {
+struct astree 
+{
 
    // Fields.
    int symbol;               // token code
