@@ -1,6 +1,6 @@
 // $Id: main.cpp,v 1.2 2016-08-18 15:13:48-07 - - $    
 // Elizabeth Cepernich
-// eceperni // 1316976
+// Leah Langford
 // CMPS 104a Fall, 2016
 // October 10, 2016                                                         
 
@@ -36,9 +36,9 @@ string a_flag=""; //The flad used for -@___
 //values for file names
 const char* file_name=NULL; //get .oc file name
 char* base_name=NULL; //get file name without suffix - use for functions
+char* strbase_name=NULL;
 char* tokbase_name=NULL; //get file name without suffix 
 string base_string=""; //get file name without suffix - use for string manipulation
-string base_tok="": //get file name without suffix - use for string manipulation for tok
 
 //we dont need chomp from cppstrtok.cpp anymore so it was deleted
 
@@ -97,13 +97,13 @@ int main (int argc, char** argv) {
    			base_string=temp_name; //put temp_name into base_string for editing
    			int len=base_string.size(); //find size of base_string for substring cut
    			base_string=base_string.substr(0,len-3); //cut the last 3 characters off
-            base_tok=base_string; //making sure tok gets only filename
    												 //the end of base_string, removing .oc
-   			char* copying=new char[base_string.length()+1]; //copy string into char*
-            char* copytok=new char[base_tok.length()+1];//copy tok into char*
-            strcpy(copying,base_string.c_str());
-            strcpy(copytok,base_tok.c_tok()); 
-   			base_name=copying; //update base_name so the base file name can be used in c functions
+   			char* copystr=new char[base_string.length()+1]; //copy string into char*
+            char* copytok=new char[base_string.length()+1];//copy tok into char*
+            strcpy(copystr,base_string.c_str());
+            strcpy(copytok,base_string.c_str()); 
+   			base_name=copystr; //update base_name so the base file name can be used in c functions
+            strbase_name=base_name;
             tokbase_name=copytok; //update tokbase_name 
    		}
    		else //the string file_name does not contain .oc
@@ -124,6 +124,8 @@ int main (int argc, char** argv) {
    		fprintf(stderr, "Error: %s does not exist.\n",file_name); //print error message
    		exit(1); //Failure and exit because .oc file does not exist
    }
+
+
    cpp_line=cpp+" "+d_flag+" "+file_name; //add that to the cpp 
    yyin = popen(cpp_line.c_str(),"r"); //open a FILE called yyin for asg2 and pipe
    										   //open the /usr/bin/cpp/prog.cpp
@@ -134,7 +136,7 @@ int main (int argc, char** argv) {
    }
    else //File does exist
    {
-         FILE* tok_file=popen(cpp_line.c_tok(), "r"); //open tok file
+         FILE* tok_file=popen(cpp_line.c_str(), "r"); //open tok file
          if (tok_file == NULL){
             fprintf(stderr, "Error: %s is empty.\n",tok_file);
             exit(1)
@@ -149,11 +151,11 @@ int main (int argc, char** argv) {
          fclose(tok_file)
       }
    }
-   strcat(base_name,".str"); //add the .str suffix to your base filename for writing
-   strcat(base_tok,".tok");
+   strcat(strbase_name,".str"); //add the .str suffix to your base filename for writing
+   strcat(tokbase_name,".tok");
 
    FILE* output=NULL; //create output file
-   output=fopen(base_name,"w"); //open file with name program.str to write
+   output=fopen(strbase_name,"w"); //open file with name program.str to write
    string_set::dump (output); //write the string set to the output file
    fclose(output); //close program.str - the file is now reitten
    return EXIT_SUCCESS; //Success and exit with file written
