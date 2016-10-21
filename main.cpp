@@ -36,6 +36,8 @@ string a_flag=""; //The flad used for -@___
 const char* file_name=NULL; //get .oc file name
 char* base_name=NULL; //get file name without suffix - use for functions
 string base_string=""; //get file name without suffix - use for string manipulation
+char* str_name=NULL;
+char* tok_name=NULL;
 
 //chomp from cppstrtok.cpp
 void chomp (char* string, char delim) {
@@ -120,16 +122,22 @@ int main (int argc, char** argv) {
    		if (strstr(file_name, ".oc")) //the string file_name contains .oc
    		{
    			cpp_line=cpp_line+" "+file_name; //add file_name to the command
-   			//base_name=basename(cpp_line); //get the base name of the file
    			
    			char* temp_name=basename((char*)file_name); //get the base name of the file
    			base_string=temp_name; //put temp_name into base_string for editing
    			int len=base_string.size(); //find size of base_string for substring cut
    			base_string=base_string.substr(0,len-3); //cut the last 3 characters off
    										 //the end of base_string, removing .oc
-   			char* copying=new char[base_string.length()+1]; //copy string into char*
-   			strcpy(copying,base_string.c_str());
-   			base_name=copying; //update base_name so the base file name can be used in c functions
+   			char* copystr=new char[base_string.length()+1]; //copy string into char*
+   			char* copytok=new char[base_string.length()+1]; //copy string into char*
+   			strcpy(copystr,base_string.c_str());
+   			strcpy(copytok,base_string.c_str());
+   			base_name=copystr; //update base_name so the base file name can be used in c functions
+   			str_name=copystr;
+   			tok_name=copytok;
+   			strcat(str_name,".str"); //add the .str suffix to your base filename for writing
+   			strcat(tok_name,".tok"); //add the .str suffix to your base filename for writing
+
    		}
    		else //the string file_name does not contain .oc
    		{
@@ -149,6 +157,8 @@ int main (int argc, char** argv) {
    		fprintf(stderr, "Error: %s does not exist.\n",file_name); //print error message
    		exit(1); //Failure and exit because .oc file does not exist
    }
+
+
    cpp_line=cpp+" "+d_flag+" "+file_name; //add that to the cpp 
    FILE* pipe=popen(cpp_line.c_str(),"r"); //open a FILE caled pipe and pipe
    										   //open the /usr/bin/cpp/prog.cpp
@@ -164,10 +174,8 @@ int main (int argc, char** argv) {
    		eprint_status(cpp_line.c_str(), closepipe); //check command status
    }
 
-   strcat(base_name,".str"); //add the .str suffix to your base filename for writing
-
    FILE* output=NULL; //create output file
-   output=fopen(base_name,"w"); //open file with name program.str to write
+   output=fopen(str_name,"w"); //open file with name program.str to write
    string_set::dump (output); //write the string set to the output file
    fclose(output); //close program.str - the file is now reitten
    return EXIT_SUCCESS; //Success and exit with file written
