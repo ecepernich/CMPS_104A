@@ -178,6 +178,8 @@ int main (int argc, char** argv) {
    	exit(1);
    }
 
+   // parse error with yyparse?? //
+
    ast=new astree (TOK_ROOT, 0, 0, 0, "");
    for(;;)
    {
@@ -192,6 +194,7 @@ int main (int argc, char** argv) {
                                     //ask TA about this\
       }                             //------------------\
    }
+   fclose(tokfile);
 
    cpplines(yyin, (char*)file_name); //use cpplines on the file
    int closepipe=pclose(yyin); //close the pipe for the file
@@ -204,9 +207,9 @@ int main (int argc, char** argv) {
    strfile=fopen(str_name,"w"); //open file with name program.str to write
    string_set::dump (strfile); //write the string set to the output file
    fclose(strfile); //close program.str - the file is now reitten
-   fclose(tokfile);
+   //fclose(tokfile);
    free_ast(ast);
-   //yylex_destory();
+   yylex_destory();
    return EXIT_SUCCESS; //Success and exit with file written
 }
 
