@@ -38,17 +38,17 @@ BADSTRING
 \n       { scanner_newline(); }
 
 
-char    { return yylval_token(TOK_CHAR);}
-else    { return yylval_token(TOK_ELSE);}
-if      { return yylval_token(TOK_IF);}
-int	    { return yylval_token(TOK_INT);}
-new	    { return yylval_token(TOK_NEW);}
-null    { return yylval_token(TOK_NULL);}
-return  { return yylval_token(TOK_RETURN);}
-string  { return yylval_token(TOK_STRING);}
-struct	{ return yylval_token(TOK_STRUCT);}
-void    { return yylval_token(TOK_VOID);}
-while   { return yylval_token(TOK_WHILE);}
+"char"    { return yylval_token(TOK_CHAR);}
+"else"    { return yylval_token(TOK_ELSE);}
+"if"      { return yylval_token(TOK_IF);}
+"int"     { return yylval_token(TOK_INT);}
+"new"     { return yylval_token(TOK_NEW);}
+"null"    { return yylval_token(TOK_NULL);}
+"return"  { return yylval_token(TOK_RETURN);}
+"string"  { return yylval_token(TOK_STRING);}
+"struct"  { return yylval_token(TOK_STRUCT);}
+"void"    { return yylval_token(TOK_VOID);}
+"while"   { return yylval_token(TOK_WHILE);}
 
 
 "!="    { return yylval_token(TOK_NE);}
