@@ -18,6 +18,8 @@ using namespace std;
 
 #include "auxlib.h"
 #include "string_set.h"
+#include "astree.h"
+#include "lyutils.h"
 
 /*public values*/
 
@@ -161,17 +163,16 @@ int main (int argc, char** argv) {
    		exit(1); //Failure and exit because .oc file does not exist
    }
 
-
    cpp_line=cpp+" "+d_flag+" "+file_name; //add that to the cpp 
-   FILE* yyin=popen(cpp_line.c_str(),"r"); //open a FILE caled pipe and pipe
-   										   //open the /usr/bin/cpp/prog.cpp
+   FILE* yyin=popen(cpp_line.c_str(),"r"); //open a FILE called yyin and pipe
+   										          //open the /usr/bin/cpp/prog.cpp
    if(yyin==NULL) //file does not exist
    {
    		fprintf(stderr, "Error: %s does not exist.\n",file_name);
    		exit(1); //Failure and exit because the file was not found
    }
    tokfile=fopen(tok_name, "w");
-   if (!tokfile)
+   if (!tokfile) //file could not be 
    {
    	fprintf(stderr, "Could not open a new .tok file.\n");
    	exit(1);
@@ -180,6 +181,10 @@ int main (int argc, char** argv) {
    cpplines(yyin, (char*)file_name); //use cpplines on the file
    int closepipe=pclose(yyin); //close the pipe for the file
    eprint_status(cpp_line.c_str(), closepipe); //check command status
+   if (closepipe !=0)
+   {
+      exit(1);
+   }
 
    strfile=fopen(str_name,"w"); //open file with name program.str to write
    string_set::dump (strfile); //write the string set to the output file
