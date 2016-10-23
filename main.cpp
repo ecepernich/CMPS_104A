@@ -86,97 +86,97 @@ int main (int argc, char** argv) {
 
    //Flag checks 
    while ((x=getopt(argc, argv, "ly@:D:")) != -1) //read flags up to the argc'th arg
-   {										  //in argv, looking for l, y, D_, or @_
-   	switch (x) //Check argument
-   	{
-   		case 'l': //l flag
-   			yy_flex_debug=1; //change debug flag
-   			break;
-   		case 'y': //y flag
-   			yydebug=1; //change debug flag
-   			break;
-   		case 'D': //-D flag
-   			d_flag=" -D"; //Add -D to the flag
-   			d_flag=d_flag+optarg+" "; //Add D's argument to the flag
-   			break;
-   		case '@': //-@ flag
-   			set_debugflags(optarg); //set debug flags
-   			break;
-   		default: //flag was not one of these things 
-   			fprintf(stderr, "Illegal argument: %s\n",optarg);
-   			exit(1); //Failure and exit upon illegal argument
-   			break;
-   	}
+   {  //in argv, looking for l, y, D_, or @_
+      switch (x) //Check argument
+       {
+         case 'l': //l flag
+            yy_flex_debug=1; //change debug flag
+            break;
+         case 'y': //y flag
+            yydebug=1; //change debug flag
+            break;
+         case 'D': //-D flag
+            d_flag=" -D"; //Add -D to the flag
+            d_flag=d_flag+optarg+" "; //Add D's argument to the flag
+            break;
+         case '@': //-@ flag
+            set_debugflags(optarg); //set debug flags
+            break;
+         default: //flag was not one of these things 
+            fprintf(stderr, "Illegal argument: %s\n",optarg);
+            exit(1); //Failure and exit upon illegal argument
+            break;
+      }
    }
    cpp_line=cpp_line+d_flag; //add -D flag to the command
    //File name check
    if (argc==optind) //If the current position argument = total arguments
    //if (argc==x) //If the current position argument = total arguments
    {
-   		fprintf(stderr, "Error: No file listed.\n"); //Error for no file
-   		exit(1); //Failure and exit if no file is listed
+         fprintf(stderr, "Error: No file listed.\n"); //Error for no file
+         exit(1); //Failure and exit if no file is listed
    }
    else if (argc>optind+1) //If total aruments are greater than the current 
    //else if (argc>x+1) //If total aruments are greater than the current 
-   {					   //argument plus 1 (all the flags plus the file)
-   		fprintf(stderr, "Error: Too many files listed. \n"); //Error for 2+ files
-   		exit(1); //Failure and exit if too many files are listed
+   {               //argument plus 1 (all the flags plus the file)
+         fprintf(stderr, "Error: Too many files listed. \n"); //Error for 2+ files
+         exit(1); //Failure and exit if too many files are listed
    }
    else //The last argument is the file
    {
-   		file_name=argv[optind]; //Get file name argument from optind (current arg)
-   		if (strstr(file_name, ".oc")) //the string file_name contains .oc
-   		{
-   			cpp_line=cpp_line+" "+file_name; //add file_name to the command
-   			
-   			char* temp_name=basename((char*)file_name); //get the base name of the file
-   			base_string=temp_name; //put temp_name into base_string for editing
-   			int len=base_string.size(); //find size of base_string for substring cut
-   			base_string=base_string.substr(0,len-3); //cut the last 3 characters off
-   										 //the end of base_string, removing .oc
-   			char* copystr=new char[base_string.length()+1]; //copy string into char*
-   			char* copytok=new char[base_string.length()+1]; //copy string into char*
-   			strcpy(copystr,base_string.c_str());
-   			strcpy(copytok,base_string.c_str());
-   			base_name=copystr; //update base_name so the base file name can be used in c functions
-   			str_name=copystr;
-   			tok_name=copytok;
-   			strcat(str_name,".str"); //add the .str suffix to your base filename for writing
-   			strcat(tok_name,".tok"); //add the .str suffix to your base filename for writing
+         file_name=argv[optind]; //Get file name argument from optind (current arg)
+         if (strstr(file_name, ".oc")) //the string file_name contains .oc
+         {
+            cpp_line=cpp_line+" "+file_name; //add file_name to the command
+            
+            char* temp_name=basename((char*)file_name); //get the base name of the file
+            base_string=temp_name; //put temp_name into base_string for editing
+            int len=base_string.size(); //find size of base_string for substring cut
+            base_string=base_string.substr(0,len-3); //cut the last 3 characters off
+             //the end of base_string, removing .oc
+            char* copystr=new char[base_string.length()+1]; //copy string into char*
+            char* copytok=new char[base_string.length()+1]; //copy string into char*
+            strcpy(copystr,base_string.c_str());
+            strcpy(copytok,base_string.c_str());
+            base_name=copystr; //update base_name so the base file name can be used in c functions
+            str_name=copystr;
+            tok_name=copytok;
+            strcat(str_name,".str"); //add the .str suffix to your base filename for writing
+            strcat(tok_name,".tok"); //add the .str suffix to your base filename for writing
 
-   		}
-   		else //the string file_name does not contain .oc
-   		{
-   			fprintf(stderr, "Error: %s is not a .oc file.\n",file_name); //error message
-   			file_name=NULL; //clear file_name
-   			exit(1); //Failure and exit because not a .oc file
-   		}
+         }
+         else //the string file_name does not contain .oc
+         {
+            fprintf(stderr, "Error: %s is not a .oc file.\n",file_name); //error message
+            file_name=NULL; //clear file_name
+            exit(1); //Failure and exit because not a .oc file
+         }
    }
 
    //check to make sure .oc file exists
    if (FILE *check=fopen(file_name,"r")) //if file can be opened to read
    {
-   		fclose(check); //file exists, so close it again
+         fclose(check); //file exists, so close it again
    }
    else //file cannot be opened to read
    {
-   		fprintf(stderr, "Error: %s does not exist.\n",file_name); //print error message
-   		exit(1); //Failure and exit because .oc file does not exist
+         fprintf(stderr, "Error: %s does not exist.\n",file_name); //print error message
+         exit(1); //Failure and exit because .oc file does not exist
    }
 
    cpp_line=cpp+" "+d_flag+" "+file_name; //add that to the cpp 
    FILE* yyin=popen(cpp_line.c_str(),"r"); //open a FILE called yyin and pipe
-   										          //open the /usr/bin/cpp/prog.cpp
+                                           //open the /usr/bin/cpp/prog.cpp
    if(yyin==NULL) //file does not exist
    {
-   		fprintf(stderr, "Error: %s does not exist.\n",file_name);
-   		exit(1); //Failure and exit because the file was not found
+         fprintf(stderr, "Error: %s does not exist.\n",file_name);
+         exit(1); //Failure and exit because the file was not found
    }
    tokfile=fopen(tok_name, "w");
    if (!tokfile) //file could not be 
    {
-   	fprintf(stderr, "Could not open a new .tok file.\n");
-   	exit(1);
+      fprintf(stderr, "Could not open a new .tok file.\n");
+      exit(1);
    }
 
    // parse error with yyparse?? //
