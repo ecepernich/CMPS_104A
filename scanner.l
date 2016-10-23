@@ -1,11 +1,11 @@
 /* $Id: scanner.l,v 1.0 2016-08-18 15:05:42-07 - - $ */
 
 %{
+
 #include "lyutils.h"
 #include "auxlib.h"
 #define YY_USER_ACTION { lexer::advance(); }
-
-
+#define IGNORE
 
 %}
 
@@ -29,7 +29,7 @@ NOTIDENT
 BADCHAR		
 BADSTRING 
 
-%
+%%
 
 "#".*		{ scanner_include(); }
 [\t]+		{ IGNORE (white space) }
@@ -50,7 +50,7 @@ while		{ return yylval_token(TOK_WHILE);}
 
 
 "!="		{ return yylval_token(TOK_NE);}
-'!"			{ return yylval_token('!'); }
+"!"			{ return yylval_token('!'); }
 "%"			{ return yylval_token('%'); }
 "("			{ return yylval_token('('); }
 ")"			{ return yylval_token(')'); }
