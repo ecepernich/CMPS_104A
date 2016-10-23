@@ -2,7 +2,7 @@
 // Elizabeth Cepernich
 // eceperni // 1316976
 // CMPS 104a Fall, 2016
-// October 10, 2016                                                         
+// October 10, 2016
 
 #include <string>
 using namespace std;
