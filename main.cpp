@@ -206,7 +206,7 @@ int main (int argc, char** argv) {
       exit(1);
    }
 
-   strfile=fopen(str_name,"w"); //open file with name program.str to write
+   strfile=fopen(str_name,"w"); //open .str file to write
    string_set::dump (strfile); //write the stringset to output file
    fclose(strfile); //close program.str - the file is now reitten
    //fclose(tokfile);
