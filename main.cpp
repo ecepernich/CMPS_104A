@@ -2,7 +2,7 @@
 // Elizabeth Cepernich
 // eceperni // 1316976
 // CMPS 104a Fall, 2016
-// October 10, 2016                                                         
+// October 10, 2016
 
 #include <string>
 using namespace std;
@@ -38,7 +38,7 @@ string a_flag=""; //The flad used for -@___
 //values for file names
 const char* file_name=NULL; //get .oc file name
 char* base_name=NULL; //get file name without suffix - use for functions
-string base_string=""; //get file name without suffix - use for string manipulation
+string base_string=""; //get file name without suffix
 char* str_name=NULL;
 char* tok_name=NULL;
 
