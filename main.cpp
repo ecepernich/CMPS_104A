@@ -20,6 +20,7 @@ using namespace std;
 #include "string_set.h"
 #include "astree.h"
 #include "lyutils.h"
+#include "yyparse.h"
 
 /*public values*/
 
