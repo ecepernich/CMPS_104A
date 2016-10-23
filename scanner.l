@@ -5,7 +5,7 @@
 #include "lyutils.h"
 #include "auxlib.h"
 #define YY_USER_ACTION { lexer::advance(); }
-#define IGNORE
+#define IGNORE {}
 
 %}
 
@@ -19,12 +19,14 @@
 %option warn
 %option verbose
 
+
 LETTER		[A-Za-z]
 DIGIT 		[0-9]
 IDENT		({LETTER}({LETTER}|{DIGIT})*)
 CHAR 		(’([^\\’\n]|\\[\\’"0nt])’)
 STRING 		(\"([^\\"\n]|\\[\\’"0nt])*\")
 NUMBER 		({DIGIT}+)
+
 NOTIDENT	
 BADCHAR		
 BADSTRING 
