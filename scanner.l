@@ -73,14 +73,19 @@ while		{ return yylval_token(TOK_WHILE);}
 "{"			{ return yylval_token('{'); }
 "}"			{ return yylval_token('}'); }
 
+
 {IDENT}		{ return yylval_token(TOK_IDENT); }
 {NUMBER}	{ return yylval_token(TOK_INTCON); }
 {CHAR}		{ return yylval_token(TOK_CHARCON); }
 {STRING}	{ return yylval_token(TOK_STRINGCON); }
 
-{NOTIDENT}
-{BADCHAR}
-{BADSTRING}
-.
+{NOTIDENT}	{ lexer::badtoken(yytext);
+              return yylval_token(TOK_IDENT); }
+{BADCHAR}	{ lexer::badtoken(yytext);
+              return yylval_token(TOK_CHARCON); }
+{BADSTRING}	{ lexer::badtoken(yytext);
+              return yylval_token(TOK_STRINGCON); }
+.			{ lexer::badchar(yytext);
+			  return yylval_token('.'); }
 
 %%
