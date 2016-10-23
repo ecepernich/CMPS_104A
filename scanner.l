@@ -27,9 +27,9 @@ CHAR     ('([^\\'\n]|\\[\\'"0nt])')
 STRING    (\"([^\\"\n]|\\[\\'"0nt])*\")
 NUMBER    ({DIGIT}+)
 
-NOTIDENT        
-BADCHAR	        
-BADSTRING        
+NOTIDENT
+BADCHAR
+BADSTRING
 
 %%
 
