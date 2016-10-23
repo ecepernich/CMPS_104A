@@ -127,29 +127,30 @@ int main (int argc, char** argv) {
    else //The last argument is the file
    {
          file_name=argv[optind]; //Get file name argument from optind
-         if (strstr(file_name, ".oc")) //the string file_name contains .oc
+         if (strstr(file_name, ".oc")) //file_name contains .oc
          {
-            cpp_line=cpp_line+" "+file_name; //add file_name to the command
+            cpp_line=cpp_line+" "+file_name; //add file_name to cmd
             
-            char* temp_name=basename((char*)file_name); //get the base name of the file
-            base_string=temp_name; //put temp_name into base_string for editing
-            int len=base_string.size(); //find size of base_string for substring cut
-            base_string=base_string.substr(0,len-3); //cut the last 3 characters off
+            char* temp_name=basename((char*)file_name); //get base name
+            base_string=temp_name; //put temp_name into base_string
+            int len=base_string.size(); //find size of base_string
+            base_string=base_string.substr(0,len-3); //cut last 3 chars
              //the end of base_string, removing .oc
-            char* copystr=new char[base_string.length()+1]; //copy string into char*
-            char* copytok=new char[base_string.length()+1]; //copy string into char*
+            char* copystr=new char[base_string.length()+1]; //copy string
+            char* copytok=new char[base_string.length()+1]; //copy string
             strcpy(copystr,base_string.c_str());
             strcpy(copytok,base_string.c_str());
-            base_name=copystr; //update base_name so the base file name can be used in c functions
+            base_name=copystr;
             str_name=copystr;
             tok_name=copytok;
-            strcat(str_name,".str"); //add the .str suffix to your base filename for writing
-            strcat(tok_name,".tok"); //add the .str suffix to your base filename for writing
+            strcat(str_name,".str"); //add the .str suffix
+            strcat(tok_name,".tok"); //add the .tok suffix
 
          }
          else //the string file_name does not contain .oc
          {
-            fprintf(stderr, "Error: %s is not a .oc file.\n",file_name); //error message
+            fprintf(stderr, "Error: 
+            %s is not a .oc file.\n",file_name); //error
             file_name=NULL; //clear file_name
             exit(1); //Failure and exit because not a .oc file
          }
