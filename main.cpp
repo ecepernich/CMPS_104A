@@ -210,7 +210,7 @@ int main (int argc, char** argv) {
    string_set::dump (strfile); //write the stringset to output file
    fclose(strfile); //close program.str - the file is now reitten
    //fclose(tokfile);
-   free_ast(ast);
+   //free_ast(ast);
    yylex_destory();
    return EXIT_SUCCESS; //Success and exit with file written
 }
