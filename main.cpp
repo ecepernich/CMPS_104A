@@ -136,8 +136,8 @@ int main (int argc, char** argv) {
             int len=base_string.size(); //find size of base_string
             base_string=base_string.substr(0,len-3); //cut last 3 chars
              //the end of base_string, removing .oc
-            char* copystr=new char[base_string.length()+1]; //copy string
-            char* copytok=new char[base_string.length()+1]; //copy string
+            char* copystr=new char[base_string.length()+1];
+            char* copytok=new char[base_string.length()+1];
             strcpy(copystr,base_string.c_str());
             strcpy(copytok,base_string.c_str());
             base_name=copystr;
@@ -162,13 +162,12 @@ int main (int argc, char** argv) {
    }
    else //file cannot be opened to read
    {
-         fprintf(stderr, "Error: %s does not exist.\n",file_name); //print error message
+         fprintf(stderr, "Error: %s does not exist.\n",file_name);
          exit(1); //Failure and exit because .oc file does not exist
    }
 
    cpp_line=cpp+" "+d_flag+" "+file_name; //add that to the cpp 
-   FILE* yyin=popen(cpp_line.c_str(),"r"); //open a FILE called yyin and pipe
-                                           //open the /usr/bin/cpp/prog.cpp
+   FILE* yyin=popen(cpp_line.c_str(),"r"); //open yyin and pipe
    if(yyin==NULL) //file does not exist
    {
          fprintf(stderr, "Error: %s does not exist.\n",file_name);
@@ -208,7 +207,7 @@ int main (int argc, char** argv) {
    }
 
    strfile=fopen(str_name,"w"); //open file with name program.str to write
-   string_set::dump (strfile); //write the string set to the output file
+   string_set::dump (strfile); //write the stringset to output file
    fclose(strfile); //close program.str - the file is now reitten
    //fclose(tokfile);
    free_ast(ast);
