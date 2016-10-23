@@ -13,8 +13,17 @@ using namespace std;
 
 #include "astree.h"
 
+#define YYEOF 0
+
 extern int yy_flex_debug;
 extern int yydebug;
+
+extern FILE* yyin;     //main.cpp files
+extern FILE* strfile;
+extern FILE* tokfile;
+extern char* yytext;   //lex info
+extern int yyleng;
+extern astree* ast;
 
 int yyparse();
 void yyerror (const char* message);

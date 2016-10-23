@@ -178,6 +178,20 @@ int main (int argc, char** argv) {
    	exit(1);
    }
 
+   ast=new astree (TOK_ROOT, 0, 0, 0, "");
+   for(;;)
+   {
+      int yyint=yylex();
+      if (yyint=YYEOF)
+      {
+         break;
+      }
+      else
+      {
+         intern_stringset(yytext);
+      }
+   }
+
    cpplines(yyin, (char*)file_name); //use cpplines on the file
    int closepipe=pclose(yyin); //close the pipe for the file
    eprint_status(cpp_line.c_str(), closepipe); //check command status
@@ -190,6 +204,8 @@ int main (int argc, char** argv) {
    string_set::dump (strfile); //write the string set to the output file
    fclose(strfile); //close program.str - the file is now reitten
    fclose(tokfile);
+   free_ast(ast);
+   //yylex_destory();
    return EXIT_SUCCESS; //Success and exit with file written
 }
 
