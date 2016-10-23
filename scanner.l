@@ -5,7 +5,7 @@
 #include "lyutils.h"
 #include "auxlib.h"
 #define YY_USER_ACTION { lexer::advance(); }
-#define IGNORE {}
+#define IGNORE {} /*ask about this */
 
 %}
 
@@ -87,7 +87,7 @@ while		{ return yylval_token(TOK_WHILE);}
               return yylval_token(TOK_CHARCON); }
 {BADSTRING}	{ lexer::badtoken(yytext);
               return yylval_token(TOK_STRINGCON); }
-.			{ lexer::badchar(yytext);
+.			{ lexer::badchar(yytext);		//ask about this too
 			  return yylval_token('.'); }
 
 %%
