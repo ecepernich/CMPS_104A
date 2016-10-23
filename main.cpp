@@ -86,7 +86,7 @@ int main (int argc, char** argv) {
    int x; //x is the int for the getopt function
 
    //Flag checks 
-   while ((x=getopt(argc, argv, "ly@:D:")) != -1) //read flags up to the argc'th arg
+   while ((x=getopt(argc, argv, "ly@:D:")) != -1) //read arg flags
    {  //in argv, looking for l, y, D_, or @_
       switch (x) //Check argument
        {
@@ -111,21 +111,22 @@ int main (int argc, char** argv) {
    }
    cpp_line=cpp_line+d_flag; //add -D flag to the command
    //File name check
-   if (argc==optind) //If the current position argument = total arguments
+   if (argc==optind) //If the current position argument=total args
    //if (argc==x) //If the current position argument = total arguments
    {
-         fprintf(stderr, "Error: No file listed.\n"); //Error for no file
+         fprintf(stderr, "Error: No file listed.\n"); //Error-no file
          exit(1); //Failure and exit if no file is listed
    }
-   else if (argc>optind+1) //If total aruments are greater than the current 
-   //else if (argc>x+1) //If total aruments are greater than the current 
-   {               //argument plus 1 (all the flags plus the file)
-         fprintf(stderr, "Error: Too many files listed. \n"); //Error for 2+ files
+   else if (argc>optind+1) //If total args are greater than current 
+   //else if (argc>x+1) 
+   //If total aruments are greater than the current 
+   {//argument plus 1 (all the flags plus the file)
+         fprintf(stderr, "Error: Too many files listed. \n"); //2+ files
          exit(1); //Failure and exit if too many files are listed
    }
    else //The last argument is the file
    {
-         file_name=argv[optind]; //Get file name argument from optind (current arg)
+         file_name=argv[optind]; //Get file name argument from optind
          if (strstr(file_name, ".oc")) //the string file_name contains .oc
          {
             cpp_line=cpp_line+" "+file_name; //add file_name to the command
