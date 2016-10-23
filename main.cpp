@@ -70,11 +70,12 @@ void cpplines (FILE* pipe, const char* filename) {
       }
       char* savepos = NULL;
       char* bufptr = buffer;
-      for (int tokenct = 1;; ++tokenct) {
-         char* token = strtok_r (bufptr, " \t\n", &savepos); //get each token
+      for (int tokenct = 1;; ++tokenct) 
+      {
+         char* token = strtok_r (bufptr, " \t\n", &savepos); 
          bufptr = NULL;
          if (token == NULL) break;
-         string_set::intern (token); //intern each token into the string set
+         string_set::intern (token); //intern each token into stringset
       }
       ++linenr; //cycle through every line until EOF
    }
