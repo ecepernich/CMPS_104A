@@ -149,8 +149,7 @@ int main (int argc, char** argv) {
          }
          else //the string file_name does not contain .oc
          {
-            fprintf(stderr, "Error: 
-            %s is not a .oc file.\n",file_name); //error
+            fprintf(stderr, "Error: %s not a .oc file.\n",file_name);
             file_name=NULL; //clear file_name
             exit(1); //Failure and exit because not a .oc file
          }
