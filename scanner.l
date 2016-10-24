@@ -27,7 +27,7 @@ CHAR      ('([^\\'\n]|\\[\\'"0nt])')
 STRING    (\"([^\\"\n]|\\[\\'"0nt])*\")
 NUMBER    ({DIGIT}+)
 
-NOTIDENT     ({DIGIT} ({LETTER}| {DIGIT})*)
+NOTIDENT     ({DIGIT}({LETTER}|{DIGIT})*)
 BADCHAR      ('([^\\'\n]|\\.)'?) 
 BADSTRING    (\"([^\\"\n]|\\.)*(\")?)
 
