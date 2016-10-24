@@ -77,7 +77,7 @@ NOTIDENT     ({DIGIT}({LETTER}|{DIGIT})*)
 {IDENT}    { return yylval_token(TOK_IDENT); }
 {NUMBER}    { return yylval_token(TOK_INTCON); }
 {CHAR}    { return yylval_token(TOK_CHARCON); }
-{STRING    { return yylval_token(TOK_STRINGCON); }
+{STRING}    { return yylval_token(TOK_STRINGCON); }
 
 {NOTIDENT}    { lexer::badtoken(yytext); }
 .             { lexer::badchar(*yytext); }
