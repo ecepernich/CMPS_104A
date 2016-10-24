@@ -20,7 +20,7 @@ using namespace std;
 #include "string_set.h"
 #include "astree.h"
 #include "lyutils.h"
-#include "yyparse.h"
+//#include "yyparse.h"
 
 /*public values*/
 
@@ -190,10 +190,7 @@ int main (int argc, char** argv) {
       {
          break;
       }
-      else
-      {
-         string_set::intern(yytext);  //ask TA about this
-      }                             
+         string_set::intern(yytext);  //ask TA about this                         
    }
    string_set::dump(tokfile);
    fclose(tokfile);
