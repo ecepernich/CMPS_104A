@@ -79,7 +79,7 @@ NOTIDENT({DIGIT} ({LETTER}| {DIGIT})*)
 {CHAR}    { return yylval_token(TOK_CHARCON); }
 {STRING    { return yylval_token(TOK_STRINGCON); }
 
-{NOTIDENT    { lexer::badtoken(yytext);
+{NOTIDENT}    { lexer::badtoken(yytext);
                 return yylval_token(TOK_IDENT); }
 .            { lexer::badchar(*yytext);} //ask about this too 
 
