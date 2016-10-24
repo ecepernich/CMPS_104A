@@ -14,6 +14,9 @@ using namespace std;
 #include "astree.h"
 #include "string_set.h"
 #include "yyparse.h"
+#define YYSTYPE astree*
+#include "yyparse.h"
+
 
 #define YYEOF 0
 
@@ -52,9 +55,6 @@ struct parser {
    static astree* root;
    static const char* get_tname (int symbol);
 };
-
-#define YYSTYPE astree*
-#include "yyparse.h"
 
 #endif
 
