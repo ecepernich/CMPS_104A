@@ -15,6 +15,8 @@ using namespace std;
 #include "auxlib.h"
 
 extern FILE* yyin;
+extern FILE* tokfile;
+extern FILE* strfile;
 extern char* yytext; 
 extern int yy_flex_debug;
 extern int yydebug;
