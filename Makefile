@@ -1,48 +1,96 @@
-# $Id: Makefile,v 1.2 2016-10-10 22:37:15-07 - - $
-# Elizabeth Cepernich
-# eceperni/1316976
+# $Id: Makefile,v 1.19 2016-08-18 15:05:42-07 - - $
 
-GPP      = g++ -std=gnu++14 -g -O0 -Wall -Wextra
-MKDEP    = g++ -std=gnu++14 -MM
+DEPSFILE  = Makefile.deps
+NOINCLUDE = ci clean spotless
+NEEDINCL  = ${filter ${NOINCLUDE}, ${MAKECMDGOALS}}
+CPP       = g++ -g -O0 -Wall -Wextra -std=gnu++14
+MKDEPS    = g++ -MM -std=gnu++14
+GRIND     = valgrind --leak-check=full --show-reachable=yes
+FLEX      = flex --header-file=${LEXHDR} --outfile=${LEXCPP}
+BISON     = bison --defines=${PARSEHDR} --output=${PARSECPP}
 
-MKFILE   = Makefile
-DEPFILE  = Makefile.dep
-SOURCES  = string_set.cpp main.cpp auxlib.cpp
-HEADERS  = string_set.h auxlib.h
-OBJECTS  = ${SOURCES:.cpp=.o}
-EXECBIN  = oc
-SRCFILES = ${HEADERS} ${SOURCES} ${MKFILE}
+MODULES   = astree lyutils string_set emitter syslib
+HDRSRC    = ${MODULES:=.h}
+CPPSRC    = ${MODULES:=.cpp} main.cpp
+FLEXSRC   = scanner.l
+BISONSRC  = parser.y
+LEXHDR    = yylex.h
+PARSEHDR  = yyparse.h
+LEXCPP    = yylex.cpp
+PARSECPP  = yyparse.cpp
+CGENS     = ${LEXCPP} ${PARSECPP}
+ALLGENS   = ${LEXHDR} ${PARSEHDR} ${CGENS}
+EXECBIN   = zexprsm
+ALLCSRC   = ${CPPSRC} ${CGENS}
+OBJECTS   = ${ALLCSRC:.cpp=.o}
+LEXOUT    = yylex.output
+PARSEOUT  = yyparse.output
+REPORTS   = ${LEXOUT} ${PARSEOUT}
+MODSRC    = ${foreach MOD, ${MODULES}, ${MOD}.h ${MOD}.cpp}
+MISCSRC   = ${filter-out ${MODSRC}, ${HDRSRC} ${CPPSRC}}
+ALLSRC    = README ${FLEXSRC} ${BISONSRC} ${MODSRC} ${MISCSRC} Makefile
+TESTINS   = ${wildcard test*.in}
+EXECTEST  = ${EXECBIN} -ly
+LISTSRC   = ${ALLSRC} ${DEPSFILE} ${PARSEHDR}
 
 all : ${EXECBIN}
 
 ${EXECBIN} : ${OBJECTS}
-	${GPP} ${OBJECTS} -o ${EXECBIN}
+	${CPP} -o${EXECBIN} ${OBJECTS}
+
+yylex.o : yylex.cpp
+	# Suppress warning message from flex compilation.
+	${CPP} -Wno-sign-compare -c $<
 
 %.o : %.cpp
-	${GPP} -c $<
+	${CPP} -c $<
 
-ci :
-	cid + ${SRCFILES}
+${LEXCPP} : ${FLEXSRC}
+	${FLEX} ${FLEXSRC}
+
+${PARSECPP} ${PARSEHDR} : ${BISONSRC}
+	${BISON} ${BISONSRC}
+
+
+ci : ${ALLSRC} ${TESTINS}
+	- checksource ${ALLSRC}
+	- cpplint.py.perl ${CPPSRC}
+	cid + ${ALLSRC} ${TESTINS} test?.inh
+
+lis : ${LISTSRC} tests
+	mkpspdf List.source.ps ${LISTSRC}
+	mkpspdf List.output.ps ${REPORTS} \
+		${foreach test, ${TESTINS:.in=}, \
+		${patsubst %, ${test}.%, in out err log}}
 
 clean :
-	-rm ${OBJECTS} ${DEPFILE}
+	- rm ${OBJECTS} ${ALLGENS} ${REPORTS} ${DEPSFILE} core
+	- rm ${foreach test, ${TESTINS:.in=}, \
+		${patsubst %, ${test}.%, out err log}}
 
 spotless : clean
 	- rm ${EXECBIN}
 
-${DEPFILE} :
-	${MKDEP} ${SOURCES} >${DEPFILE}
+dep : ${ALLCSRC}
+	@ echo "# ${DEPSFILE} created `date` by ${MAKE}" >${DEPSFILE}
+	${MKDEPS} ${ALLCSRC} >>${DEPSFILE}
 
-deps :
-	- rm ${DEPFILE}
-	${MAKE} --no-print-directory ${DEPFILE}
+${DEPSFILE} :
+	@ touch ${DEPSFILE}
+	${MAKE} --no-print-directory deps
 
-include ${DEPFILE}
+tests : ${EXECBIN}
+	touch ${TESTINS}
+	make --no-print-directory ${TESTINS:.in=.out}
 
-test : ${EXECBIN}
-	${EXECBIN} * * * >test.out 2>&1
+%.out %.err : %.in
+	${GRIND} --log-file=$*.log ${EXECTEST} $< 1>$*.out 2>$*.err; \
+	echo EXIT STATUS = $$? >>$*.log
 
-lis : test
-	mkpspdf Listing.ps ${SRCFILES} ${DEPFILE} test.out
+again :
+	gmake --no-print-directory spotless deps ci all lis
+	
+ifeq "${NEEDINCL}" ""
+include ${DEPSFILE}
+endif
 
-again : ${SRCFILES}
