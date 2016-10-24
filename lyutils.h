@@ -44,7 +44,7 @@ struct lexer {
    static void newfilename (const string& filename);
    static void advance();
    static void newline();
-   statoc int yylval_token();
+   static int yylval_token();
    static void badchar (unsigned char bad);
    static void badtoken (char* lexeme);
    static void include();
