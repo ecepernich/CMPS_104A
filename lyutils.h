@@ -21,6 +21,7 @@ extern char* yytext;
 extern int yy_flex_debug;
 extern int yydebug;
 extern size_t yyleng; 
+#define YYEOF 0
 
 int yylex();
 int yylex_destroy();
