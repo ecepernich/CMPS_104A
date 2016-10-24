@@ -8,7 +8,6 @@
 
 #include "auxlib.h"
 #include "lyutils.h"
-#include "yylex.h"
 
 bool lexer::interactive = true;
 location lexer::lloc = {0, 1, 0};
