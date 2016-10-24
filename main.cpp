@@ -211,7 +211,7 @@ int main (int argc, char** argv) {
    fclose(strfile); //close program.str - the file is now reitten
    //fclose(tokfile);
    //free_ast(ast);
-   yylex_destory();
+   yylex_destroy();
    return EXIT_SUCCESS; //Success and exit with file written
 }
 
