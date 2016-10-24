@@ -34,7 +34,7 @@ ${EXECBIN} : ${OBJECTS}
 
 ${OBJECTS} : ${CPPSRC} ${CGENS}
 	${CPP} -c ${CPPSRC}
-	${CPP} -c {CGENS}
+	${CPP} -c ${CGENS}
 
 ${CLGEN} : ${LSOURCES}
 	flex --outfile=${CLGEN} ${LSOURCES} 2>${LREPORT}
