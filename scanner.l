@@ -2,7 +2,7 @@
 
 #include "lyutils.h"
 #include "auxlib.h"
-#define YY_USER_ACTION { lexer::advacnce(); }
+#define YY_USER_ACTION { lexer::advance(); }
 
 %}
 
