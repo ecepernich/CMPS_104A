@@ -76,8 +76,8 @@ dep : ${ALLCSRC}
 	${MKDEPS} ${ALLCSRC} >>${DEPSFILE}
 
 ${CLGEN} : ${LSOURCES}
-    flex --outfile=${CLGEN} ${LSOURCES} 2>${LREPORT}
-    - grep -v '^ ' ${LREPORT}
+	flex --outfile=${CLGEN} ${LSOURCES} 2>${LREPORT}
+	- grep -v '^ ' ${LREPORT}
 
 ${CYGEN} ${HYGEN} : ${YSOURCES}
     bison --defines=${HYGEN} --output=${CYGEN} ${YSOURCES}
