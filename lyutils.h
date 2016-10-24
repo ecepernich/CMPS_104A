@@ -13,6 +13,7 @@ using namespace std;
 
 #include "astree.h"
 #include "string_set.h"
+#include "yyparse.h"
 
 #define YYEOF 0
 
