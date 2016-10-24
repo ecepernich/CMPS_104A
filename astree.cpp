@@ -18,11 +18,11 @@ astree::astree (int symbol_, const location& lloc_, const char* info) {
    // vector defaults to empty -- no children
 }
 
-location::location (size_t filenr_, size_t linenr_, size_t offset_) {
-   filenr = filenr_;
-   linenr = linenr_;
-   offset = offset_;
-}
+//location::location (size_t filenr_, size_t linenr_, size_t offset_) {
+//   filenr = filenr_;
+//   linenr = linenr_;
+//   offset = offset_;
+//}
 
 astree::~astree() {
    while (not children.empty()) {
