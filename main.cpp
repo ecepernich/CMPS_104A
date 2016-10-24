@@ -192,10 +192,10 @@ int main (int argc, char** argv) {
       }
       else
       {
-         string_set::intern(yytext);  //ask TA about this
-                                    
+         string_set::intern(yytext);  //ask TA about this                             
       }                             
    }
+   string_set::dump(tokfile);
    fclose(tokfile);
 
    cpplines(yyin, (char*)file_name); //use cpplines on the file
@@ -209,8 +209,6 @@ int main (int argc, char** argv) {
    strfile=fopen(str_name,"w"); //open .str file to write
    string_set::dump (strfile); //write the stringset to output file
    fclose(strfile); //close program.str - the file is now reitten
-   //fclose(tokfile);
-   //free_ast(ast);
    yylex_destroy();
    return EXIT_SUCCESS; //Success and exit with file written
 }
