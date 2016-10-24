@@ -16,5 +16,3 @@ main.o: In function `main':
 /afs/cats.ucsc.edu/users/j/eceperni/104a/asg2/cmps_104a/main.cpp:195: undefined reference to `yytext'
 /afs/cats.ucsc.edu/users/j/eceperni/104a/asg2/cmps_104a/main.cpp:212: undefined reference to `yylex_destroy()'
 collect2: error: ld returned 1 exit status
-gmake: *** [oc] Error 1
-bash-271$ 
