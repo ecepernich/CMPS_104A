@@ -1,4 +1,4 @@
-// $Id: lyutils.h,v 1.10 2016-10-06 16:42:53-07 - - $
+// $Id: lyutils.h,v 1.6 2016-10-06 16:13:39-07 - - $
 
 #ifndef __UTILS_H__
 #define __UTILS_H__
@@ -13,21 +13,26 @@ using namespace std;
 
 #include "astree.h"
 #include "auxlib.h"
+//#include "yyparse.h"
+
+
+#define YYEOF 0
+
+extern FILE* strfile;
+extern FILE* tokfile;
 
 extern FILE* yyin;
-extern FILE* tokfile;
-extern FILE* strfile;
 extern char* yytext; 
 extern int yy_flex_debug;
 extern int yydebug;
-extern size_t yyleng; 
-#define YYEOF 0
+extern size_t yyleng;
 
 int yylex();
 int yylex_destroy();
 int yyparse();
 void yyerror (const char* message);
 int yylval_token(int symbol);
+
 
 struct lexer {
    static bool interactive;
@@ -38,17 +43,20 @@ struct lexer {
    static void newfilename (const string& filename);
    static void advance();
    static void newline();
+   static int yylval_token();
    static void badchar (unsigned char bad);
    static void badtoken (char* lexeme);
    static void include();
 };
+
+
+#include "yyparse.h"
+#define YYSTYPE astree*
 
 struct parser {
    static astree* root;
    static const char* get_tname (int symbol);
 };
 
-#define YYSTYPE astree*
-#include "yyparse.h"
-
 #endif
+
