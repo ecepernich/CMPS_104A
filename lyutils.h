@@ -13,7 +13,6 @@ using namespace std;
 
 #include "astree.h"
 #include "string_set.h"
-#include "yyparse.h"
 #define YYSTYPE astree*
 #include "yyparse.h"
 
@@ -52,7 +51,7 @@ struct lexer {
 int yylval_token();
 
 struct parser {
-   static astree::astree* root;
+   static astree* root;
    static const char* get_tname (int symbol);
 };
 
