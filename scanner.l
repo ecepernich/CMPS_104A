@@ -1,11 +1,8 @@
-
-
 %{
 
 #include "lyutils.h"
 #include "auxlib.h"
-#define YY_USER_ACTION { lexer::advance(); }
-#define IGNORE {} /*ask about this */
+#define YY_USER_ACTION { lexer::useraction(); }
 
 %}
 
@@ -32,11 +29,6 @@ BADCHAR      ('([^\\'\n]|\\.)'?)
 BADSTRING    (\"([^\\"\n]|\\.)*(\")?)
 
 %%
-
-"#".*    { scanner_include(); }
-[\t]+    { IGNORE (white space) }
-\n       { scanner_newline(); }
-
 
 "char"    { return yylval_token(TOK_CHAR);}
 "else"    { return yylval_token(TOK_ELSE);}
@@ -74,6 +66,10 @@ BADSTRING    (\"([^\\"\n]|\\.)*(\")?)
 "]"    { return yylval_token(']'); }
 "{"    { return yylval_token('{'); }
 "}"    { return yylval_token('}'); }
+
+"#".*    { scanner_include(); }
+[\t]+    {  }
+\n       { scanner_newline(); }
 
 
 {IDENT}    { return yylval_token(TOK_IDENT); }
