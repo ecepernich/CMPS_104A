@@ -44,6 +44,13 @@ ${OBJECTS} : ${CPPSRC} ${CGENS}
 	${CPP} -c ${CPPSRC}
 	${CPP} -c {CGENS}
 
+${CLGEN} : ${LSOURCES}
+	flex --outfile=${CLGEN} ${LSOURCES} 2>${LREPORT}
+	- grep -v '^ ' ${LREPORT}
+
+${CYGEN} ${HYGEN} : ${YSOURCES}
+	bison --defines=${HYGEN} --output=${CYGEN} ${YSOURCES}
+
 %.o : %.cpp
 	${CPP} -c $<
 
@@ -71,12 +78,6 @@ dep : ${ALLCSRC}
 	@ echo "# ${DEPSFILE} created `date` by ${MAKE}" >${DEPSFILE}
 	${MKDEPS} ${ALLCSRC} >>${DEPSFILE}
 
-${CLGEN} : ${LSOURCES}
-	flex --outfile=${CLGEN} ${LSOURCES} 2>${LREPORT}
-	- grep -v '^ ' ${LREPORT}
-
-${CYGEN} ${HYGEN} : ${YSOURCES}
-	bison --defines=${HYGEN} --output=${CYGEN} ${YSOURCES}
 
 ${DEPSFILE} :
 	@ touch ${DEPSFILE}
