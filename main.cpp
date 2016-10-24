@@ -192,7 +192,7 @@ int main (int argc, char** argv) {
       }
       else
       {
-         stringset::intern(yytext);  //ask TA about this
+         string_set::intern(yytext);  //ask TA about this
                                     
       }                             
    }
