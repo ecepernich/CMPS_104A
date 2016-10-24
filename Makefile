@@ -19,6 +19,7 @@ CYGEN     = yyparse.cpp
 CGENS     = ${CLGEN} ${CYGEN}
 ALLGENS   = ${LEXHDR} ${HYGEN} ${CGENS}
 EXECBIN   = oc
+OBJECTS   = ${ALLCSRC:.cpp=.o}
 LREPORT   = yylex.output 
 YREPORT   = yyparse.output 
 MODULES   = astree lyutils string_set auxlib 
@@ -26,7 +27,6 @@ HDRSRC    = ${MODULES:=.h}
 CPPSRC    = ${MODULES:=.cpp} main.cpp
 LEXHDR    = yylex.h
 ALLCSRC   = ${CPPSRC} ${CGENS}
-OBJECTS   = ${ALLCSRC:.cpp=.o}
 REPORTS   = ${LREPORT} ${YREPORT}
 MODSRC    = ${foreach MOD, ${MODULES}, ${MOD}.h ${MOD}.cpp}
 MISCSRC   = ${filter-out ${MODSRC}, ${HDRSRC} ${CPPSRC}}
@@ -63,9 +63,7 @@ lis : ${LISTSRC} tests
 		${patsubst %, ${test}.%, in out err log}}
 
 clean :
-	- rm ${OBJECTS} ${ALLGENS} ${REPORTS} ${DEPSFILE} core
-	- rm ${foreach test, ${TESTINS:.in=}, \
-		${patsubst %, ${test}.%, out err log}}
+	- rm ${OBJECTS} ${ALLGENS} ${REPORTS}
 
 spotless : clean
 	- rm ${EXECBIN} 
