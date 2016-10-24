@@ -27,9 +27,7 @@ CHAR      ('([^\\'\n]|\\[\\'"0nt])')
 STRING    (\"([^\\"\n]|\\[\\'"0nt])*\")
 NUMBER    ({DIGIT}+)
 
-NOTIDENT
-BADCHAR
-BADSTRING
+NOTIDENT({DIGIT} ({LETTER}| {DIGIT})*)
 
 %%
 
@@ -83,10 +81,6 @@ BADSTRING
 
 {NOTIDENT    { lexer::badtoken(yytext);
                 return yylval_token(TOK_IDENT); }
-{BADCHAR}    { lexer::badtoken(yytext);
-                return yylval_token(TOK_CHARCON); }
-{BADSTRING }   { lexer::badtoken(yytext);
-                return yylval_token(TOK_STRINGCON); }
 .            { lexer::badchar(*yytext);} //ask about this too 
 
 %%
