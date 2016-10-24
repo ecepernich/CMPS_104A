@@ -67,9 +67,9 @@ BADSTRING    (\"([^\\"\n]|\\.)*(\")?)
 "{"    { return yylval_token('{'); }
 "}"    { return yylval_token('}'); }
 
-"#".*    { scanner_include(); }
+"#".*    { lexer::include(); }
 [\t]+    {  }
-\n       { scanner_newline(); }
+\n       { lexer::newline(); }
 
 
 {IDENT}    { return yylval_token(TOK_IDENT); }
