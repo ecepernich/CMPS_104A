@@ -13,8 +13,9 @@ using namespace std;
 
 #include "astree.h"
 #include "string_set.h"
-#define YYSTYPE astree*
 #include "yyparse.h"
+#define YYSTYPE astree*
+//#include "yyparse.h"
 
 
 #define YYEOF 0
