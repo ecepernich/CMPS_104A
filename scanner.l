@@ -28,8 +28,6 @@ STRING    (\"([^\\"\n]|\\[\\'"0nt])*\")
 NUMBER    ({DIGIT}+)
 
 NOTIDENT     ({DIGIT}({LETTER}|{DIGIT})*)
-BADCHAR      ('([^\\'\n]|\\.)'?) 
-BADSTRING    (\"([^\\"\n]|\\.)*(\")?)
 
 %%
 
@@ -82,8 +80,6 @@ BADSTRING    (\"([^\\"\n]|\\.)*(\")?)
 {STRING    { return yylval_token(TOK_STRINGCON); }
 
 {NOTIDENT}    { lexer::badtoken(yytext); }
-{BADCHAR}     { lexer::badtoken(yytext); } 
-{BADSTRING}   { lexer::badtoken(yytext); }
 .             { lexer::badchar(*yytext); }
 
 %%
