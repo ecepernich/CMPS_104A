@@ -51,10 +51,6 @@ ${CLGEN} : ${LSOURCES}
 ${CYGEN} ${HYGEN} : ${YSOURCES}
 	bison --defines=${HYGEN} --output=${CYGEN} ${YSOURCES}
 
-%.o : %.cpp
-	${CPP} -c $<
-
-
 ci : ${ALLSRC} ${TESTINS}
 	- checksource ${ALLSRC}
 	- cpplint.py.perl ${CPPSRC}
