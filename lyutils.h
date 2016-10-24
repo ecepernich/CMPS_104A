@@ -13,19 +13,17 @@ using namespace std;
 
 #include "astree.h"
 #include "auxlib.h"
-//#include "yyparse.h"
-
 
 #define YYEOF 0
 
-extern FILE* strfile;
-extern FILE* tokfile;
-
 extern FILE* yyin;
+extern FILE* tokfile;
+extern FILE* strfile;
 extern char* yytext; 
 extern int yy_flex_debug;
 extern int yydebug;
-extern size_t yyleng;
+extern size_t yyleng; 
+#define YYEOF 0
 
 int yylex();
 int yylex_destroy();
