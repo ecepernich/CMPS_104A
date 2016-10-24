@@ -25,6 +25,8 @@ extern char* yytext;   //lex info
 extern int yyleng;
 extern astree* ast;
 
+int yylex(void);
+int yylex_destroy (void);
 int yyparse();
 void yyerror (const char* message);
 
