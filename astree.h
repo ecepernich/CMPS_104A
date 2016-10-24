@@ -8,7 +8,6 @@
 using namespace std;
 
 #include "auxlib.h"
-//#include "lyutils.h"
 
 struct location {
    size_t filenr;
@@ -16,8 +15,7 @@ struct location {
    size_t offset;
 };
 
-struct astree 
-{
+struct astree {
 
    // Fields.
    int symbol;               // token code
@@ -41,4 +39,3 @@ void destroy (astree* tree1, astree* tree2 = nullptr);
 void errllocprintf (const location&, const char* format, const char*);
 
 #endif
-
