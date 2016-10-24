@@ -33,8 +33,8 @@ ${EXECBIN} : ${OBJECTS}
 	${CPP} -o${EXECBIN} ${OBJECTS}
 
 ${OBJECTS} : ${CPPSRC} ${CGENS}
-	${CPP} -c ${CPPSRC}
-	${CPP} -c ${CGENS}
+	${CPP} -Wno-sign-compare -c ${CPPSRC}
+	${CPP} -Wno-sign-compare -c ${CGENS}
 
 ${CLGEN} : ${LSOURCES}
 	flex --outfile=${CLGEN} ${LSOURCES} 2>${LREPORT}
