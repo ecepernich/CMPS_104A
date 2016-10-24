@@ -56,6 +56,7 @@ int yylval_token(int symbol)
    return symbol;
 }
 
+
 void lexer::badchar (unsigned char bad) {
    char buffer[16];
    snprintf (buffer, sizeof buffer,
