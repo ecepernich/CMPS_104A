@@ -52,7 +52,7 @@ struct lexer {
 int yylval_token();
 
 struct parser {
-   static astree* root;
+   static astree::astree* root;
    static const char* get_tname (int symbol);
 };
 
