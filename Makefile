@@ -6,32 +6,32 @@ NEEDINCL  = ${filter ${NOINCLUDE}, ${MAKECMDGOALS}}
 CPP       = g++ -g -O0 -Wall -Wextra -std=gnu++14
 MKDEPS    = g++ -MM -std=gnu++14
 GRIND     = valgrind --leak-check=full --show-reachable=yes
-FLEX      = flex --header-file=${LEXHDR} --outfile=${LEXCPP}
-BISON     = bison --defines=${PARSEHDR} --output=${PARSECPP}
 
+
+
+LSOURCES  = scanner.l
+YSOURCES  = parser.y 
+CLGEN     = yylex.cpp
+HYGEN     = yyparse.h 
+CYGEN     = yyparse.cpp 
+LREPORT   = yylex.output 
+YREPORT   = yyparse.output 
 MODULES   = astree lyutils string_set auxlib 
 HDRSRC    = ${MODULES:=.h}
 CPPSRC    = ${MODULES:=.cpp} main.cpp
-FLEXSRC   = scanner.l
-BISONSRC  = parser.y
 LEXHDR    = yylex.h
-PARSEHDR  = yyparse.h
-LEXCPP    = yylex.cpp
-PARSECPP  = yyparse.cpp
-CGENS     = ${LEXCPP} ${PARSECPP}
-ALLGENS   = ${LEXHDR} ${PARSEHDR} ${CGENS}
+CGENS     = ${CLGEN} ${CYGEN}
+ALLGENS   = ${LEXHDR} ${HYGEN} ${CGENS}
 EXECBIN   = oc
 ALLCSRC   = ${CPPSRC} ${CGENS}
 OBJECTS   = ${ALLCSRC:.cpp=.o}
-LEXOUT    = yylex.output
-PARSEOUT  = yyparse.output
-REPORTS   = ${LEXOUT} ${PARSEOUT}
+REPORTS   = ${LREPORT} ${YREPORT}
 MODSRC    = ${foreach MOD, ${MODULES}, ${MOD}.h ${MOD}.cpp}
 MISCSRC   = ${filter-out ${MODSRC}, ${HDRSRC} ${CPPSRC}}
-ALLSRC    = README ${FLEXSRC} ${BISONSRC} ${MODSRC} ${MISCSRC} Makefile
+ALLSRC    = README ${LSOURCES} ${YSOURCES} ${MODSRC} ${MISCSRC} Makefile
 TESTINS   = ${wildcard test*.in}
 EXECTEST  = ${EXECBIN} -ly
-LISTSRC   = ${ALLSRC} ${DEPSFILE} ${PARSEHDR}
+LISTSRC   = ${ALLSRC} ${DEPSFILE} ${HYGEN}
 
 all : ${EXECBIN}
 
@@ -45,11 +45,11 @@ yylex.o : yylex.cpp
 %.o : %.cpp
 	${CPP} -c $<
 
-${LEXCPP} : ${FLEXSRC}
-	${FLEX} ${FLEXSRC}
+${CLGEN} : ${LSOURCES}
+	${FLEX} ${LSOURCES}
 
-${PARSECPP} ${PARSEHDR} : ${BISONSRC}
-	${BISON} ${BISONSRC}
+${CYGEN} ${HYGEN} : ${YSOURCES}
+	${BISON} ${YSOURCES}
 
 
 ci : ${ALLSRC} ${TESTINS}
@@ -74,6 +74,13 @@ spotless : clean
 dep : ${ALLCSRC}
 	@ echo "# ${DEPSFILE} created `date` by ${MAKE}" >${DEPSFILE}
 	${MKDEPS} ${ALLCSRC} >>${DEPSFILE}
+
+${CLGEN} : ${LSOURCES}
+    flex --outfile=${CLGEN} ${LSOURCES} 2>${LREPORT}
+    - grep -v ’ˆ ’ ${LREPORT}
+
+${CYGEN} ${HYGEN} : ${YSOURCES}
+    bison --defines=${HYGEN} --output=${CYGEN} ${YSOURCES}
 
 ${DEPSFILE} :
 	@ touch ${DEPSFILE}
