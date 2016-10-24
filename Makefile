@@ -7,22 +7,24 @@ CPP       = g++ -g -O0 -Wall -Wextra -std=gnu++14
 MKDEPS    = g++ -MM -std=gnu++14
 GRIND     = valgrind --leak-check=full --show-reachable=yes
 
+BISON = bison --defines=${PARSEHDR} --output=${PARCECPP}
 
-
+HDRSRC = astree.h auxlib.h lyutils.h string_set.h
+CPPSRC = astree.cpp auxlib.cpp lyutils.cpp string_set.cpp main.cpp
 LSOURCES  = scanner.l
 YSOURCES  = parser.y 
-CLGEN     = yylex.cpp
 HYGEN     = yyparse.h 
+CLGEN     = yylex.cpp
 CYGEN     = yyparse.cpp 
+CGENS     = ${CLGEN} ${CYGEN}
+ALLGENS   = ${LEXHDR} ${HYGEN} ${CGENS}
+EXECBIN   = oc
 LREPORT   = yylex.output 
 YREPORT   = yyparse.output 
 MODULES   = astree lyutils string_set auxlib 
 HDRSRC    = ${MODULES:=.h}
 CPPSRC    = ${MODULES:=.cpp} main.cpp
 LEXHDR    = yylex.h
-CGENS     = ${CLGEN} ${CYGEN}
-ALLGENS   = ${LEXHDR} ${HYGEN} ${CGENS}
-EXECBIN   = oc
 ALLCSRC   = ${CPPSRC} ${CGENS}
 OBJECTS   = ${ALLCSRC:.cpp=.o}
 REPORTS   = ${LREPORT} ${YREPORT}
@@ -42,14 +44,12 @@ yylex.o : yylex.cpp
 	# Suppress warning message from flex compilation.
 	${CPP} -Wno-sign-compare -c $<
 
+${OBJECTS} : ${CPPSRC} ${CGENS}
+	${CPP} -c ${CPPSRC}
+	${CPP} -c {CGENS}
+
 %.o : %.cpp
 	${CPP} -c $<
-
-${CLGEN} : ${LSOURCES}
-	${FLEX} ${LSOURCES}
-
-${CYGEN} ${HYGEN} : ${YSOURCES}
-	${BISON} ${YSOURCES}
 
 
 ci : ${ALLSRC} ${TESTINS}
