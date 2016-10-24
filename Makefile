@@ -40,10 +40,6 @@ all : ${EXECBIN}
 ${EXECBIN} : ${OBJECTS}
 	${CPP} -o${EXECBIN} ${OBJECTS}
 
-yylex.o : yylex.cpp
-	# Suppress warning message from flex compilation.
-	${CPP} -Wno-sign-compare -c $<
-
 ${OBJECTS} : ${CPPSRC} ${CGENS}
 	${CPP} -c ${CPPSRC}
 	${CPP} -c {CGENS}
