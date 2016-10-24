@@ -21,9 +21,9 @@
 
 
 LETTER    [A-Za-z]
-DIGIT    [0-9]
-IDENT    ({LETTER}({LETTER}|{DIGIT})*)
-CHAR     ('([^\\'\n]|\\[\\'"0nt])')
+DIGIT     [0-9]
+IDENT     ({LETTER}({LETTER}|{DIGIT})*)
+CHAR      ('([^\\'\n]|\\[\\'"0nt])')
 STRING    (\"([^\\"\n]|\\[\\'"0nt])*\")
 NUMBER    ({DIGIT}+)
 
