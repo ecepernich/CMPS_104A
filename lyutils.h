@@ -47,13 +47,13 @@ struct lexer {
 };
 
 
-#include "yyparse.h"
-#define YYSTYPE astree*
-
 struct parser {
    static astree* root;
    static const char* get_tname (int symbol);
 };
+
+#include "yyparse.h"
+#define YYSTYPE astree*
 
 #endif
 
