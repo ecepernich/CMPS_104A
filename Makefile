@@ -1,6 +1,6 @@
 # $Id: Makefile,v 1.19 2016-08-18 15:05:42-07 - - $
 
-DEPSFILE  = Makefile.deps
+MKFILE  = Makefile
 NOINCLUDE = ci clean spotless
 NEEDINCL  = ${filter ${NOINCLUDE}, ${MAKECMDGOALS}}
 CPP       = g++ -g -O0 -Wall -Wextra -std=gnu++14
@@ -9,10 +9,10 @@ GRIND     = valgrind --leak-check=full --show-reachable=yes
 FLEX      = flex --header-file=${LEXHDR} --outfile=${LEXCPP}
 BISON     = bison --defines=${PARSEHDR} --output=${PARSECPP}
 
-MODULES   = astree lyutils string_set emitter syslib
+MODULES   = astree lyutils string_set auxlib 
 HDRSRC    = ${MODULES:=.h}
 CPPSRC    = ${MODULES:=.cpp} main.cpp
-FLEXSRC   = lexer.l
+FLEXSRC   = scanner.l
 BISONSRC  = parser.y
 LEXHDR    = yylex.h
 PARSEHDR  = yyparse.h

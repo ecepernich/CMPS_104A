@@ -19,8 +19,8 @@ astree::astree (int symbol_, const location& lloc_, const char* info) {
 }
 
 location::location (size_t filenr_, size_t linenr_, size_t offset_) {
-   filenr = symbol_;
-   linenr = lloc_;
+   filenr = filenr_;
+   linenr = linenr_;
    offset = offset_;
 }
 
