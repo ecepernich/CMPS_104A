@@ -1,5 +1,3 @@
-# $Id: Makefile,v 1.19 2016-08-18 15:05:42-07 - - $
-
 MKFILE  = Makefile
 NOINCLUDE = ci clean spotless
 NEEDINCL  = ${filter ${NOINCLUDE}, ${MAKECMDGOALS}}
@@ -23,7 +21,7 @@ OBJECTS   = ${CPPSRC:.cpp=.o}
 LREPORT   = yylex.output 
 YREPORT   = yyparse.output 
 REPORTS   = ${LREPORT} ${YREPORT}
-PSOURCES = ${LSOURCES} ${YSOURCES}
+PSOURCES  = ${LSOURCES} ${YSOURCES}
 ALLSRC    = README ${HDRSRC} {CPPSRC} ${LSOURCES} ${YSOURCES} Makefile
 TESTINS   = ${wildcard test*.in}
 LISTSRC   = ${ALLSRC} ${DEPSFILE} ${HYGEN}
@@ -46,8 +44,6 @@ ${CYGEN} ${HYGEN} : ${YSOURCES}
 	bison --defines=${HYGEN} --output=${CYGEN} ${YSOURCES}
 
 ci : ${ALLSRC} ${TESTINS}
-	- checksource ${ALLSRC}
-	- cpplint.py.perl ${CPPSRC}
 	cid + ${ALLSRC} ${TESTINS} test?.inh
 
 lis : ${LISTSRC} tests
@@ -61,6 +57,9 @@ clean :
 
 spotless : clean
 	- rm ${EXECBIN} 
+
+checksource : ${ALLSRC}
+	checksource ${ALLSRC}
 
 dep : ${ALLCSRC}
 	@ echo "# ${DEPSFILE} created `date` by ${MAKE}" >${DEPSFILE}
