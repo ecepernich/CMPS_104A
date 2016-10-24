@@ -17,23 +17,17 @@ HYGEN     = yyparse.h
 CLGEN     = yylex.cpp
 CYGEN     = yyparse.cpp 
 CGENS     = ${CLGEN} ${CYGEN}
-ALLGENS   = ${LEXHDR} ${HYGEN} ${CGENS}
+ALLGENS   = ${HYGEN} ${CGENS}
 EXECBIN   = oc
 OBJECTS   = ${ALLCSRC:.cpp=.o}
 LREPORT   = yylex.output 
 YREPORT   = yyparse.output 
-MODULES   = astree lyutils string_set auxlib 
-HDRSRC    = ${MODULES:=.h}
-CPPSRC    = ${MODULES:=.cpp} main.cpp
-LEXHDR    = yylex.h
-ALLCSRC   = ${CPPSRC} ${CGENS}
 REPORTS   = ${LREPORT} ${YREPORT}
-MODSRC    = ${foreach MOD, ${MODULES}, ${MOD}.h ${MOD}.cpp}
-MISCSRC   = ${filter-out ${MODSRC}, ${HDRSRC} ${CPPSRC}}
-ALLSRC    = README ${LSOURCES} ${YSOURCES} ${MODSRC} ${MISCSRC} Makefile
+PSOURCES = ${LSOURCES} ${YSOURCES}
+ALLSRC    = README ${HDRSRC} {CPPSRC} ${LSOURCES} ${YSOURCES} Makefile
 TESTINS   = ${wildcard test*.in}
-EXECTEST  = ${EXECBIN} -ly
 LISTSRC   = ${ALLSRC} ${DEPSFILE} ${HYGEN}
+
 
 all : ${EXECBIN}
 
