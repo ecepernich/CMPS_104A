@@ -12,7 +12,7 @@ using namespace std;
 #include <stdio.h>
 
 #include "astree.h"
-#include "string_set.h"
+#include "auxlib.h"
 #include "yyparse.h"
 #define YYSTYPE astree*
 //#include "yyparse.h"
@@ -20,20 +20,20 @@ using namespace std;
 
 #define YYEOF 0
 
-extern int yy_flex_debug;
-extern int yydebug;
-
-extern FILE* yyin;     //main.cpp files
 extern FILE* strfile;
 extern FILE* tokfile;
-extern char* yytext;   //lex info
-extern int yyleng;
-//extern astree* ast;
 
-int yylex(void);
-int yylex_destroy (void);
+extern FILE* yyin;
+extern char* yytext; 
+extern int yy_flex_debug;
+extern int yydebug;
+extern size_t yyleng; 
+
+int yylex();
+int yylex_destroy();
 int yyparse();
 void yyerror (const char* message);
+
 
 struct lexer {
    static bool interactive;
