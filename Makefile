@@ -80,7 +80,7 @@ ${CLGEN} : ${LSOURCES}
 	- grep -v '^ ' ${LREPORT}
 
 ${CYGEN} ${HYGEN} : ${YSOURCES}
-    bison --defines=${HYGEN} --output=${CYGEN} ${YSOURCES}
+	bison --defines=${HYGEN} --output=${CYGEN} ${YSOURCES}
 
 ${DEPSFILE} :
 	@ touch ${DEPSFILE}
