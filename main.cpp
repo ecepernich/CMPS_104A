@@ -186,13 +186,13 @@ int main (int argc, char** argv) {
    for(;;)
    {
       int yyint=yylex();
-      if (yyint=YYEOF)
+      if (yyint==YYEOF)
       {
          break;
       }
       else
       {
-         intern_stringset(yytext);  //ask TA about this
+         stringset::intern(yytext);  //ask TA about this
                                     
       }                             
    }
