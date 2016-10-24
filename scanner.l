@@ -81,12 +81,9 @@ BADSTRING    (\"([^\\"\n]|\\.)*(\")?)
 {CHAR}    { return yylval_token(TOK_CHARCON); }
 {STRING    { return yylval_token(TOK_STRINGCON); }
 
-{NOTIDENT}    { lexer::badtoken(yytext);
-                return yylval_token(TOK_IDENT); }
-{BADCHAR}     { lexer::badtoken(yytext);
-                return yylval_token(TOK_CHARCON); } 
-{BADSTRING}   { lexer::badtoken(yytext);
-                return yylval_token(TOK_STRINGCON); }
+{NOTIDENT}    { lexer::badtoken(yytext); }
+{BADCHAR}     { lexer::badtoken(yytext); } 
+{BADSTRING}   { lexer::badtoken(yytext); }
 .             { lexer::badchar(*yytext); }
 
 %%
