@@ -182,7 +182,7 @@ int main (int argc, char** argv) {
 
    // parse error with yyparse?? //
 
-   ast=new astree (TOK_ROOT, 0, 0, 0, "");
+   ast=new astree (TOK_ROOT, NULL, yytext);
    for(;;)
    {
       int yyint=yylex();
