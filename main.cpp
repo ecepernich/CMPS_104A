@@ -192,9 +192,9 @@ int main (int argc, char** argv) {
       }
       else
       {
-         intern_stringset(yytext);  //----------------\
-                                    //ask TA about this\
-      }                             //------------------\
+         intern_stringset(yytext);  //ask TA about this
+                                    
+      }                             
    }
    fclose(tokfile);
 
