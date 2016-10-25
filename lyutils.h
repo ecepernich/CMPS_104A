@@ -30,8 +30,6 @@ int yylex_destroy();
 int yyparse();
 void yyerror (const char* message);
 int yylval_token(int symbol);
-const char* parser::get_tname (int symbol);
-
 
 struct lexer {
    static bool interactive;
@@ -55,6 +53,8 @@ struct parser {
 
 #define YYSTYPE astree*
 #include "yyparse.h"
+
+const char* parser::get_tname (int symbol);
 
 #endif
 
