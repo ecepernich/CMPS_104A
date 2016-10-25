@@ -30,7 +30,7 @@ int yylex_destroy();
 int yyparse();
 void yyerror (const char* message);
 int yylval_token(int symbol);
-const char *get_yytname (int symbol);
+const char* parser::get_tname (int symbol)
 
 
 struct lexer {
