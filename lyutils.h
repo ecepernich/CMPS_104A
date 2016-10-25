@@ -54,7 +54,7 @@ struct parser {
 #define YYSTYPE astree*
 #include "yyparse.h"
 
-const char* parser::get_tname (int symbol);
+const char *get_yytname (int symbol);
 
 #endif
 
