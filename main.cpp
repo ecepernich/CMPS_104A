@@ -165,7 +165,7 @@ int main (int argc, char** argv) {
    }
 
    cpp_line=cpp+" "+d_flag+" "+file_name; //add that to the cpp 
-   yyin=popen(cpp_line.c_str(),"r"); //open yyin and pipe
+   yyin = popen(cpp_line.c_str(),"r"); //open yyin and pipe
    if(yyin==NULL) //file does not exist
    {
          fprintf(stderr, "Error: %s does not exist.\n",file_name);
@@ -181,9 +181,11 @@ int main (int argc, char** argv) {
    // parse error with yyparse?? //
 
    //ast=new astree (TOK_ROOT, NULL, yytext);
+   fprintf(tokfile, "yo \n");
    for(;;)
    {
       int yyint=yylex();
+      fprintf(tokfile, "yo \n");
       if (yyint==YYEOF) break;
          //string_set::intern(yytext);
       fprintf(tokfile, "yo \n");
