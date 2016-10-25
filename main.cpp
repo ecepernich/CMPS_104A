@@ -165,7 +165,7 @@ int main (int argc, char** argv) {
    }
 
    cpp_line=cpp+" "+d_flag+" "+file_name; //add that to the cpp 
-   FILE* yyin=popen(cpp_line.c_str(),"r"); //open yyin and pipe
+   yyin=popen(cpp_line.c_str(),"r"); //open yyin and pipe
    if(yyin==NULL) //file does not exist
    {
          fprintf(stderr, "Error: %s does not exist.\n",file_name);
@@ -186,7 +186,7 @@ int main (int argc, char** argv) {
       int yyint=yylex();
       if (yyint==YYEOF) break;
          //string_set::intern(yytext);
-         fprintf(tokfile, "yo \n");
+      fprintf(tokfile, "yo \n");
    }
    //string_set::dump(tokfile);
    fclose(tokfile);
