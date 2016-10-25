@@ -51,7 +51,7 @@ int yylval_token(int symbol)
            ast1->symbol,
            lexer::lloc.filenr,
            lexer::lloc.linenr,
-           lexer::lloc.offset,
+           lexer::lloc.offset
            //ast1->lexinfo->c_str());
            );
    return symbol;
