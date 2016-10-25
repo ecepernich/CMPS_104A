@@ -53,7 +53,7 @@ lis : ${LISTSRC} tests
 		${patsubst %, ${test}.%, in out err log}}
 
 clean :
-	- rm ${OBJECTS} ${ALLGENS} ${REPORTS}
+	- rm ${OBJECTS} ${ALLGENS} ${REPORTS} checksource.log gmake.log *.o
 
 spotless : clean
 	- rm ${EXECBIN} 
