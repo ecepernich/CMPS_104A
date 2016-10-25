@@ -187,14 +187,6 @@ int main (int argc, char** argv) {
       int yyint=yylex();
       if (yyint==YYEOF) break;
       string_set::intern(yytext);
-   for(;;)
-   {
-      int yyint=yylex();
-      if (yyint==YYEOF) 
-      { 
-         fprintf(tokfile, "This is where it breaks.\n");
-         break;
-      }
    }
    string_set::dump(tokfile);
    fclose(tokfile);
