@@ -188,9 +188,10 @@ int main (int argc, char** argv) {
       {
          break;
       }
-         string_set::intern(yytext);
+         //string_set::intern(yytext);
+         fprintf(tokfile, "yo \n");
    }
-   string_set::dump(tokfile);
+   //string_set::dump(tokfile);
    fclose(tokfile);
 
    cpplines(yyin, (char*)file_name); //use cpplines on the file
