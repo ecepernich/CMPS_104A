@@ -5,7 +5,7 @@
 
  We acknowledge that each partner in a programming pair should
  drive roughly 50% of the time the pair is working together, and
- at most 25% of an individual’s effort for an assignment should
+ at most 25% of an individual's effort for an assignment should
  be spent working alone. Any work done by a solitary programmer
  must be reviewed by the partner. The object is to work
  together, learning from each other, not to divide the work into
@@ -20,6 +20,7 @@
  Please grade the work submitted by eceperni@ucsc.edu
  and not the work submitted by llangfor@ucsc.edu.
 
- We used bitbucket (git) to share work between our directories when not together. The 
- bitbucket repo can be found here: https://bitbucket.org/leahlang4d/cmps_104a We have made 
+ We used bitbucket (git) to share work between our directories when 
+ not together. The bitbucket repo can be found here: 
+ https://bitbucket.org/leahlang4d/cmps_104a We have made 
  it public, so if you want to look at it, it should be accessible. 
