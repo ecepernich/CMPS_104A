@@ -40,8 +40,8 @@ string base_string=""; //get file name without suffix
 char* str_name=NULL;
 char* tok_name=NULL;
 
-//FILE* strfile;
-//FILE* tokfile;
+FILE* strfile;
+FILE* tokfile;
 
 //chomp from cppstrtok.cpp
 void chomp (char* string, char delim) {
@@ -171,7 +171,7 @@ int main (int argc, char** argv) {
          fprintf(stderr, "Error: %s does not exist.\n",file_name);
          exit(1); //Failure and exit because the file was not found
    }
-   FILE* tokfile=fopen(tok_name, "w");
+   tokfile=fopen(tok_name, "w");
    if (!tokfile) //file could not be 
    {
       fprintf(stderr, "Could not open a new .tok file.\n");
@@ -201,7 +201,7 @@ int main (int argc, char** argv) {
       exit(1);
    }
 
-   FILE* strfile=fopen(str_name,"w"); //open .str file to write
+   strfile=fopen(str_name,"w"); //open .str file to write
    string_set::dump (strfile); //write the stringset to output file
    fclose(strfile); //close program.str - the file is now reitten
    yylex_destroy();
