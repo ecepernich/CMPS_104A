@@ -35,12 +35,12 @@ string a_flag=""; //The flad used for -@___
 
 //values for file names
 const char* file_name=NULL; //get .oc file name
-char* base_name=NULL; //get file name without suffix - use for functions
+char* base_name=NULL; //get file name without suffix - for functions
 string base_string=""; //get file name without suffix
 char* str_name=NULL;
 char* tok_name=NULL;
 
-FILE* strfile;
+FILE* strfile; //files accessible to other files
 FILE* tokfile;
 
 //chomp from cppstrtok.cpp
@@ -82,7 +82,7 @@ void cpplines (FILE* pipe, const char* filename) {
 
 int main (int argc, char** argv) {
     exec::execname = basename(argv[0]);
-    yy_flex_debug=0;
+    yy_flex_debug=0; //set to 0 to prevent stdout
     yydebug=0;
    int x; //x is the int for the getopt function
 
@@ -174,28 +174,25 @@ int main (int argc, char** argv) {
          fprintf(stderr, "Error: %s does not exist.\n",file_name);
          exit(1); //Failure and exit because the file was not found
    }
-   tokfile=fopen(tok_name, "w");
-   if (!tokfile) //file could not be 
+   tokfile=fopen(tok_name, "w"); //open tok file
+   if (!tokfile) //file could not be opened
    {
       fprintf(stderr, "Could not open a new .tok file.\n");
       exit(1);
    }
 
-   // parse error with yyparse?? //
-
-   //ast=new astree (TOK_ROOT, NULL, yytext);
-   for(;;)
+   for(;;) //for loop ends at EOF
    {
-      int yyint=yylex();
-      if (yyint==YYEOF) break;
+      int yyint=yylex(); //get tok
+      if (yyint==YYEOF) break; //break @ EOF
       string_set::intern(yytext);
    }
-   fclose(tokfile);
+   fclose(tokfile); //close tok file
 
    cpplines(yyin, (char*)file_name); //use cpplines on the file
    int closepipe=pclose(yyin); //close the pipe for the file
    eprint_status(cpp_line.c_str(), closepipe); //check command status
-   if (closepipe !=0)
+   if (closepipe !=0) //error check
    {
       exit(1);
    }
@@ -203,7 +200,7 @@ int main (int argc, char** argv) {
    strfile=fopen(str_name,"w"); //open .str file to write
    string_set::dump (strfile); //write the stringset to output file
    fclose(strfile); //close program.str - the file is now reitten
-   yylex_destroy();
+   yylex_destroy(); //clear yylex
    return EXIT_SUCCESS; //Success and exit with file written
 }
 
