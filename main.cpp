@@ -81,6 +81,7 @@ void cpplines (FILE* pipe, const char* filename) {
 
 
 int main (int argc, char** argv) {
+    exec::execname = basename(argv[0]);
    int x; //x is the int for the getopt function
 
    //Flag checks 
@@ -181,16 +182,13 @@ int main (int argc, char** argv) {
    // parse error with yyparse?? //
 
    //ast=new astree (TOK_ROOT, NULL, yytext);
-   fprintf(tokfile, "yo \n");
    for(;;)
    {
       int yyint=yylex();
-      fprintf(tokfile, "yo \n");
       if (yyint==YYEOF) break;
-         //string_set::intern(yytext);
-      fprintf(tokfile, "yo \n");
+         string_set::intern(yytext);
    }
-   //string_set::dump(tokfile);
+   string_set::dump(tokfile);
    fclose(tokfile);
 
    cpplines(yyin, (char*)file_name); //use cpplines on the file

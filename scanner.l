@@ -30,6 +30,10 @@ BADSTRING    (\"([^\\"\n]|\\.)*(\")?)
 
 %%
 
+"#".*    { lexer::include(); }
+[\t]+    {  }
+\n       { lexer::newline(); }
+
 "char"    { return yylval_token(TOK_CHAR);}
 "else"    { return yylval_token(TOK_ELSE);}
 "if"      { return yylval_token(TOK_IF);}
@@ -67,9 +71,7 @@ BADSTRING    (\"([^\\"\n]|\\.)*(\")?)
 "{"    { return yylval_token('{'); }
 "}"    { return yylval_token('}'); }
 
-"#".*    { lexer::include(); }
-[\t]+    {  }
-\n       { lexer::newline(); }
+
 
 
 {IDENT}    { return yylval_token(TOK_IDENT); }
