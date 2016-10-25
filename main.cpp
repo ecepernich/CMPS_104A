@@ -190,7 +190,7 @@ int main (int argc, char** argv) {
       {
          break;
       }
-         string_set::intern(yytext);  //ask TA about this                         
+         string_set::intern(yytext);
    }
    string_set::dump(tokfile);
    fclose(tokfile);
