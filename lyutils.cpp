@@ -48,17 +48,18 @@ void lexer::newline() {
    lexer::lloc.offset = 0;
 }
 
+//token helper function
 int yylval_token(int symbol)
-{
+{ //make new astree with req values (w/ formatting)
    astree* ast1=new astree(symbol, lexer::lloc, yytext);
    fprintf(tokfile, "%zu \t %zu.%zu \t %i \t %12.12s \t\t (%s) \n",
-           lexer::lloc.filenr,
-           lexer::lloc.linenr,
-           lexer::lloc.offset,
-           ast1->symbol,
-           parser::get_tname(symbol),
-           ast1->lexinfo->c_str());
-   return symbol;
+           lexer::lloc.filenr, //file#
+           lexer::lloc.linenr, //line#
+           lexer::lloc.offset, //offset
+           ast1->symbol, //symbol # code
+           parser::get_tname(symbol), //symbol
+           ast1->lexinfo->c_str()); //lexinfo
+   return symbol; //end
 }
 
 

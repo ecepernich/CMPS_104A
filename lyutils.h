@@ -21,9 +21,9 @@ using namespace std;
 
 #define YYEOF 0
 
-extern FILE* yyin;
-extern FILE* tokfile;
-extern FILE* strfile;
+extern FILE* yyin; //called in main
+extern FILE* tokfile; //from main
+extern FILE* strfile; //from main
 extern char* yytext; 
 extern int yy_flex_debug;
 extern int yydebug;
@@ -34,7 +34,7 @@ int yylex();
 int yylex_destroy();
 int yyparse();
 void yyerror (const char* message);
-int yylval_token(int symbol);
+int yylval_token(int symbol); //helper funct
 
 struct lexer {
    static bool interactive;
@@ -54,11 +54,12 @@ struct lexer {
 struct parser {
    static astree* root;
    static const char* get_tname (int symbol);
-};
+}; //get_tname used in lyutils.cpp llyval
 
 #define YYSTYPE astree*
 #include "yyparse.h"
 
+//also in parser.y
 const char *get_yytname (int symbol);
 
 #endif
