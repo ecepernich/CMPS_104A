@@ -184,10 +184,7 @@ int main (int argc, char** argv) {
    for(;;)
    {
       int yyint=yylex();
-      if (yyint==YYEOF)
-      {
-         break;
-      }
+      if (yyint==YYEOF) break;
          //string_set::intern(yytext);
          fprintf(tokfile, "yo \n");
    }
