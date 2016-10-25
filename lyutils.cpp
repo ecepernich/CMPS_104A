@@ -46,7 +46,7 @@ void lexer::newline() {
 int yylval_token(int symbol)
 {
    astree* ast1=new astree(symbol, lexer::lloc, yytext);
-   fprintf(tokfile, "%zu \t %zu.%zu \t %i \t %.*s \t (%.*s) \n",
+   fprintf(tokfile, "%zu \t %zu.%zu \t %i \t %s \t \t (%s) \n",
            lexer::lloc.filenr,
            lexer::lloc.linenr,
            lexer::lloc.offset,
