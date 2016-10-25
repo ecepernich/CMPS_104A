@@ -1,4 +1,7 @@
-// $Id: astree.cpp,v 1.8 2016-09-21 17:13:03-07 - - $
+// Elizabeth Cepernich (eceperni@ucsc.edu)
+// Leah Langford (llangfor@ucsc.edu)
+// CMPS 104A Fall 2016
+// Assignment 2: .tok file
 
 #include <assert.h>
 #include <inttypes.h>

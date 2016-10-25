@@ -1,3 +1,8 @@
+// Elizabeth Cepernich (eceperni@ucsc.edu)
+// Leah Langford (llangfor@ucsc.edu)
+// CMPS 104A Fall 2016
+// Assignment 2: .tok file
+
 #include <assert.h>
 #include <errno.h>
 #include <libgen.h>

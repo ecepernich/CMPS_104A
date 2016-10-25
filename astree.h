@@ -1,4 +1,7 @@
-// $Id: astree.h,v 1.7 2016-10-06 16:13:39-07 - - $
+// Elizabeth Cepernich (eceperni@ucsc.edu)
+// Leah Langford (llangfor@ucsc.edu)
+// CMPS 104A Fall 2016
+// Assignment 2: .tok file
 
 #ifndef __ASTREE_H__
 #define __ASTREE_H__

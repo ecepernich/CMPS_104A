@@ -1,3 +1,8 @@
+// Elizabeth Cepernich (eceperni@ucsc.edu)
+// Leah Langford (llangfor@ucsc.edu)
+// CMPS 104A Fall 2016
+// Assignment 2: .tok file
+
 // $Id: string_set.cpp,v 1.1 2016-10-10 22:29:50-07 - - $
 
 #include <string>

@@ -1,8 +1,8 @@
 // $Id: main.cpp,v 1.2 2016-08-18 15:13:48-07 - - $    
-// Elizabeth Cepernich
-// eceperni // 1316976
-// CMPS 104a Fall, 2016
-// October 10, 2016
+// Elizabeth Cepernich (eceperni@ucsc.edu)
+// Leah Langford (llangfor@ucsc.edu)
+// CMPS 104A Fall 2016
+// Assignment 2: .tok file
 
 #include <string>
 using namespace std;
