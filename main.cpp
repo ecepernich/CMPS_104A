@@ -82,6 +82,8 @@ void cpplines (FILE* pipe, const char* filename) {
 
 int main (int argc, char** argv) {
     exec::execname = basename(argv[0]);
+    yy_flex_debug=0;
+    yydebug=0;
    int x; //x is the int for the getopt function
 
    //Flag checks 
