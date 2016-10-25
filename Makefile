@@ -4,7 +4,6 @@ NEEDINCL  = ${filter ${NOINCLUDE}, ${MAKECMDGOALS}}
 CPP       = g++ -g -O0 -Wall -Wextra -std=gnu++14
 MKDEPS    = g++ -MM -std=gnu++14
 GRIND     = valgrind --leak-check=full --show-reachable=yes
-
 BISON = bison --defines=${PARSEHDR} --output=${PARCECPP}
 
 HDRSRC = astree.h auxlib.h lyutils.h string_set.h
@@ -17,7 +16,7 @@ CYGEN     = yyparse.cpp
 CGENS     = ${CLGEN} ${CYGEN}
 ALLGENS   = ${HYGEN} ${CGENS}
 EXECBIN   = oc
-OBJECTS   = ${CPPSRC:.cpp=.o}
+OBJECTS   = ${CPPSRC:.cpp=.o} yylex.o yyparse.o
 LREPORT   = yylex.output 
 YREPORT   = yyparse.output 
 REPORTS   = ${LREPORT} ${YREPORT}
