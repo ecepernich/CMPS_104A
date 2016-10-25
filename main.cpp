@@ -181,18 +181,18 @@ int main (int argc, char** argv) {
    // parse error with yyparse?? //
 
    //ast=new astree (TOK_ROOT, NULL, yytext);
-   fprintf(tokfile, "yo \n");
+   fprintf(tokfile, "before for \n");
    for(;;)
    {
       int yyint=yylex();
-      fprintf(tokfile, "yo \n");
+      fprintf(tokfile, "before break \n");
       if (yyint==YYEOF) 
       { 
          fprintf(tokfile, "This is where it breaks.\n");
          break;
       }
          //string_set::intern(yytext);
-      fprintf(tokfile, "yo \n");
+      fprintf(tokfile, "after break \n");
    }
    //string_set::dump(tokfile);
    fclose(tokfile);
