@@ -45,16 +45,18 @@ void lexer::newline() {
 
 int yylval_token(int symbol)
 {
+   //int loc1=new location(filenr, linenr, offset);
    astree* ast1=new astree(symbol, lexer::lloc, yytext);
-   fprintf(tokfile, "%zu \t %zu.%zu \t %i \t %s \t \t (%s) \n",
+   fprintf(tokfile, "%i %zu %zu %zu (%s) \n",
+           ast1->symbol,
            lexer::lloc.filenr,
            lexer::lloc.linenr,
            lexer::lloc.offset,
-           ast1->symbol,
-           parser::get_tname(symbol),
            ast1->lexinfo->c_str());
+           
    return symbol;
 }
+
 
 void lexer::badchar (unsigned char bad) {
    char buffer[16];
@@ -73,6 +75,7 @@ void lexer::include() {
    static char filename[0x1000];
    assert (sizeof filename > strlen (yytext));
    int scan_rc = sscanf (yytext, "# %zd \"%[^\"]\"", &linenr, filename);
+   fprintf(tokfile, "%s\n", yytext);
    if (scan_rc != 2) {
       errprintf ("%s: invalid directive, ignored\n", yytext);
    }else {
