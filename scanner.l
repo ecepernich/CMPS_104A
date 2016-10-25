@@ -1,5 +1,8 @@
 %{
 
+//Elizabeth Cepernich (eceperni@ucsc.edu)
+//Leah Langford (llangfor@ucsc.edu)
+
 #include "lyutils.h"
 #include "auxlib.h"
 #define YY_USER_ACTION { lexer::advance(); }
