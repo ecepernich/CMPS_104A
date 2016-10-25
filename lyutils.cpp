@@ -45,13 +45,12 @@ void lexer::newline() {
 
 int yylval_token(int symbol)
 {
-   //int loc1=new location(filenr, linenr, offset);
    astree* ast1=new astree(symbol, lexer::lloc, yytext);
-   fprintf(tokfile, "%zu \t %zu \t %i \t %s \t (%s) \n",
+   fprintf(tokfile, "\t %zu \t %zu.%zu \t %i \t (%s) \n",
+           lexer::loc.filenr,
            lexer::lloc.linenr,
            lexer::lloc.offset,
            ast1->symbol,
-           get_yytname(ast1->symbol),
            ast1->lexinfo->c_str());
    return symbol;
 }
