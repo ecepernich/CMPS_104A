@@ -31,7 +31,6 @@ constexpr size_t LINESIZE=1024;
 
 //values for flag checks
 int yy_flex_debug=0; //The flag used for -l
-int yydebug=0; //The flag used for -y
 string d_flag=""; //The flag used for -D___
 string a_flag=""; //The flad used for -@___
 
