@@ -186,7 +186,7 @@ int main (int argc, char** argv) {
    {
       int yyint=yylex();
       fprintf(tokfile, "before break \n");
-      if (yyint==YYEOF) 
+      if (yylex()==YYEOF) 
       { 
          fprintf(tokfile, "This is where it breaks.\n");
          break;
