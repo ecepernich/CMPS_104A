@@ -47,19 +47,6 @@ int yylval_token(int symbol)
 {
    //int loc1=new location(filenr, linenr, offset);
    astree* ast1=new astree(symbol, lexer::lloc, yytext);
-   fprintf(tokfile, "%i %zu %zu %zu (%s) \n",
-           ast1->symbol,
-           lexer::lloc.filenr,
-           lexer::lloc.linenr,
-           lexer::lloc.offset,
-           ast1->lexinfo->c_str());
-   return symbol;
-}
-
-int yylval_token(int symbol)
-{
-   //int loc1=new location(filenr, linenr, offset);
-   astree* ast1=new astree(symbol, lexer::lloc, yytext);
    fprintf(tokfile, "%zu \t %zu \t %i \t %s \t (%s) \n",
            lexer::lloc.linenr,
            lexer::lloc.offset,
