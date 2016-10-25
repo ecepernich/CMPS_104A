@@ -30,7 +30,6 @@ string cpp_line=cpp; //Not from cppstrtok.cpp
 constexpr size_t LINESIZE=1024; 
 
 //values for flag checks
-int yy_flex_debug=0; //The flag used for -l
 string d_flag=""; //The flag used for -D___
 string a_flag=""; //The flad used for -@___
 
