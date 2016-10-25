@@ -186,7 +186,11 @@ int main (int argc, char** argv) {
    {
       int yyint=yylex();
       fprintf(tokfile, "yo \n");
-      if (yyint==YYEOF) break;
+      if (yyint==YYEOF) 
+      { 
+         fprintf(tokfile, "This is where it breaks.\n");
+         break;
+      }
          //string_set::intern(yytext);
       fprintf(tokfile, "yo \n");
    }
