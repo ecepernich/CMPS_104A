@@ -188,7 +188,6 @@ int main (int argc, char** argv) {
       if (yyint==YYEOF) break;
       string_set::intern(yytext);
    }
-   string_set::dump(tokfile);
    fclose(tokfile);
 
    cpplines(yyin, (char*)file_name); //use cpplines on the file
