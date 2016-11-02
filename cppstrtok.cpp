@@ -1,3 +1,8 @@
+// Elizabeth Cepernich (eceperni@ucsc.edu)
+// Leah Langford (llangfor@ucsc.edu)
+// CMPS 104A Fall 2016
+// Assignment 2: .tok file
+
 // $Id: cppstrtok.cpp,v 1.7 2016-09-30 11:45:04-07 - - $
 
 // Use cpp to scan a file and print line numbers.

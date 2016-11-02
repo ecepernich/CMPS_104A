@@ -1,0 +1,18 @@
+astree.o: In function `astree::dump_node(_IO_FILE*)':
+/afs/cats.ucsc.edu/users/j/eceperni/104a/asg2/cmps_104a/astree.cpp:52: undefined reference to `parser::get_tname(int)'
+astree.o: In function `astree::print(_IO_FILE*, astree*, int)':
+/afs/cats.ucsc.edu/users/j/eceperni/104a/asg2/cmps_104a/astree.cpp:76: undefined reference to `parser::get_tname(int)'
+lyutils.o: In function `lexer::advance()':
+/afs/cats.ucsc.edu/users/j/eceperni/104a/asg2/cmps_104a/lyutils.cpp:35: undefined reference to `yytext'
+/afs/cats.ucsc.edu/users/j/eceperni/104a/asg2/cmps_104a/lyutils.cpp:38: undefined reference to `yyleng'
+lyutils.o: In function `yylval_token(int)':
+/afs/cats.ucsc.edu/users/j/eceperni/104a/asg2/cmps_104a/lyutils.cpp:49: undefined reference to `yytext'
+lyutils.o: In function `lexer::include()':
+/afs/cats.ucsc.edu/users/j/eceperni/104a/asg2/cmps_104a/lyutils.cpp:75: undefined reference to `yytext'
+/afs/cats.ucsc.edu/users/j/eceperni/104a/asg2/cmps_104a/lyutils.cpp:76: undefined reference to `yytext'
+/afs/cats.ucsc.edu/users/j/eceperni/104a/asg2/cmps_104a/lyutils.cpp:78: undefined reference to `yytext'
+main.o: In function `main':
+/afs/cats.ucsc.edu/users/j/eceperni/104a/asg2/cmps_104a/main.cpp:188: undefined reference to `yylex()'
+/afs/cats.ucsc.edu/users/j/eceperni/104a/asg2/cmps_104a/main.cpp:195: undefined reference to `yytext'
+/afs/cats.ucsc.edu/users/j/eceperni/104a/asg2/cmps_104a/main.cpp:212: undefined reference to `yylex_destroy()'
+collect2: error: ld returned 1 exit status
