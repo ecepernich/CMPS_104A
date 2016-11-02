@@ -1,48 +1,91 @@
-# $Id: Makefile,v 1.2 2016-10-10 22:37:15-07 - - $
-# Elizabeth Cepernich
-# eceperni/1316976
+# Elizabeth Cepernich (eceperni@ucsc.edu)
+# Leah Langford (llangfor@ucsc.edu)
+# CMPS 104A Fall 2016
+# Assignment 2: .tok file
 
-GPP      = g++ -std=gnu++14 -g -O0 -Wall -Wextra
-MKDEP    = g++ -std=gnu++14 -MM
+MKFILE  = Makefile
+NOINCLUDE = ci clean spotless
+NEEDINCL  = ${filter ${NOINCLUDE}, ${MAKECMDGOALS}}
+CPP       = g++ -g -O0 -Wall -Wextra -std=gnu++14
+MKDEPS    = g++ -MM -std=gnu++14
+GRIND     = valgrind --leak-check=full --show-reachable=yes
+BISON = bison --defines=${PARSEHDR} --output=${PARCECPP}
 
-MKFILE   = Makefile
-DEPFILE  = Makefile.dep
-SOURCES  = string_set.cpp main.cpp auxlib.cpp
-HEADERS  = string_set.h auxlib.h
-OBJECTS  = ${SOURCES:.cpp=.o}
-EXECBIN  = oc
-SRCFILES = ${HEADERS} ${SOURCES} ${MKFILE}
+HDRSRC = astree.h auxlib.h lyutils.h string_set.h
+CPPSRC = astree.cpp auxlib.cpp lyutils.cpp string_set.cpp main.cpp
+LSOURCES  = scanner.l
+YSOURCES  = parser.y 
+HYGEN     = yyparse.h 
+CLGEN     = yylex.cpp
+CYGEN     = yyparse.cpp 
+CGENS     = ${CLGEN} ${CYGEN}
+ALLGENS   = ${HYGEN} ${CGENS}
+EXECBIN   = oc
+OBJECTS   = ${CPPSRC:.cpp=.o} yylex.o yyparse.o
+LREPORT   = yylex.output 
+YREPORT   = yyparse.output 
+REPORTS   = ${LREPORT} ${YREPORT}
+PSOURCES  = ${LSOURCES} ${YSOURCES}
+ALLSRC    = README ${HDRSRC} {CPPSRC} ${LSOURCES} ${YSOURCES} Makefile
+TESTINS   = ${wildcard test*.in}
+LISTSRC   = ${ALLSRC} ${DEPSFILE} ${HYGEN}
+
 
 all : ${EXECBIN}
 
 ${EXECBIN} : ${OBJECTS}
-	${GPP} ${OBJECTS} -o ${EXECBIN}
+	${CPP} -o${EXECBIN} ${OBJECTS}
 
-%.o : %.cpp
-	${GPP} -c $<
+${OBJECTS} : ${CPPSRC} ${CGENS}
+	${CPP} -Wno-sign-compare -c ${CPPSRC}
+	${CPP} -Wno-sign-compare -c ${CGENS}
 
-ci :
-	cid + ${SRCFILES}
+${CLGEN} : ${LSOURCES}
+	flex --outfile=${CLGEN} ${LSOURCES} 2>${LREPORT}
+	- grep -v '^ ' ${LREPORT}
+
+${CYGEN} ${HYGEN} : ${YSOURCES}
+	bison --defines=${HYGEN} --output=${CYGEN} ${YSOURCES}
+
+ci : ${ALLSRC} ${TESTINS}
+	cid + ${ALLSRC} ${TESTINS} test?.inh
+
+lis : ${LISTSRC} tests
+	mkpspdf List.source.ps ${LISTSRC}
+	mkpspdf List.output.ps ${REPORTS} \
+		${foreach test, ${TESTINS:.in=}, \
+		${patsubst %, ${test}.%, in out err log}}
 
 clean :
-	-rm ${OBJECTS} ${DEPFILE}
+	- rm ${OBJECTS} ${ALLGENS} ${REPORTS} checksource.log gmake.log
 
 spotless : clean
-	- rm ${EXECBIN}
+	- rm ${EXECBIN} 
 
-${DEPFILE} :
-	${MKDEP} ${SOURCES} >${DEPFILE}
+checksource : ${ALLSRC}
+	checksource ${ALLSRC}
 
-deps :
-	- rm ${DEPFILE}
-	${MAKE} --no-print-directory ${DEPFILE}
+dep : ${ALLCSRC}
+	@ echo "# ${DEPSFILE} created `date` by ${MAKE}" >${DEPSFILE}
+	${MKDEPS} ${ALLCSRC} >>${DEPSFILE}
 
-include ${DEPFILE}
 
-test : ${EXECBIN}
-	${EXECBIN} * * * >test.out 2>&1
+${DEPSFILE} :
+	@ touch ${DEPSFILE}
+	${MAKE} --no-print-directory deps
 
-lis : test
-	mkpspdf Listing.ps ${SRCFILES} ${DEPFILE} test.out
+tests : ${EXECBIN}
+	touch ${TESTINS}
+	make --no-print-directory ${TESTINS:.in=.out}
 
-again : ${SRCFILES}
+%.out %.err : %.in
+	${GRIND} --log-file=$*.log ${EXECTEST} $< 1>$*.out 2>$*.err; \
+	echo EXIT STATUS = $$? >>$*.log
+
+again :
+	gmake --no-print-directory spotless deps ci all lis
+	
+ifeq "${NEEDINCL}" ""
+include ${DEPSFILE}
+endif
+
