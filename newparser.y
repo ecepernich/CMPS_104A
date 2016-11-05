@@ -120,5 +120,23 @@ allocator      : TOK_NEW TOK_IDENT '(' ')'
                | TOK_NEW basetype '[' expr ']'
                ;
 
+call           : TOK_IDENT '(' ')'
+               | TOK_IDENT '(' expr ')'
+               | TOK_IDENT '(' callrepeat ')'
 
+callrepeat     : callrepeat ',' expr
+               | ',' expr
+               ;
+
+variable       : TOK_IDENT
+               | expr '[' expr ']'
+               | expr '.' TOK_IDENT
+               ;
+
+constant       : TOK_INT
+               | TOK_CHAR
+               | TOK_STRING
+               | TOK_NULL
+               ;
+               
 
