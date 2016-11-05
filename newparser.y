@@ -14,33 +14,31 @@
 %start program
 
 %%
-program : program structdef 
-    | program function
-    | program statement
-    | program
-    | program error ';' 
-    | program error '}'
-    ;
-
-%%
+program       : program structdef 
+              | program function
+              | program statement
+              | program error ';' 
+              | program error '}'
+              |
+              ;
 
 structdef     : TOK_STRUCT TOK_IDENT '{' '}'
-              | TOK_STRUCT TOK_IDENT '{' structrepeat'}'
+              | TOK_STRUCT TOK_IDENT '{' structrepeat '}'
               ;
          
 structrepeat  : structrepeat fielddecl ';'
-              |fielddecl;
+              | fielddecl ';'
               |
               ;
 
 fielddecl     : basetype TOK_IDENT
-              |basetype TOK_ARRAY TOK_IDENT
+              | basetype TOK_ARRAY TOK_IDENT
               ;
 
-basetype      :  TOK_VOID
-              |TOK_INT
-              |TOK_STRING
-              |TOK_IDENT
+basetype      : TOK_VOID
+              | TOK_INT
+              | TOK_STRING
+              | TOK_IDENT
               ;
 
 function      : identdecl '(' ')' block
@@ -49,7 +47,7 @@ function      : identdecl '(' ')' block
               ;
 
 functionrepeat : frunctionrepeat ',' identdecl 
-               | ',' identdecl
+               | identdecl
                ;
 
 identdecl      : basetype TOK_IDENT
@@ -70,7 +68,7 @@ statement      : block
                | while
                | ifelse
                | return
-               | expr ':'
+               | expr ';'
                ;
 
 vardecl        : identdecl '=' expr ';'
@@ -87,8 +85,8 @@ return         : TOK_RETURN ';'
                | TOK_RETURN expr ';'
                ;
 
-expr           : binop
-               | unop
+expr           : binoperation
+               | unoperation
                | allocator
                | call
                | '(' expr ')'
@@ -96,7 +94,7 @@ expr           : binop
                | constant
                ;
 
-binop          : expr '+' expr
+binoperation   : expr '+' expr
                | expr '-' expr
                | expr '*' expr
                | expr '/' expr
@@ -110,7 +108,7 @@ binop          : expr '+' expr
                | expr TOK_LE expr
                ;
 
-unop           : '+' expr
+unoperation    : '+' expr
                | '-' expr
                | '!' expr
                | TOK_NEW expr
@@ -125,7 +123,7 @@ call           : TOK_IDENT '(' ')'
                | TOK_IDENT '(' callrepeat ')'
 
 callrepeat     : callrepeat ',' expr
-               | ',' expr
+               | expr
                ;
 
 variable       : TOK_IDENT
@@ -138,5 +136,5 @@ constant       : TOK_INT
                | TOK_STRING
                | TOK_NULL
                ;
-               
+
 
