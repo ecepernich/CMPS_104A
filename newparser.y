@@ -65,6 +65,14 @@ blockrepeat: blockrepeat statement
         | statement
         ;
 
+statement: block
+        | vardecl
+        | while
+        | ifelse
+        | return
+        | expr ':'
+        ;
+
 
 
 
