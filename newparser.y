@@ -25,17 +25,17 @@ program : program structdef
 %%
 
 structdef: TOK_STRUCT TOK_IDENT '{' '}'
-         | TOK_STRUCT TOK_IDENT '{' structrepeat'}'
-         ;
+        | TOK_STRUCT TOK_IDENT '{' structrepeat'}'
+        ;
          
 structrepeat: structrepeat fielddecl ';'
-            |fielddecl;
-            |
-            ;
+        |fielddecl;
+        |
+        ;
 
 fielddecl:basetype TOK_IDENT
-         |basetype TOK_ARRAY TOK_IDENT
-         ;
+        |basetype TOK_ARRAY TOK_IDENT
+        ;
 
 basetype:TOK_VOID
         |TOK_INT
@@ -44,3 +44,29 @@ basetype:TOK_VOID
         ;
 
 function: identdecl '(' ')' block
+        | identdecl '(' identdecl ')' block
+        | identdecl '(' functionrepeat ')' block
+        ;
+
+functionrepeat: frunctionrepeat ',' identdecl 
+        | ',' identdecl
+        ;
+
+identdecl: basetype TOK_IDENT
+        | basetype TOK_ARRAY TOK_IDENT
+        :
+
+block: ';'
+        |'{' '}'
+        |'{' blockrepeat '}'
+        ;
+
+blockrepeat: blockrepeat statement
+        | statement
+        ;
+
+
+
+
+
+
