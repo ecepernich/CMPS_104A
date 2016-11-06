@@ -16,6 +16,7 @@
 %
 %verbose
 
+
 %token TOK_ROOT TOK_IDENT TOK_FIELD TOK_TYPEID
 %token TOK_POS TOK_NEG TOK_CALL TOK_NEW
 %token TOK_STRUCT TOK_ARRAY TOK_VOID 
@@ -36,7 +37,7 @@
 %start program
 
 %%
-root          : program { yyparse_astree=$1; }
+root          : program              { yyparse_astree=$1; }
               ;
 
 program       : program structdef    { $$ = adopt1 ($1, $2); }
@@ -53,16 +54,15 @@ structdef     : TOK_STRUCT TOK_IDENT '{' '}'
          
 structrepeat  : structrepeat fielddecl ';'
               | fielddecl ';'
-              |
               ;
 
 fielddecl     : basetype TOK_IDENT
               | basetype TOK_ARRAY TOK_IDENT
               ;
 
-basetype      : TOK_VOID { $$ = $1; }
-              | TOK_INT { $$ = $1; }
-              | TOK_STRING {$$ = $1; }
+basetype      : TOK_VOID          { $$ = $1; }
+              | TOK_INT           { $$ = $1; }
+              | TOK_STRING        {$$ = $1; }
               | TOK_IDENT
               ;
 
@@ -88,13 +88,13 @@ blockrepeat    : blockrepeat statement
                | statement
                ;
 
-statement      : block       { $$ = $1; }
-               | vardecl     { $$ = $1; }
-               | while       { $$ = $1; }
-               | ifelse      { $$ = $1; }
-               | return      { $$ = $1; }
-               | expr ';'    { free_ast($2);
-                               $$ = $1; }
+statement      : block           { $$ = $1; }
+               | vardecl         { $$ = $1; }
+               | while           { $$ = $1; }
+               | ifelse          { $$ = $1; }
+               | return          { $$ = $1; }
+               | expr ';'        { free_ast($2);
+                                   $$ = $1; }
                ;
 
 vardecl        : identdecl '=' expr ';'
