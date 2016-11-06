@@ -34,10 +34,9 @@ astree::~astree() {
    }
 }
 
-astree* astree::adopt (astree* child1, astree* child2, astree* child3) {
+astree* astree::adopt (astree* child1, astree* child2) {
    if (child1 != nullptr) children.push_back (child1);
    if (child2 != nullptr) children.push_back (child2);
-   if (child3 != nullptr) children.push_back (child3);
    return this;
 }
 
@@ -79,10 +78,9 @@ void astree::print (FILE* outfile, astree* tree, int depth) {
    }
 }
 
-void destroy (astree* tree1, astree* tree2, astree* tree3) {
+void destroy (astree* tree1, astree* tree2) {
    if (tree1 != nullptr) delete tree1;
    if (tree2 != nullptr) delete tree2;
-   if (tree3 != nullptr) delete tree3;
 }
 
 void errllocprintf (const location& lloc, const char* format,

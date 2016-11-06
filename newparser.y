@@ -105,8 +105,14 @@ vardecl        : identdecl '=' expr ';'    { destroy($4);
 while          : TOK_WHILE '('expr ')' statement    { $$ = astree::adopt ($1, $3, $5); }
                ;
 
-ifesle         : TOK_IF '(' expr ')' statement
-               | TOK_IF '(' expr ')' statement TOK_ELSE statement
+ifesle         : TOK_IF '(' expr ')' statement { adopt2($1, $3, $5);
+                                                 destroy($2);
+                                                 destroy($4); }
+               | TOK_IF '(' expr ')' statement TOK_ELSE statement { 
+                       adopt3(convert($1,TOK_IFLESE), $3, $5, $7);
+                       destroy($2);
+                       destroy($4);
+                       destroy($6); }
                ;
 
 return         : TOK_RETURN ';'
