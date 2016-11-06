@@ -10,7 +10,7 @@
 
 //things from flex go here? 
 %debug
-%
+%defines
 %
 %
 %
@@ -40,9 +40,9 @@
 root          : program              { yyparse_astree=$1; }
               ;
 
-program       : program structdef    { $$ = adopt1 ($1, $2); }
-              | program function     { $$ = adopt1 ($1, $2); }
-              | program statement    { $$ = adopt1 ($1, $2); }
+program       : program structdef    { $$ = astree::adopt ($1, $2); }
+              | program function     { $$ = astree::adopt ($1, $2); }
+              | program statement    { $$ = astree::adopt ($1, $2); }
               | program error ';' 
               | program error '}'
               |                      { $$ = new::parseroot() }
@@ -52,17 +52,17 @@ structdef     : TOK_STRUCT TOK_IDENT '{' '}'
               | TOK_STRUCT TOK_IDENT '{' structrepeat '}'
               ;
          
-structrepeat  : structrepeat fielddecl ';'
+structrepeat  : structrepeat fielddecl ';'     
               | fielddecl ';'
               ;
 
-fielddecl     : basetype TOK_IDENT
-              | basetype TOK_ARRAY TOK_IDENT
+fielddecl     : basetype TOK_IDENT               { $$ = astree::adopt_sym($1, $2, TOK_FIELD); }
+              | basetype TOK_ARRAY TOK_IDENT     { $$ = astree::adopt_sym($2, $1, TOK_FIELD); }
               ;
 
 basetype      : TOK_VOID          { $$ = $1; }
               | TOK_INT           { $$ = $1; }
-              | TOK_STRING        {$$ = $1; }
+              | TOK_STRING        { $$ = $1; }
               | TOK_IDENT
               ;
 
@@ -93,7 +93,7 @@ statement      : block           { $$ = $1; }
                | while           { $$ = $1; }
                | ifelse          { $$ = $1; }
                | return          { $$ = $1; }
-               | expr ';'        { free_ast($2);
+               | expr ';'        { destroy($2);
                                    $$ = $1; }
                ;
 
@@ -120,18 +120,18 @@ expr           : binoperation
                | constant
                ;
 
-binoperation   : expr '+' expr
-               | expr '-' expr
-               | expr '*' expr
-               | expr '/' expr
-               | expr '%' expr
-               | expr '=' expr
-               | expr TOK_EQ expr
-               | expr TOK_NE expr
-               | expr TOK_GT expr
-               | expr TOK_LT expr
-               | expr TOK_GE expr
-               | expr TOK_LE expr
+binoperation   : expr '+' expr        { $$ = astree::adopt($2, $1, $3); }
+               | expr '-' expr        { $$ = astree::adopt($2, $1, $3); }
+               | expr '*' expr        { $$ = astree::adopt($2, $1, $3); }
+               | expr '/' expr        { $$ = astree::adopt($2, $1, $3); }
+               | expr '%' expr        { $$ = astree::adopt($2, $1, $3); }
+               | expr '=' expr        { $$ = astree::adopt($2, $1, $3); }
+               | expr TOK_EQ expr     { $$ = astree::adopt($2, $1, $3); }
+               | expr TOK_NE expr     { $$ = astree::adopt($2, $1, $3); }
+               | expr TOK_GT expr     { $$ = astree::adopt($2, $1, $3); }
+               | expr TOK_LT expr     { $$ = astree::adopt($2, $1, $3); } 
+               | expr TOK_GE expr     { $$ = astree::adopt($2, $1, $3); }
+               | expr TOK_LE expr     { $$ = astree::adopt($2, $1, $3); }
                ;
 
 unoperation    : '+' expr
@@ -157,10 +157,10 @@ variable       : TOK_IDENT
                | expr '.' TOK_IDENT
                ;
 
-constant       : TOK_INT
-               | TOK_CHAR
-               | TOK_STRING
-               | TOK_NULL
+constant       : TOK_INT        { $$ = $1; }
+               | TOK_CHAR       { $$ = $1; }
+               | TOK_STRING     { $$ = $1; }
+               | TOK_NULL       { $$ = $1; }
                ;
 
 
