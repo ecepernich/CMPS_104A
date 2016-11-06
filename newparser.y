@@ -126,13 +126,15 @@ return         : TOK_RETURN ';'          { convert($1, TOK_RETURNVOID);
                                            $$ = $1; }
                ;
 
-expr           : binoperation
-               | unoperation
-               | allocator
-               | call
-               | '(' expr ')'
-               | variable
-               | constant
+expr           : binoperation       { $$ = $1; }
+               | unoperation        { $$ = $1; }
+               | allocator          { $$ = $1; }
+               | call               { $$ = $1; }
+               | '(' expr ')'       { $$ = $2;
+                                      destroy($1);
+                                      destroy($3); }
+               | variable           { $$ = $1; }
+               | constant           { $$ = $1; }
                ;
 
 binoperation   : expr '+' expr        { $$ = $2->adopt($1, $3); }
