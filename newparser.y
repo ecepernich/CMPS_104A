@@ -76,8 +76,10 @@ functionrepeat : frunctionrepeat ',' identdecl
                | identdecl
                ;
 
-identdecl      : basetype TOK_IDENT
-               | basetype TOK_ARRAY TOK_IDENT
+identdecl      : basetype TOK_IDENT               { $2->convert(TOK_DECLID); 
+                                                    $$ = $1->adopt($2); }
+               | basetype TOK_ARRAY TOK_IDENT     { $3->convert(TOK_DECLID); 
+                                                    $$ = $2->adopt($1, $3); }
                ;
 
 block          : ';'                  { $$ = $1->convert($TOK_BLOCK); }
