@@ -9,12 +9,12 @@
 }%
 
 //things from flex go here? 
+%debug
 %
 %
 %
 %
-%
-%
+%verbose
 
 %token TOK_ROOT TOK_IDENT TOK_FIELD TOK_TYPEID
 %token TOK_POS TOK_NEG TOK_CALL TOK_NEW
@@ -29,7 +29,8 @@
 %left '+' '-'
 %left '*' '/' '%'
 %right TOK_POS TOK_NEG '!' TOK_NEW
-%left TOK_ARRAY TOK_FIELD TOK_FUNCTION
+%left TOK_ARRAY TOK_FIELD TOK_FUNCTION '.' '['
+// () is highest but has no associativity???
 
 
 %start program
