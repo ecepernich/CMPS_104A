@@ -1,14 +1,35 @@
 %{
-    // Parser for astree project
-    //New parser.l
+    // Elizabeth Cepernich
+    // Leah Langford
+    // CMPS 104A Fall 2016
+    // November 7, 2016
+
+    #include "astree.h"
+    #include "lyutils.h"
 }%
 
-
+//things from flex go here? 
+%
+%
+%
+%
+%
+%
 
 %token TOK_ROOT TOK_IDENT TOK_FIELD TOK_TYPEID
 %token TOK_POS TOK_NEG TOK_CALL TOK_NEW
 %token TOK_STRUCT TOK_ARRAY TOK_VOID 
 
+
+
+//precedences (delete this line, comments don't work)
+%right TOK_IF TOK_ELSE
+%right '='
+%left TOK_EQ TOK_NE TOK_GT TOK_LT TOK_GE TOK_LE
+%left '+' '-'
+%left '*' '/' '%'
+%right TOK_POS TOK_NEG '!' TOK_NEW
+%left TOK_ARRAY TOK_FIELD TOK_FUNCTION
 
 
 %start program
