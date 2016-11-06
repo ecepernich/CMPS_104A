@@ -43,8 +43,8 @@ root          : program              { yyparse_astree=$1; }
 program       : program structdef    { $$ = astree::adopt ($1, $2); }
               | program function     { $$ = astree::adopt ($1, $2); }
               | program statement    { $$ = astree::adopt ($1, $2); }
-              | program error ';' 
-              | program error '}'
+              | program error ';'    { $$ = $1; }
+              | program error '}'    { $$ = $1; }
               |                      { $$ = new::parseroot() }
               ;
 
@@ -56,8 +56,8 @@ structrepeat  : structrepeat fielddecl ';'
               | fielddecl ';'
               ;
 
-fielddecl     : basetype TOK_IDENT               { $$ = astree::adopt_sym($1, $2, TOK_FIELD); }
-              | basetype TOK_ARRAY TOK_IDENT     { $$ = astree::adopt_sym($2, $1, TOK_FIELD); }
+fielddecl     : basetype TOK_IDENT              { $$ = astree::adopt_sym($1, $2, TOK_FIELD); }
+              | basetype TOK_ARRAY TOK_IDENT    { $$ = astree::adopt_sym($2, $1, TOK_FIELD); }
               ;
 
 basetype      : TOK_VOID          { $$ = $1; }
@@ -97,10 +97,12 @@ statement      : block           { $$ = $1; }
                                    $$ = $1; }
                ;
 
-vardecl        : identdecl '=' expr ';'
+vardecl        : identdecl '=' expr ';'    { destroy($4);
+                                             $2 = astree::adopt_sym($2, TOK_VARDECL);
+                                             $$ = adopt($2, $1, $3); }
                ;
 
-while          : TOK_WHILE '('expr ')' statement
+while          : TOK_WHILE '('expr ')' statement    { $$ = astree::adopt ($1, $3, $5); }
                ;
 
 ifesle         : TOK_IF '(' expr ')' statement
