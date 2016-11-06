@@ -79,6 +79,11 @@ void astree::print (FILE* outfile, astree* tree, int depth) {
    }
 }
 
+void astree::convert(int symbol_){
+   symbol = symbol_;
+   return this;
+}
+
 void destroy (astree* tree1, astree* tree2) {
    if (tree1 != nullptr) delete tree1;
    if (tree2 != nullptr) delete tree2;
