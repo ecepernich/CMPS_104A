@@ -148,10 +148,12 @@ binoperation   : expr '+' expr        { $$ = $2->adopt($1, $3); }
                | expr TOK_LE expr     { $$ = $2->adopt($1, $3); }
                ;
 
-unoperation    : '+' expr
-               | '-' expr
-               | '!' expr
-               | TOK_NEW expr
+unoperation    : '+' expr             { $1->convert(TOK_POS); 
+                                        $$ = $1->adopt($2); }
+               | '-' expr             { $1->convert(TOK_NEG); 
+                                        $$ = $1->adopt($2); }
+               | '!' expr             { $$ = $1->adopt($2); }
+               | TOK_NEW expr         { $$ = $1->adopt($2); }
             
 allocator      : TOK_NEW TOK_IDENT '(' ')'
                | TOK_NEW TOK_STRING '(' ')'
@@ -166,9 +168,11 @@ callrepeat     : callrepeat ',' expr
                | expr
                ;
 
-variable       : TOK_IDENT
-               | expr '[' expr ']'
-               | expr '.' TOK_IDENT
+variable       : TOK_IDENT                { $$ = $1; }
+               | expr '[' expr ']'        { $2->convert(TOK_INDEX); 
+                                            $$ = $2->adopt($1, $3); }
+               | expr '.' TOK_IDENT       { $3->convert(TOK_FIELD); 
+                                            $$ = $2->adopt($1, $3); }
                ;
 
 constant       : TOK_INT        { $$ = $1; }
