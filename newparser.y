@@ -56,8 +56,8 @@ structrepeat  : structrepeat fielddecl ';'
               | fielddecl ';'
               ;
 
-fielddecl     : basetype TOK_IDENT              { $$ = astree::adopt_sym($1, $2, TOK_FIELD); }
-              | basetype TOK_ARRAY TOK_IDENT    { $$ = astree::adopt_sym($2, $1, TOK_FIELD); }
+fielddecl     : basetype TOK_IDENT              { $$ = $1->adopt_sym($2, TOK_FIELD); }
+              | basetype TOK_ARRAY TOK_IDENT    { $$ = $1->adopt_sym($2, TOK_FIELD); }
               ;
 
 basetype      : TOK_VOID          { $$ = $1; }
@@ -79,12 +79,12 @@ identdecl      : basetype TOK_IDENT
                | basetype TOK_ARRAY TOK_IDENT
                ;
 
-block          : ';'                  { $$ = convert($1, TOK_BLOCK); }
+block          : ';'                  { $$ = $1->convert($TOK_BLOCK); }
                |'{' '}'               { destroy($2); 
-                                        $$ = convert($1, TOK_BLOCK); }
+                                        $$ = $1->convert(TOK_BLOCK); }
                |'{' blockrepeat '}'   { destroy($3);
-                                        convert($1, TOK_BLOCK);
-                                        $$=adopt$1->($2); }
+                                        $1->convert(TOK_BLOCK);
+                                        $$=$1->adopt($2); }
                ;
 
 blockrepeat    : blockrepeat statement
@@ -101,8 +101,8 @@ statement      : block           { $$ = $1; }
                ;
 
 vardecl        : identdecl '=' expr ';'    { destroy($4);
-                                             $2 = astree::adopt_sym($2, TOK_VARDECL);
-                                             $$ = adopt$2->($1, $3); }
+                                             $2->convert(TOK_VARDECL);
+                                             $$ = $2->adopt($1, $3); }
                ;
 
 while          : TOK_WHILE '('expr ')' statement    { $$ = $1->adopt($3, $5); }
