@@ -119,8 +119,10 @@ ifelse         : TOK_IF '(' expr ')' statement { $1->adopt($3, $5);
                        destroy($6); }
                ;
 
-return         : TOK_RETURN ';'
-               | TOK_RETURN expr ';'
+return         : TOK_RETURN ';'          { convert($1, TOK_RETURNVOID);
+                                           $$ = $1; }
+               | TOK_RETURN expr ';'     { $1->adopt($2);
+                                           $$ = $1; }
                ;
 
 expr           : binoperation
