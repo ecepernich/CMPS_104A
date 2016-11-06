@@ -48,8 +48,9 @@ program       : program structdef    { $$ = $1->adopt($2); }
               |                      { $$ = new::parseroot() }
               ;
 
-structdef     : TOK_STRUCT TOK_IDENT '{' '}'
-              | TOK_STRUCT TOK_IDENT '{' structrepeat '}'
+structdef     : TOK_STRUCT TOK_IDENT '{' '}'               {$$ = $1 -> adopt_sym($2, TOK_TYPEID)}
+              | TOK_STRUCT TOK_IDENT '{' structrepeat '}'  { $2->convert(TOK_TYPEID)
+                                                             $$ = $1 -> adopt_sym($2, $4)   }
               ;
          
 structrepeat  : structrepeat fielddecl ';'     
