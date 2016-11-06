@@ -39,9 +39,11 @@ char* base_name=NULL; //get file name without suffix - for functions
 string base_string=""; //get file name without suffix
 char* str_name=NULL;
 char* tok_name=NULL;
+char* ast_name=NULL;
 
 FILE* strfile; //files accessible to other files
 FILE* tokfile;
+FILE* astfile;
 
 //chomp from cppstrtok.cpp
 void chomp (char* string, char delim) {
@@ -139,13 +141,17 @@ int main (int argc, char** argv) {
              //the end of base_string, removing .oc
             char* copystr=new char[base_string.length()+1];
             char* copytok=new char[base_string.length()+1];
+            char* copyast=new char[base_string.length()+1];
             strcpy(copystr,base_string.c_str());
             strcpy(copytok,base_string.c_str());
+            strcpy(copyast,base_string.c_str());
             base_name=copystr;
             str_name=copystr;
             tok_name=copytok;
+            ast_name=copyast;
             strcat(str_name,".str"); //add the .str suffix
             strcat(tok_name,".tok"); //add the .tok suffix
+            strcat(ast_name,".ast"); //add the .tok suffix
 
          }
          else //the string file_name does not contain .oc
@@ -168,7 +174,7 @@ int main (int argc, char** argv) {
    }
 
    cpp_line=cpp+" "+d_flag+" "+file_name; //add that to the cpp 
-   yyin = popen(cpp_line.c_str(),"r"); //open yyin and pipe
+   yyin=popen(cpp_line.c_str(),"r"); //open yyin and pipe
    if(yyin==NULL) //file does not exist
    {
          fprintf(stderr, "Error: %s does not exist.\n",file_name);
@@ -200,6 +206,9 @@ int main (int argc, char** argv) {
    strfile=fopen(str_name,"w"); //open .str file to write
    string_set::dump (strfile); //write the stringset to output file
    fclose(strfile); //close program.str - the file is now reitten
+   astfile=fopen(ast_name,"w");
+   astree::dump(astfile, yyparse_astree);
+   fclose(astfile);
    yylex_destroy(); //clear yylex
    return EXIT_SUCCESS; //Success and exit with file written
 }
