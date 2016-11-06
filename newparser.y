@@ -8,12 +8,10 @@
     #include "lyutils.h"
 }%
 
-//things from flex go here? 
 %debug
 %defines
-%
-%
-%
+%error-verbose
+%token-table
 %verbose
 
 
@@ -34,10 +32,10 @@
 // () is highest but has no associativity???
 
 
-%start program
+%start start
 
 %%
-root          : program              { parse::root=$1; }
+start          : program              { parse::root=$1; }
               ;
 
 program       : program structdef    { $$ = $1->adopt($2); }
@@ -64,10 +62,12 @@ fielddecl     : basetype TOK_IDENT              { $$ = $1->adopt_sym($2, TOK_FIE
 basetype      : TOK_VOID          { $$ = $1; }
               | TOK_INT           { $$ = $1; }
               | TOK_STRING        { $$ = $1; }
-              | TOK_IDENT
+              | TOK_TYPEID        { $$ = $1; }
+              | TOK_IDENT         { $$ = $1; }
               ;
 
-function      : identdecl '(' ')' block
+function      : identdecl '(' ')' block                  { $2->convert(TOK_PARAM);
+                                                           $$ = }
               | identdecl '(' identdecl ')' block
               | identdecl '(' functionrepeat ')' block
               ;
