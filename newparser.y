@@ -155,9 +155,16 @@ unoperation    : '+' expr             { $1->convert(TOK_POS);
                | '!' expr             { $$ = $1->adopt($2); }
                | TOK_NEW expr         { $$ = $1->adopt($2); }
             
-allocator      : TOK_NEW TOK_IDENT '(' ')'
-               | TOK_NEW TOK_STRING '(' ')'
-               | TOK_NEW basetype '[' expr ']'
+allocator      : TOK_NEW TOK_IDENT '(' ')'        { $2->convert(TOK_TYPEID); 
+                                                    $$ = $1->adopt($2); }
+               | TOK_NEW TOK_STRING '(' expr ')'  { $4->convert(TOK_NEWSTRING); 
+                                                    $$ = $1->adopt($2, $4); 
+                                                    destroy($3);
+                                                    destroy($5); }
+               | TOK_NEW basetype '[' expr ']'    { $4->convert(TOK_NEWARRAY); 
+                                                    $$ = $1->adopt($2, $4); 
+                                                    destroy($3);
+                                                    destroy($5); }
                ;
 
 call           : TOK_IDENT '(' ')'
