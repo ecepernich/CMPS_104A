@@ -168,12 +168,17 @@ allocator      : TOK_NEW TOK_IDENT '(' ')'        { $2->convert(TOK_TYPEID);
                                                     destroy($5); }
                ;
 
-call           : TOK_IDENT '(' ')'
-               | TOK_IDENT '(' expr ')'
-               | TOK_IDENT '(' callrepeat ')'
+call           : TOK_IDENT '(' ')'             { $2->convert(TOK_VOID); 
+                                                 destroy($3);
+                                                 $$ = $1->adopt($2); }
+               | TOK_IDENT '(' callrepeat ')'  { $2->convert(TOK_CALL);
+                                                 destroy($4);
+                                                 $$ = $2->adopt($1, $3); }
+               ;
 
-callrepeat     : callrepeat ',' expr
-               | expr
+callrepeat     : callrepeat ',' expr        { $$ = $1->adopt($2); 
+                                              destroy($3); }
+               | expr                       { $$ = $1; }
                ;
 
 variable       : TOK_IDENT                { $$ = $1; }
