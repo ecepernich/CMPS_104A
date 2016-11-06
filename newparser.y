@@ -37,12 +37,12 @@
 %start program
 
 %%
-root          : program              { yyparse_astree=$1; }
+root          : program              { parse::root=$1; }
               ;
 
-program       : program structdef    { $$ = astree::adopt ($1, $2); }
-              | program function     { $$ = astree::adopt ($1, $2); }
-              | program statement    { $$ = astree::adopt ($1, $2); }
+program       : program structdef    { $$ = $1->adopt($2); }
+              | program function     { $$ = $1->adopt($2); }
+              | program statement    { $$ = $1->adopt($2); }
               | program error ';'    { $$ = $1; }
               | program error '}'    { $$ = $1; }
               |                      { $$ = new::parseroot() }
@@ -79,9 +79,12 @@ identdecl      : basetype TOK_IDENT
                | basetype TOK_ARRAY TOK_IDENT
                ;
 
-block          : ';'
-               |'{' '}'
-               |'{' blockrepeat '}'
+block          : ';'                  { $$ = convert($1, TOK_BLOCK); }
+               |'{' '}'               { destroy($2); 
+                                        $$ = convert($1, TOK_BLOCK); }
+               |'{' blockrepeat '}'   { destroy($3);
+                                        convert($1, TOK_BLOCK);
+                                        $$=adopt$1->($2); }
                ;
 
 blockrepeat    : blockrepeat statement
@@ -93,23 +96,24 @@ statement      : block           { $$ = $1; }
                | while           { $$ = $1; }
                | ifelse          { $$ = $1; }
                | return          { $$ = $1; }
-               | expr ';'        { destroy($2);
-                                   $$ = $1; }
+               | expr ';'        { $$ = $1; 
+                                   destroy($2); }
                ;
 
 vardecl        : identdecl '=' expr ';'    { destroy($4);
                                              $2 = astree::adopt_sym($2, TOK_VARDECL);
-                                             $$ = adopt($2, $1, $3); }
+                                             $$ = adopt$2->($1, $3); }
                ;
 
-while          : TOK_WHILE '('expr ')' statement    { $$ = astree::adopt ($1, $3, $5); }
+while          : TOK_WHILE '('expr ')' statement    { $$ = $1->adopt($3, $5); }
                ;
 
-ifesle         : TOK_IF '(' expr ')' statement { adopt2($1, $3, $5);
+ifelse         : TOK_IF '(' expr ')' statement { $1->adopt($3, $5);
                                                  destroy($2);
                                                  destroy($4); }
                | TOK_IF '(' expr ')' statement TOK_ELSE statement { 
-                       adopt3(convert($1,TOK_IFLESE), $3, $5, $7);
+                       convert($1, TOK_IFELSE);
+                       $$ = $1->adopt($3, $5, $7);
                        destroy($2);
                        destroy($4);
                        destroy($6); }
@@ -128,18 +132,18 @@ expr           : binoperation
                | constant
                ;
 
-binoperation   : expr '+' expr        { $$ = astree::adopt($2, $1, $3); }
-               | expr '-' expr        { $$ = astree::adopt($2, $1, $3); }
-               | expr '*' expr        { $$ = astree::adopt($2, $1, $3); }
-               | expr '/' expr        { $$ = astree::adopt($2, $1, $3); }
-               | expr '%' expr        { $$ = astree::adopt($2, $1, $3); }
-               | expr '=' expr        { $$ = astree::adopt($2, $1, $3); }
-               | expr TOK_EQ expr     { $$ = astree::adopt($2, $1, $3); }
-               | expr TOK_NE expr     { $$ = astree::adopt($2, $1, $3); }
-               | expr TOK_GT expr     { $$ = astree::adopt($2, $1, $3); }
-               | expr TOK_LT expr     { $$ = astree::adopt($2, $1, $3); } 
-               | expr TOK_GE expr     { $$ = astree::adopt($2, $1, $3); }
-               | expr TOK_LE expr     { $$ = astree::adopt($2, $1, $3); }
+binoperation   : expr '+' expr        { $$ = $2->adopt($1, $3); }
+               | expr '-' expr        { $$ = $2->adopt($1, $3); }
+               | expr '*' expr        { $$ = $2->adopt($1, $3); }
+               | expr '/' expr        { $$ = $2->adopt($1, $3); }
+               | expr '%' expr        { $$ = $2->adopt($1, $3); }
+               | expr '=' expr        { $$ = $2->adopt($1, $3); }
+               | expr TOK_EQ expr     { $$ = $2->adopt($1, $3); }
+               | expr TOK_NE expr     { $$ = $2->adopt($1, $3); }
+               | expr TOK_GT expr     { $$ = $2->adopt($1, $3); }
+               | expr TOK_LT expr     { $$ = $2->adopt($1, $3); } 
+               | expr TOK_GE expr     { $$ = $2->adopt($1, $3); }
+               | expr TOK_LE expr     { $$ = $2->adopt($1, $3); }
                ;
 
 unoperation    : '+' expr
