@@ -21,6 +21,7 @@ size_t lexer::last_yyleng = 0;
 vector<string> lexer::filenames;
 
 astree* parser::root = nullptr;
+astree* astree::yyparse_astree = nullptr;
 
 const string* lexer::filename (int filenr) {
    return &lexer::filenames.at(filenr);
