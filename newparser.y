@@ -78,8 +78,9 @@ function      : identdecl '(' ')' block                  {$2->convert(TOK_PARAM)
                                                          {$$=$2;}}
               ;
 
-functionrepeat : frunctionrepeat ',' identdecl 
-               | identdecl
+functionrepeat : frunctionrepeat ',' identdecl           {$$=$1->adopt($3);
+                                                          destroy($2);}
+               | identdecl                               {$$=$1;}
                ;
 
 identdecl      : basetype TOK_IDENT               { $2->convert(TOK_DECLID); 
