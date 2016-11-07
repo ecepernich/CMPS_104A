@@ -28,6 +28,7 @@ using namespace std;
 const string cpp="/usr/bin/cpp";
 string cpp_line=cpp; //Not from cppstrtok.cpp
 constexpr size_t LINESIZE=1024; 
+extern astree* yyparse_astree;
 
 //values for flag checks
 string d_flag=""; //The flag used for -D___
@@ -187,12 +188,13 @@ int main (int argc, char** argv) {
       exit(1);
    }
 
-   for(;;) //for loop ends at EOF
-   {
-      int yyint=yylex(); //get tok
-      if (yyint==YYEOF) break; //break @ EOF
-      string_set::intern(yytext);
-   }
+   yyparse(); //replace yylex()
+   //for(;;) //for loop ends at EOF
+   //{
+   //   int yyint=yylex(); //get tok
+   //   if (yyint==YYEOF) break; //break @ EOF
+   //   string_set::intern(yytext);
+   //}
    fclose(tokfile); //close tok file
 
    cpplines(yyin, (char*)file_name); //use cpplines on the file
