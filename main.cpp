@@ -195,7 +195,6 @@ int main (int argc, char** argv) {
    //   if (yyint==YYEOF) break; //break @ EOF
    //   string_set::intern(yytext);
    //}
-   fclose(tokfile); //close tok file
 
    cpplines(yyin, (char*)file_name); //use cpplines on the file
    int closepipe=pclose(yyin); //close the pipe for the file
@@ -204,6 +203,7 @@ int main (int argc, char** argv) {
    {
       exit(1);
    }
+   fclose(tokfile); //close tok file
 
    strfile=fopen(str_name,"w"); //open .str file to write
    string_set::dump (strfile); //write the stringset to output file

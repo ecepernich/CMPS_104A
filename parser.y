@@ -51,7 +51,7 @@ program       : program structdef    { $$ = $1->adopt($2); }
               | program statement    { $$ = $1->adopt($2); }
               | program error ';'    { $$ = $1; }
               | program error '}'    { $$ = $1; }
-              |                      { $$ = new astree
+              |               { $$ = new astree
                                (TOK_ROOT, {0, 0, 0}, "<<ROOT>>"); }
               ;
 
@@ -200,7 +200,7 @@ allocator      : TOK_NEW TOK_IDENT '(' ')'        {
 call           : TOK_IDENT '(' ')'             { $2->convert(TOK_VOID); 
                                                  destroy($3);
                                                  $$ = $1->adopt($2); }
-               | TOK_IDENT '(' callrepeat ')'  {
+               | TOK_IDENT '(' callrepeat ')'  { 
                                         $2->convert(TOK_CALL);
                                         destroy($4);
                                         $$ = $2->adopt($1, $3); }

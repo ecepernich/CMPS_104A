@@ -46,6 +46,12 @@ astree* astree::adopt_sym (astree* child, int symbol_) {
    return adopt (child);
 }
 
+astree* astree::convert(int symbol_)
+{
+   symbol = symbol_;
+   return this;
+}
+
 void astree::dump_node (FILE* outfile) {
    fprintf (outfile, "%p->{%s %zd.%zd.%zd \"%s\":",
             this, parser::get_tname (symbol),
@@ -79,10 +85,6 @@ void astree::print (FILE* outfile, astree* tree, int depth) {
    }
 }
 
-astree* astree::convert(int symbol_){
-   symbol = symbol_;
-   return this;
-}
 
 void destroy (astree* tree1, astree* tree2) {
    if (tree1 != nullptr) delete tree1;
