@@ -6,7 +6,7 @@
 
     #include "astree.h"
     #include "lyutils.h"
-}%
+%}
 
 %debug
 %defines
@@ -25,7 +25,6 @@
 %token TOK_IF TOK_PARAMLIST TOK_WHILE
 
 
-//precedences (delete this line, comments don't work)
 %right TOK_IF TOK_ELSE
 %right '='
 %left TOK_EQ TOK_NE TOK_GT TOK_LT TOK_GE TOK_LE
@@ -33,8 +32,7 @@
 %left '*' '/' '%'
 %right TOK_POS TOK_NEG '!' TOK_NEW
 %left TOK_ARRAY TOK_FIELD TOK_FUNCTION '.' '['
-// () is highest but has no associativity???
-
+%nonassoc '('
 
 %start start
 
