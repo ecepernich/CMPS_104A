@@ -14,6 +14,7 @@
 #include "auxlib.h"
 #include "lyutils.h"
 #include "astree.h"
+#include "string_set.h"
 
 bool lexer::interactive = true;
 location lexer::lloc = {0, 1, 0};
