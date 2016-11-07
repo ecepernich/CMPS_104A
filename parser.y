@@ -79,14 +79,14 @@ basetype      : TOK_VOID          { $$ = $1; }
 
 function      : identdecl '(' ')' block  { 
                     $2->convert(TOK_PARAMLIST);
-                    $$ = new astree(TOK_FUNCTION, $1->lloc, "")->adopt($1,$2,$4);
-                    destroy($3); }
+                    $3->convert(TOK_FUNCTION);
+                    $$ = $3->adopt($1,$2,$4); }
                                 
               | identdecl '(' functionrepeat ')' block   { 
                     $2->convert(TOK_PARAMLIST);
                     $2->adopt($3);
-                    $$ = new astree(TOK_FUNCTION, $1->lloc, "")->adopt($1,$2,$5); 
-                    destroy($4); }
+                    $4->convert(TOK_FUNCTION);
+                    $$ = $4->adopt($1,$2,$5); }
               ;
 
 functionrepeat : functionrepeat ',' identdecl           { $$ = $1->adopt($3);
