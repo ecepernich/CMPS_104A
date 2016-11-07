@@ -204,8 +204,7 @@ int main (int argc, char** argv) {
    if (closepipe !=0) //error check
    {
       exit(1);
-   }
-   fclose(tokfile); //close tok file
+   } //close tok file
 
    strfile=fopen(str_name,"w"); //open .str file to write
    string_set::dump (strfile); //write the stringset to output file
@@ -213,6 +212,7 @@ int main (int argc, char** argv) {
    astfile=fopen(ast_name,"w");
    astree::dump(astfile, parser::root);
    fclose(astfile);
+   fclose(tokfile);
    yylex_destroy(); //clear yylex
    return EXIT_SUCCESS; //Success and exit with file written
 }
