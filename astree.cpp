@@ -77,13 +77,12 @@ void astree::full_astree(FILE* outfile, astree* root, int depth)
    {
       fprintf(outfile, "|\t");
    }
-   dump_node(outfile, root);
+   dump(outfile, root);
    fprintf(outfile, "\n");
    for (size_t child=0; child<children.size();child++)
    {
       full_astree(outfile,children[child],depth++);
    }
-
 
 }
 
