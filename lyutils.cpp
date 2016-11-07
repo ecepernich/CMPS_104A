@@ -101,7 +101,7 @@ void yyerror (const char* message) {
 
 astree* new_parseroot(void)
 {
-  yyparse_astree=new astree(TOK_ROOT, lloc, "root");
+  yyparse_astree=new astree(TOK_ROOT, {0,0,0}, "root");
   return yyparse_astree;
 }
 
