@@ -39,8 +39,7 @@ struct astree {
    astree* convert (int symbol_);
 };
 
-void destroy (astree* tree1, astree* tree2 = nullptr, 
-                                 astree* child3 = nullptr);
+void destroy (astree* tree1, astree* tree2 = nullptr);
 
 void errllocprintf (const location&, const char* format, const char*);
 
