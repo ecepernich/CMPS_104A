@@ -70,10 +70,12 @@ basetype      : TOK_VOID          { $$ = $1; }
               | TOK_IDENT         { $$ = $1; }
               ;
 
-function      : identdecl '(' ')' block                  { $2->convert(TOK_PARAM);
-                                                           $$ = }
-              | identdecl '(' identdecl ')' block
-              | identdecl '(' functionrepeat ')' block
+function      : identdecl '(' ')' block                  {$2->convert(TOK_PARAM);
+                                                           $$ =$2;}
+              | identdecl '(' identdecl ')' block        {$2->convert(TOK_PARAM);
+                                                          $$=$2;}
+              | identdecl '(' functionrepeat ')' block   {$2->convert(TOK_PARAM);
+                                                         {$$=$2;}}
               ;
 
 functionrepeat : frunctionrepeat ',' identdecl 
