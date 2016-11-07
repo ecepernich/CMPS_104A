@@ -70,7 +70,7 @@ void astree::dump_tree (FILE* outfile, int depth) {
    fflush (NULL);
 }
 
-void astree::full_astree(FILE* outfile, astree* tree, int depth)
+void astree::full_astree(FILE* outfile, int depth)
 {
    int i=0;
    for (i=0;i<depth+1;i++)
@@ -79,16 +79,13 @@ void astree::full_astree(FILE* outfile, astree* tree, int depth)
    }
    dump_node(outfile);
    fprintf(outfile, "\n");
-   for (size_t child=0; child<children.size();child++)
-   {
-      full_astree(outfile,children[child],depth++);
-   }
+   for (astree* child: children) child->full_astree(outfile, depth + 1);
 
 }
 
 void astree::dump (FILE* outfile, astree* tree) {
    if (tree == nullptr) fprintf (outfile, "nullptr");
-                   else tree->dump_node (outfile);
+                   else tree->full_astree (outfile, 0);
 }
 
 void astree::print (FILE* outfile, astree* tree, int depth) {
