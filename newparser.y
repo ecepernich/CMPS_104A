@@ -119,7 +119,7 @@ vardecl        : identdecl '=' expr ';'    { destroy($4);
                                              $$ = $2->adopt($1, $3); }
                ;
 
-while          : TOK_WHILE '('expr ')' statement    { $$ = $1->adopt($3, $5); 
+while          : TOK_WHILE '(' expr ')' statement    { $$ = $1->adopt($3, $5); 
                                                       destroy($2, $4); }
                ;
 
