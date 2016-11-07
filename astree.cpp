@@ -41,7 +41,7 @@ astree* astree::adopt (astree* child1, astree* child2, astree* child3) {
    return this;
 }
 
-astree* astree::adopt_sym (astree* child, int symbol_) {
+astree* astree::adopt_sym(astree* child, int symbol_) {
    symbol = symbol_;
    return adopt (child);
 }
