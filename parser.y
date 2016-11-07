@@ -37,7 +37,7 @@
 %start start
 
 %%
-start         : program              { parse::root=$1; }
+start         : program              { yyparse_astree=$1; }
               ;
 
 program       : program structdef    { $$ = $1->adopt($2); }
@@ -45,7 +45,7 @@ program       : program structdef    { $$ = $1->adopt($2); }
               | program statement    { $$ = $1->adopt($2); }
               | program error ';'    { $$ = $1; }
               | program error '}'    { $$ = $1; }
-              |                      { $$ = new::parseroot() }
+              |                      { $$ = astree::astree(); }
               ;
 
 structdef     : TOK_STRUCT TOK_IDENT '{' '}'               { $2->convert(TOK_TYPEID);
