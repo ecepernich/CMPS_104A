@@ -212,4 +212,3 @@ constant       : TOK_INT        { $$ = $1; }
                ;
 
 
-%%
