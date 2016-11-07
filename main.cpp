@@ -188,17 +188,17 @@ int main (int argc, char** argv) {
       exit(1);
    }
 
-   yyparse();
-   cpplines(yyin, (char*)file_name); //use cpplines on the file
 
-
-    //replace yylex()
+   yyparse(); //replace yylex()
    //for(;;) //for loop ends at EOF
    //{
    //   int yyint=yylex(); //get tok
    //   if (yyint==YYEOF) break; //break @ EOF
    //   string_set::intern(yytext);
    //}
+
+   cpplines(yyin, (char*)file_name); //use cpplines on the file
+
 
    int closepipe=pclose(yyin); //close the pipe for the file
    eprint_status(cpp_line.c_str(), closepipe); //check command status
@@ -213,7 +213,7 @@ int main (int argc, char** argv) {
    astfile=fopen(ast_name,"w");
    astree::dump(astfile, parser::root);
    fclose(astfile);
-   fclose(tokfile);
+
    yylex_destroy(); //clear yylex
    return EXIT_SUCCESS; //Success and exit with file written
 }
