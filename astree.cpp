@@ -79,7 +79,7 @@ void astree::print (FILE* outfile, astree* tree, int depth) {
    }
 }
 
-void astree::convert(int symbol_){
+astree* astree::convert(int symbol_){
    symbol = symbol_;
    return this;
 }
