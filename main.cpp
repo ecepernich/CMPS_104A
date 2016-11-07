@@ -140,9 +140,9 @@ int main (int argc, char** argv) {
             int len=base_string.size(); //find size of base_string
             base_string=base_string.substr(0,len-3); //cut last 3 chars
              //the end of base_string, removing .oc
-            char* copystr=new char[base_string.length()+1];
-            char* copytok=new char[base_string.length()+1];
-            char* copyast=new char[base_string.length()+1];
+            char* copystr=new char[base_string.length()];
+            char* copytok=new char[base_string.length()];
+            char* copyast=new char[base_string.length()];
             strcpy(copystr,base_string.c_str());
             strcpy(copytok,base_string.c_str());
             strcpy(copyast,base_string.c_str());
