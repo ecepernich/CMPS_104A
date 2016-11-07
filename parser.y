@@ -135,7 +135,7 @@ ifelse         : TOK_IF '(' expr ')' statement { $1->adopt($3, $5);
                        destroy($6); }
                ;
 
-return         : TOK_RETURN ';'          { convert($1, TOK_RETURNVOID);
+return         : TOK_RETURN ';'          { $1->convert(TOK_RETURNVOID);
                                            $$ = $1; }
                | TOK_RETURN expr ';'     { $1->adopt($2);
                                            $$ = $1; }
