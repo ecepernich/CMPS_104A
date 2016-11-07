@@ -204,12 +204,7 @@ int main (int argc, char** argv) {
    cpplines(yyin, (char*)file_name); //use cpplines on the file
 
 
-   int closepipe=pclose(yyin); //close the pipe for the file
-   eprint_status(cpp_line.c_str(), closepipe); //check command status
-   if (closepipe !=0) //error check
-   {
-      exit(1);
-   } //close tok file
+   
 
    strfile=fopen(str_name,"w"); //open .str file to write
    string_set::dump (strfile); //write the stringset to output file
@@ -217,6 +212,13 @@ int main (int argc, char** argv) {
    astfile=fopen(ast_name,"w");
    astree::dump(astfile, parser::root);
    fclose(astfile);
+
+   int closepipe=pclose(yyin); //close the pipe for the file
+   eprint_status(cpp_line.c_str(), closepipe); //check command status
+   if (closepipe !=0) //error check
+   {
+      exit(1);
+   } //close tok file
 
    yylex_destroy(); //clear yylex
    return EXIT_SUCCESS; //Success and exit with file written
