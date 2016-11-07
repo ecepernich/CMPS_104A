@@ -70,7 +70,7 @@ void astree::dump_tree (FILE* outfile, astree* root, int depth) {
    }   
    dump_node (outfile);
    fprintf (outfile, "\n");
-   for (astree* child: children) child->dump_tree (outfile, child, depth + 1);
+   for (astree* child: root) child->dump_tree (outfile, child, depth + 1);
    fflush (NULL);
 }
 
