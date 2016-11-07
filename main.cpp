@@ -188,14 +188,14 @@ int main (int argc, char** argv) {
       exit(1);
    }
 
-
-   yyparse(); //replace yylex()
-   //for(;;) //for loop ends at EOF
-   //{
-   //   int yyint=yylex(); //get tok
-   //   if (yyint==YYEOF) break; //break @ EOF
-   //   string_set::intern(yytext);
-   //}
+   yyparse();
+    //replace yylex()
+   for(;;) //for loop ends at EOF
+   {
+      int yyint=yylex(); //get tok
+      if (yyint==YYEOF) break; //break @ EOF
+      string_set::intern(yytext);
+   }
 
    cpplines(yyin, (char*)file_name); //use cpplines on the file
 

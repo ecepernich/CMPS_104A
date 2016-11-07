@@ -175,9 +175,9 @@ binoperation   : expr '+' expr        { $$ = $2->adopt($1, $3); }
                | expr TOK_LE expr     { $$ = $2->adopt($1, $3); }
                ;
 
-unoperation    : '+' expr  %prec TOK_POS           { $1->convert(TOK_POS); 
+unoperation    : '+' expr  %prec TOK_POS     { $1->convert(TOK_POS); 
                                         $$ = $1->adopt($2); }
-               | '-' expr   %prec TOK_NEG          { $1->convert(TOK_NEG); 
+               | '-' expr   %prec TOK_NEG    { $1->convert(TOK_NEG); 
                                         $$ = $1->adopt($2); }
                | '!' expr             { $$ = $1->adopt($2); }
                | TOK_NEW expr         { $$ = $1->adopt($2); }
