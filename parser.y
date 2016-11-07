@@ -14,6 +14,7 @@
 %token-table
 %verbose
 
+%destructor { destroy ($$); } <>
 %initial-action {
    parser::root = new astree(TOK_ROOT, {0, 0, 0}, "<<ROOT>>");
 }
