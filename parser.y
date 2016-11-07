@@ -125,8 +125,9 @@ vardecl        : identdecl '=' expr ';'    { destroy($4);
                                              $$ = $2->adopt($1, $3); }
                ;
 
-while          : TOK_WHILE '(' expr ')' statement    { $$ = $1->adopt($3, $5); 
-                                                      destroy($2, $4); }
+while          : TOK_WHILE '(' expr ')' statement    { 
+                              $$ = $1->adopt($3, $5); 
+                              destroy($2, $4); }
                ;
 
 ifelse         : TOK_IF '(' expr ')' statement { $1->adopt($3, $5);
@@ -138,10 +139,10 @@ ifelse         : TOK_IF '(' expr ')' statement { $1->adopt($3, $5);
                        destroy($6); }
                ;
 
-return         : TOK_RETURN ';'          { convert($1, TOK_RETURNVOID);
-                                           $$ = $1; }
-               | TOK_RETURN expr ';'     { $1->adopt($2);
-                                           $$ = $1; }
+return         : TOK_RETURN ';'        { convert($1, TOK_RETURNVOID);
+                                         $$ = $1; }
+               | TOK_RETURN expr ';'   { $1->adopt($2);
+                                         $$ = $1; }
                ;
 
 expr           : binoperation       { $$ = $1; }
@@ -175,14 +176,17 @@ unoperation    : '+' expr             { $1->convert(TOK_POS);
                | '!' expr             { $$ = $1->adopt($2); }
                | TOK_NEW expr         { $$ = $1->adopt($2); }
             
-allocator      : TOK_NEW TOK_IDENT '(' ')'        { $2->convert(TOK_TYPEID); 
-                                                    $$ = $1->adopt($2); }
-               | TOK_NEW TOK_STRING '(' expr ')'  { $4->convert(TOK_NEWSTRING); 
-                                                    $$ = $1->adopt($2, $4); 
-                                                    destroy($3, $5); }
-               | TOK_NEW basetype '[' expr ']'    { $4->convert(TOK_NEWARRAY); 
-                                                    $$ = $1->adopt($2, $4); 
-                                                    destroy($3, $5); }
+allocator      : TOK_NEW TOK_IDENT '(' ')'    { 
+                              $2->convert(TOK_TYPEID); 
+                              $$ = $1->adopt($2); }
+               | TOK_NEW TOK_STRING '(' expr ')'  { 
+                              $4->convert(TOK_NEWSTRING); 
+                              $$ = $1->adopt($2, $4); 
+                              destroy($3, $5); }
+               | TOK_NEW basetype '[' expr ']'    { 
+                              $4->convert(TOK_NEWARRAY); 
+                              $$ = $1->adopt($2, $4); 
+                              destroy($3, $5); }
                ;
 
 call           : TOK_IDENT '(' ')'             { $2->convert(TOK_VOID); 
