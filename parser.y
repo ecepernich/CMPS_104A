@@ -75,13 +75,13 @@ basetype      : TOK_VOID          { $$ = $1; }
 
 function      : identdecl '(' ')' block  { 
                     $2->convert(TOK_PARAMLIST);
-                    $$ = astree::astree(TOK_FUNCTION, $1->lloc, "")->adopt($1,$2,$4);
+                    $$ = new astree(TOK_FUNCTION, $1->lloc, "")->adopt($1,$2,$4);
                     destroy($3); }
                                 
               | identdecl '(' functionrepeat ')' block   { 
                     $2->convert(TOK_PARAMLIST);
                     $2->adopt($3);
-                    $$ = astree::astree(TOK_FUNCTION, $1->lloc, "")->adopt($1,$2,$5); 
+                    $$ = new astree(TOK_FUNCTION, $1->lloc, "")->adopt($1,$2,$5); 
                     destroy($4); }
               ;
 
