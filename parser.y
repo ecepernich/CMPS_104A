@@ -210,3 +210,11 @@ constant       : TOK_INT        { $$ = $1; }
                ;
 
 
+
+%%
+
+
+
+const char* parser::get_tname (int symbol) {
+   return yytname [YYTRANSLATE (symbol)];
+}
