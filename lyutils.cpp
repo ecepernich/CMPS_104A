@@ -14,7 +14,6 @@
 #include "auxlib.h"
 #include "lyutils.h"
 #include "astree.h"
-#include "string_set.h"
 
 bool lexer::interactive = true;
 location lexer::lloc = {0, 1, 0};
@@ -61,7 +60,6 @@ int yylval_token(int symbol)
            ast1->symbol, //symbol # code
            parser::get_tname(symbol), //symbol
            ast1->lexinfo->c_str()); //lexinfo
-   string_set::intern(yytext);
    return symbol; //end
 }
 
