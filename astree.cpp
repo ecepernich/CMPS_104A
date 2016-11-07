@@ -80,6 +80,7 @@ void astree::full_astree(FILE* outfile, int depth)
    dump_node(outfile);
    fprintf(outfile, "\n");
    for (astree* child: children) child->full_astree(outfile, depth + 1);
+   fflush (NULL);
 
 }
 
