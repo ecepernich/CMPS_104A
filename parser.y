@@ -50,8 +50,7 @@ program       : program structdef    { $$ = $1->adopt($2); }
               | program statement    { $$ = $1->adopt($2); }
               | program error ';'    { $$ = $1; }
               | program error '}'    { $$ = $1; }
-              |               { $$ = new astree
-                               (TOK_ROOT, {0, 0, 0}, "<<ROOT>>"); }
+              |                      { $$ = parser::root; }
               ;
 
 structdef     : TOK_STRUCT TOK_IDENT '{' '}' { 
