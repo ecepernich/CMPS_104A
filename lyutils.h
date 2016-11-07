@@ -61,6 +61,7 @@ struct parser {
 
 //also in parser.y
 const char *get_yytname (int symbol);
+astree* new_parseroot(void);
 
 #endif
 

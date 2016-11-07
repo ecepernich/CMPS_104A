@@ -46,7 +46,7 @@ program       : program structdef    { $$ = $1->adopt($2); }
               | program statement    { $$ = $1->adopt($2); }
               | program error ';'    { $$ = $1; }
               | program error '}'    { $$ = $1; }
-              |                      { $$ = astree()); }
+              |                      { $$ = new_parseroot(); }
               ;
 
 structdef     : TOK_STRUCT TOK_IDENT '{' '}'               { $2->convert(TOK_TYPEID);

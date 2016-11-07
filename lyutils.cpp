@@ -99,3 +99,9 @@ void yyerror (const char* message) {
    errllocprintf (lexer::lloc, "%s\n", message);
 }
 
+astree* new_parseroot(void)
+{
+  yyparse_astree=new astree(TOK_ROOT, lloc, "root");
+  return yyparse_astree;
+}
+
