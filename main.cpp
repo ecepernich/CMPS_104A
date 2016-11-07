@@ -189,7 +189,10 @@ int main (int argc, char** argv) {
    }
 
 
-   yyparse();
+   int parse_rc = yyparse();
+   if (parse_rc) {
+      printf("Parse error");
+   }
     //replace yylex()
    for(;;) //for loop ends at EOF
    {
