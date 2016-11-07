@@ -194,7 +194,7 @@ int main (int argc, char** argv) {
    {
       int yyint=yylex(); //get tok
       if (yyint==YYEOF) break; //break @ EOF
-      string_set::intern(yytext);
+      //string_set::intern(yytext);
    }
 
    cpplines(yyin, (char*)file_name); //use cpplines on the file
