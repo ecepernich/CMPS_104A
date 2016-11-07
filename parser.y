@@ -200,9 +200,10 @@ allocator      : TOK_NEW TOK_IDENT '(' ')'        {
 call           : TOK_IDENT '(' ')'             { $2->convert(TOK_VOID); 
                                                  destroy($3);
                                                  $$ = $1->adopt($2); }
-               | TOK_IDENT '(' callrepeat ')'  { $2->convert(TOK_CALL);
-                                                 destroy($4);
-                                                 $$ = $2->adopt($1, $3); }
+               | TOK_IDENT '(' callrepeat ')'  { 
+                                        $2->convert(TOK_CALL);
+                                        destroy($4);
+                                        $$ = $2->adopt($1, $3); }
                ;
 
 callrepeat     : callrepeat ',' expr        { $$ = $1->adopt($2); 
