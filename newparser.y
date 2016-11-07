@@ -35,7 +35,7 @@
 %start start
 
 %%
-start          : program              { parse::root=$1; }
+start         : program              { parse::root=$1; }
               ;
 
 program       : program structdef    { $$ = $1->adopt($2); }
@@ -52,8 +52,7 @@ structdef     : TOK_STRUCT TOK_IDENT '{' '}'               { $2->convert(TOK_TYP
                                                              destroy($4); }
               | TOK_STRUCT TOK_IDENT '{' structrepeat '}'  { $2->convert(TOK_TYPEID);
                                                              $$ = $1->adopt($2,$4);
-                                                             destroy($3);
-                                                             destroy($5); }
+                                                             destroy($3, $5); }
               ;
          
 structrepeat  : structrepeat fielddecl ';'    { $$ = $1->adopt($2); }   
@@ -95,8 +94,8 @@ block          : ';'                  { $$ = $1->convert($TOK_BLOCK); }
                                         $$=$1->adopt($2); }
                ;
 
-blockrepeat    : blockrepeat statement
-               | statement
+blockrepeat    : blockrepeat statement   { $$ = $1->adopt($2); }
+               | statement               { $$ = $1; }
                ;
 
 statement      : block           { $$ = $1; }
@@ -113,17 +112,16 @@ vardecl        : identdecl '=' expr ';'    { destroy($4);
                                              $$ = $2->adopt($1, $3); }
                ;
 
-while          : TOK_WHILE '('expr ')' statement    { $$ = $1->adopt($3, $5); }
+while          : TOK_WHILE '('expr ')' statement    { $$ = $1->adopt($3, $5); 
+                                                      destroy($2, $4); }
                ;
 
 ifelse         : TOK_IF '(' expr ')' statement { $1->adopt($3, $5);
-                                                 destroy($2);
-                                                 destroy($4); }
+                                                 destroy($2, $4); }
                | TOK_IF '(' expr ')' statement TOK_ELSE statement { 
                        convert($1, TOK_IFELSE);
                        $$ = $1->adopt($3, $5, $7);
-                       destroy($2);
-                       destroy($4);
+                       destroy($2,$4);
                        destroy($6); }
                ;
 
@@ -138,8 +136,7 @@ expr           : binoperation       { $$ = $1; }
                | allocator          { $$ = $1; }
                | call               { $$ = $1; }
                | '(' expr ')'       { $$ = $2;
-                                      destroy($1);
-                                      destroy($3); }
+                                      destroy($1, $3); }
                | variable           { $$ = $1; }
                | constant           { $$ = $1; }
                ;
@@ -169,12 +166,10 @@ allocator      : TOK_NEW TOK_IDENT '(' ')'        { $2->convert(TOK_TYPEID);
                                                     $$ = $1->adopt($2); }
                | TOK_NEW TOK_STRING '(' expr ')'  { $4->convert(TOK_NEWSTRING); 
                                                     $$ = $1->adopt($2, $4); 
-                                                    destroy($3);
-                                                    destroy($5); }
+                                                    destroy($3, $5); }
                | TOK_NEW basetype '[' expr ']'    { $4->convert(TOK_NEWARRAY); 
                                                     $$ = $1->adopt($2, $4); 
-                                                    destroy($3);
-                                                    destroy($5); }
+                                                    destroy($3, $5); }
                ;
 
 call           : TOK_IDENT '(' ')'             { $2->convert(TOK_VOID); 
