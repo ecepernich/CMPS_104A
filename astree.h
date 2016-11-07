@@ -35,6 +35,7 @@ struct astree {
    void dump_node (FILE*);
    void dump_tree (FILE*, int depth = 0);
    static void dump (FILE* outfile, astree* tree);
+   static void full_astree (FILE* outfile, astree* tree, int depth);
    static void print (FILE* outfile, astree* tree, int depth = 0);
    astree* convert (int symbol_);
 };
