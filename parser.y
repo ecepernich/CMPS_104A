@@ -14,6 +14,10 @@
 %token-table
 %verbose
 
+%initial-action {
+   parser::root = new astree(ROOT, {0, 0, 0}, "<<ROOT>>");
+}
+
 
 %token TOK_ROOT TOK_IDENT TOK_FIELD TOK_TYPEID
 %token TOK_POS TOK_NEG TOK_CALL TOK_NEW TOK_RETURN TOK_RETURNVOID
@@ -38,7 +42,7 @@
 %start start
 
 %%
-start         : program              { yyparse_astree=$1; }
+start         : program              { $$ = $1 = nullptr; }
               ;
 
 program       : program structdef    { $$ = $1->adopt($2); }
@@ -46,7 +50,7 @@ program       : program structdef    { $$ = $1->adopt($2); }
               | program statement    { $$ = $1->adopt($2); }
               | program error ';'    { $$ = $1; }
               | program error '}'    { $$ = $1; }
-              |                      { $$ = new_parseroot(); }
+              |                      { $$ = parser::root; }
               ;
 
 structdef     : TOK_STRUCT TOK_IDENT '{' '}'               { $2->convert(TOK_TYPEID);
