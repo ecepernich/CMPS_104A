@@ -42,7 +42,7 @@
 %start start
 
 %%
-start         : program              { $$ = $1 = nullptr; }
+start         : program              { $$ = parser::root; }
               ;
 
 program       : program structdef    { $$ = $1->adopt($2); }
