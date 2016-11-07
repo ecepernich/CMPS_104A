@@ -42,7 +42,8 @@
 %start start
 
 %%
-start         : program              { $$ = new astree(TOK_ROOT, {0, 0, 0}, "<<ROOT>>"); }
+start         : program  { $$ = new astree
+                             (TOK_ROOT, {0, 0, 0}, "<<ROOT>>"); }
               ;
 
 program       : program structdef    { $$ = $1->adopt($2); }
@@ -50,24 +51,29 @@ program       : program structdef    { $$ = $1->adopt($2); }
               | program statement    { $$ = $1->adopt($2); }
               | program error ';'    { $$ = $1; }
               | program error '}'    { $$ = $1; }
-              |                      { $$ = new astree(TOK_ROOT, {0, 0, 0}, "<<ROOT>>"); }
+              |                      { $$ = new astree
+                               (TOK_ROOT, {0, 0, 0}, "<<ROOT>>"); }
               ;
 
-structdef     : TOK_STRUCT TOK_IDENT '{' '}'               { $2->convert(TOK_TYPEID);
-                                                             $$ = $1->adopt($2);
-                                                             destroy($3);
-                                                             destroy($4); }
-              | TOK_STRUCT TOK_IDENT '{' structrepeat '}'  { $2->convert(TOK_TYPEID);
-                                                             $$ = $1->adopt($2,$4);
-                                                             destroy($3, $5); }
+structdef     : TOK_STRUCT TOK_IDENT '{' '}' { 
+                          $2->convert(TOK_TYPEID);
+                          $$ = $1->adopt($2);
+                          destroy($3);
+                          destroy($4); }
+              | TOK_STRUCT TOK_IDENT '{' structrepeat '}'  { 
+                          $2->convert(TOK_TYPEID);
+                          $$ = $1->adopt($2,$4);
+                          destroy($3, $5); }
               ;
          
-structrepeat  : structrepeat fielddecl ';'    { $$ = $1->adopt($2); }   
-              | fielddecl ';'                 { $$ = $1; }
+structrepeat  : structrepeat fielddecl ';'   { $$ = $1->adopt($2); }   
+              | fielddecl ';'                { $$ = $1; }
               ;
 
-fielddecl     : basetype TOK_IDENT              { $$ = $1->adopt_sym($2, TOK_FIELD); }
-              | basetype TOK_ARRAY TOK_IDENT    { $$ = $2->adopt_sym($1, TOK_FIELD); }
+fielddecl     : basetype TOK_IDENT              { 
+                               $$ = $1->adopt_sym($2, TOK_FIELD); }
+              | basetype TOK_ARRAY TOK_IDENT    { 
+                               $$ = $2->adopt_sym($1, TOK_FIELD); }
               ;
 
 basetype      : TOK_VOID          { $$ = $1; }
@@ -89,15 +95,16 @@ function      : identdecl '(' ')' block  {
                     $$ = $4->adopt($1,$2,$5); }
               ;
 
-functionrepeat : functionrepeat ',' identdecl           { $$ = $1->adopt($3);
-                                                           destroy($2); }
-               | identdecl                              { $$ = $1; }
+functionrepeat : functionrepeat ',' identdecl  { $$ = $1->adopt($3);
+                                                 destroy($2); }
+               | identdecl                     { $$ = $1; }
                ;
 
-identdecl      : basetype TOK_IDENT               { $2->convert(TOK_DECLID); 
-                                                    $$ = $1->adopt($2); }
-               | basetype TOK_ARRAY TOK_IDENT     { $3->convert(TOK_DECLID); 
-                                                    $$ = $2->adopt($1, $3); }
+identdecl      : basetype TOK_IDENT   { $2->convert(TOK_DECLID); 
+                                        $$ = $1->adopt($2); }
+               | basetype TOK_ARRAY TOK_IDENT  { 
+                                      $3->convert(TOK_DECLID); 
+                                      $$ = $2->adopt($1, $3); }
                ;
 
 block          : ';'                  { $$ = $1->convert(TOK_BLOCK); }
@@ -126,8 +133,9 @@ vardecl        : identdecl '=' expr ';'    { destroy($4);
                                              $$ = $2->adopt($1, $3); }
                ;
 
-while          : TOK_WHILE '(' expr ')' statement    { $$ = $1->adopt($3, $5); 
-                                                      destroy($2, $4); }
+while          : TOK_WHILE '(' expr ')' statement    { 
+                                        $$ = $1->adopt($3, $5); 
+                                        destroy($2, $4); }
                ;
 
 ifelse         : TOK_IF '(' expr ')' statement { $1->adopt($3, $5);
@@ -139,10 +147,10 @@ ifelse         : TOK_IF '(' expr ')' statement { $1->adopt($3, $5);
                        destroy($6); }
                ;
 
-return         : TOK_RETURN ';'          { $1->convert(TOK_RETURNVOID);
-                                           $$ = $1; }
-               | TOK_RETURN expr ';'     { $1->adopt($2);
-                                           $$ = $1; }
+return         : TOK_RETURN ';'         { $1->convert(TOK_RETURNVOID);
+                                         $$ = $1; }
+               | TOK_RETURN expr ';'    { $1->adopt($2);
+                                          $$ = $1; }
                ;
 
 expr           : binoperation       { $$ = $1; }
@@ -176,14 +184,17 @@ unoperation    : '+' expr             { $1->convert(TOK_POS);
                | '!' expr             { $$ = $1->adopt($2); }
                | TOK_NEW expr         { $$ = $1->adopt($2); }
             
-allocator      : TOK_NEW TOK_IDENT '(' ')'        { $2->convert(TOK_TYPEID); 
-                                                    $$ = $1->adopt($2); }
-               | TOK_NEW TOK_STRING '(' expr ')'  { $4->convert(TOK_NEWSTRING); 
-                                                    $$ = $1->adopt($2, $4); 
-                                                    destroy($3, $5); }
-               | TOK_NEW basetype '[' expr ']'    { $4->convert(TOK_NEWARRAY); 
-                                                    $$ = $1->adopt($2, $4); 
-                                                    destroy($3, $5); }
+allocator      : TOK_NEW TOK_IDENT '(' ')'        { 
+                                    $2->convert(TOK_TYPEID); 
+                                    $$ = $1->adopt($2); }
+               | TOK_NEW TOK_STRING '(' expr ')'  { 
+                                    $4->convert(TOK_NEWSTRING); 
+                                    $$ = $1->adopt($2, $4); 
+                                    destroy($3, $5); }
+               | TOK_NEW basetype '[' expr ']'    { 
+                                    $4->convert(TOK_NEWARRAY); 
+                                    $$ = $1->adopt($2, $4); 
+                                    destroy($3, $5); }
                ;
 
 call           : TOK_IDENT '(' ')'             { $2->convert(TOK_VOID); 
