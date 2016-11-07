@@ -14,6 +14,9 @@
 %token-table
 %verbose
 
+%initial-action {
+   parser::root = new astree(TOK_ROOT, {0, 0, 0}, "<<ROOT>>");
+}
 
 
 %token TOK_ROOT TOK_IDENT TOK_FIELD TOK_TYPEID
