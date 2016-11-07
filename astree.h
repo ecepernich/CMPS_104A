@@ -33,7 +33,7 @@ struct astree {
                                      astree* child3 = nullptr);
    astree* adopt_sym (astree* child, int symbol);
    void dump_node (FILE*);
-   void dump_tree (FILE*, astree* root, int depth = 0);
+   void dump_tree (FILE*, int depth = 0);
    static void dump (FILE* outfile, astree* tree);
    static void print (FILE* outfile, astree* tree, int depth = 0);
    astree* convert (int symbol_);
