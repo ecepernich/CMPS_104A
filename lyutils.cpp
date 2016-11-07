@@ -60,6 +60,7 @@ int yylval_token(int symbol)
            ast1->symbol, //symbol # code
            parser::get_tname(symbol), //symbol
            ast1->lexinfo->c_str()); //lexinfo
+   string_set::intern(yytext);
    return symbol; //end
 }
 
