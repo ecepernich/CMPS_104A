@@ -42,7 +42,7 @@
 %start start
 
 %%
-start         : program              { $$ = parser::root; }
+start         : program              { $$ = new astree(TOK_ROOT, {0, 0, 0}, "<<ROOT>>"); }
               ;
 
 program       : program structdef    { $$ = $1->adopt($2); }
