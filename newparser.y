@@ -46,17 +46,22 @@ program       : program structdef    { $$ = $1->adopt($2); }
               |                      { $$ = new::parseroot() }
               ;
 
-structdef     : TOK_STRUCT TOK_IDENT '{' '}'               {$$ = $1->adopt_sym($2, TOK_TYPEID); }
+structdef     : TOK_STRUCT TOK_IDENT '{' '}'               { $2->convert(TOK_TYPEID);
+                                                             $$ = $1->adopt($2);
+                                                             destroy($3);
+                                                             destroy($4); }
               | TOK_STRUCT TOK_IDENT '{' structrepeat '}'  { $2->convert(TOK_TYPEID);
-                                                             $$ = $1->adopt_sym($2, $4);}
+                                                             $$ = $1->adopt($2,$4);
+                                                             destroy($3);
+                                                             destroy($5); }
               ;
          
-structrepeat  : structrepeat fielddecl ';'     
-              | fielddecl ';'
+structrepeat  : structrepeat fielddecl ';'    { $$ = $1->adopt($2); }   
+              | fielddecl ';'                 { $$ = $1; }
               ;
 
 fielddecl     : basetype TOK_IDENT              { $$ = $1->adopt_sym($2, TOK_FIELD); }
-              | basetype TOK_ARRAY TOK_IDENT    { $$ = $1->adopt_sym($2, TOK_FIELD); }
+              | basetype TOK_ARRAY TOK_IDENT    { $$ = $2->adopt_sym($1, TOK_FIELD); }
               ;
 
 basetype      : TOK_VOID          { $$ = $1; }
