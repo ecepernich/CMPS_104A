@@ -24,7 +24,7 @@
 %token TOK_STRUCT TOK_ARRAY TOK_VOID TOK_NULL
 %token TOK_STRING TOK_CHAR TOK_INT TOK_INDEX
 %token TOK_NEWARRAY TOK_NEWSTRING TOK_LE TOK_NE
-%token TOK_BLOCK TOK_DECLID TOK_FUNCTION TOK_IFELSE
+%token TOK_BLOCK TOK_DECLID TOK_FUNCTION TOK_IFELSE TOK_PROTOTYPE
 %token TOK_VARDECL TOK_EQ TOK_GT TOK_GE TOK_ELSE
 %token TOK_IF TOK_PARAMLIST TOK_WHILE
 %token TOK_INTCON TOK_CHARCON TOK_STRINGCON
@@ -87,10 +87,10 @@ function      : identdecl '(' ')' block  {
                     $3->convert(TOK_FUNCTION);
                     $$ = $3->adopt($1,$2,$4); }
                                 
-              | identdecl '(' functionrepeat ')' block   { 
+              | identdecl '(' functionrepeat ')' ';'  { 
                     $2->convert(TOK_PARAMLIST);
                     $2->adopt($3);
-                    $4->convert(TOK_FUNCTION);
+                    $4->convert(TOK_PROTOTYPE);
                     $$ = $4->adopt($1,$2,$5); }
               ;
 
@@ -106,8 +106,7 @@ identdecl      : basetype TOK_IDENT   { $2->convert(TOK_DECLID);
                                       $$ = $2->adopt($1, $3); }
                ;
 
-block          : ';'                  { $$ = $1->convert(TOK_BLOCK); }
-               |'{' '}'               { destroy($2); 
+block          : '{' '}'               { destroy($2); 
                                         $$ = $1->convert(TOK_BLOCK); }
                |'{' blockrepeat '}'   { destroy($3);
                                         $1->convert(TOK_BLOCK);
@@ -137,7 +136,7 @@ while          : TOK_WHILE '(' expr ')' statement    {
                                         destroy($2, $4); }
                ;
 
-ifelse         : TOK_IF '(' expr ')' statement { $1->adopt($3, $5);
+ifelse         : TOK_IF '(' expr ')' statement %prec TOK_ELSE { $1->adopt($3, $5);
                                                  destroy($2, $4); }
                | TOK_IF '(' expr ')' statement TOK_ELSE statement { 
                        $1->convert(TOK_IFELSE);
@@ -176,9 +175,9 @@ binoperation   : expr '+' expr        { $$ = $2->adopt($1, $3); }
                | expr TOK_LE expr     { $$ = $2->adopt($1, $3); }
                ;
 
-unoperation    : '+' expr             { $1->convert(TOK_POS); 
+unoperation    : '+' expr  %prec TOK_POS           { $1->convert(TOK_POS); 
                                         $$ = $1->adopt($2); }
-               | '-' expr             { $1->convert(TOK_NEG); 
+               | '-' expr   %prec TOK_NEG          { $1->convert(TOK_NEG); 
                                         $$ = $1->adopt($2); }
                | '!' expr             { $$ = $1->adopt($2); }
                | TOK_NEW expr         { $$ = $1->adopt($2); }
