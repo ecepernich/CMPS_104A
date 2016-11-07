@@ -107,7 +107,8 @@ identdecl      : basetype TOK_IDENT   { $2->convert(TOK_DECLID);
                ;
 
 block          : '{' '}'               { destroy($2); 
-                                        $$ = $1->convert(TOK_BLOCK); }
+                                         $1->convert(TOK_BLOCK); 
+                                         $$ = $1}
                |'{' blockrepeat '}'   { destroy($3);
                                         $1->convert(TOK_BLOCK);
                                         $$=$1->adopt($2); }
