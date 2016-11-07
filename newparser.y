@@ -70,17 +70,21 @@ basetype      : TOK_VOID          { $$ = $1; }
               | TOK_IDENT         { $$ = $1; }
               ;
 
-function      : identdecl '(' ')' block                  {$2->convert(TOK_PARAM);
-                                                           $$ =$2;}
-              | identdecl '(' identdecl ')' block        {$2->convert(TOK_PARAM);
-                                                          $$=$2;}
-              | identdecl '(' functionrepeat ')' block   {$2->convert(TOK_PARAM);
-                                                         {$$=$2;}}
+function      : identdecl '(' ')' block  { 
+                    $2->convert(TOK_PARAMLIST);
+                    $$ = astree::astree(TOK_FUNCTION, $1->lloc, "")->adopt($1,$2,$4);
+                    destroy($3); }
+                                
+              | identdecl '(' functionrepeat ')' block   { 
+                    $2->convert(TOK_PARAMLIST);
+                    $2->adopt($3);
+                    $$ = astree::astree(TOK_FUNCTION, $1->lloc, "")->adopt($1,$2,$5); 
+                    destroy($4); }
               ;
 
-functionrepeat : frunctionrepeat ',' identdecl           {$$=$1->adopt($3);
-                                                          destroy($2);}
-               | identdecl                               {$$=$1;}
+functionrepeat : functionrepeat ',' identdecl           { $$ = $1->adopt($3);
+                                                           destroy($2); }
+               | identdecl                              { $$ = $1; }
                ;
 
 identdecl      : basetype TOK_IDENT               { $2->convert(TOK_DECLID); 
