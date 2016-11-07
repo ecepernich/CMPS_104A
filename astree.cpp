@@ -70,17 +70,6 @@ void astree::dump_tree (FILE* outfile, int depth) {
    fflush (NULL);
 }
 
-void astree::dump2 (FILE* outfile, astree* tree)
-{
-   dump_tree(outfile, 0);
-
-   const char token=parser::get_tname(symbol);
-   if (strcomp(token, "TOK_")==0)
-   {
-      token+=4;
-   }
-   
-}
 
 void astree::dump (FILE* outfile, astree* tree) {
    if (tree == nullptr) fprintf (outfile, "nullptr");
