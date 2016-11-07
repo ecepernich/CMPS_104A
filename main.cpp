@@ -211,7 +211,7 @@ int main (int argc, char** argv) {
    string_set::dump (strfile); //write the stringset to output file
    fclose(strfile); //close program.str - the file is now reitten
    astfile=fopen(ast_name,"w");
-   astree::print(astfile, parser::root);
+   astree::dump(astfile, parser::root);
    fclose(astfile);
    yylex_destroy(); //clear yylex
    return EXIT_SUCCESS; //Success and exit with file written
