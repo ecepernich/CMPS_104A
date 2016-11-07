@@ -16,13 +16,14 @@
 
 
 %token TOK_ROOT TOK_IDENT TOK_FIELD TOK_TYPEID
-%token TOK_POS TOK_NEG TOK_CALL TOK_NEW TOK_RETURN
+%token TOK_POS TOK_NEG TOK_CALL TOK_NEW TOK_RETURN TOK_RETURNVOID
 %token TOK_STRUCT TOK_ARRAY TOK_VOID TOK_NULL
 %token TOK_STRING TOK_CHAR TOK_INT TOK_INDEX
 %token TOK_NEWARRAY TOK_NEWSTRING TOK_LE TOK_NE
 %token TOK_BLOCK TOK_DECLID TOK_FUNCTION TOK_IFELSE
 %token TOK_VARDECL TOK_EQ TOK_GT TOK_GE TOK_ELSE
 %token TOK_IF TOK_PARAMLIST TOK_WHILE
+%token TOK_INTCON TOK_CHARCON TOK_STRINGCON
 
 
 %right TOK_IF TOK_ELSE
@@ -128,7 +129,7 @@ while          : TOK_WHILE '(' expr ')' statement    { $$ = $1->adopt($3, $5);
 ifelse         : TOK_IF '(' expr ')' statement { $1->adopt($3, $5);
                                                  destroy($2, $4); }
                | TOK_IF '(' expr ')' statement TOK_ELSE statement { 
-                       convert($1, TOK_IFELSE);
+                       $1->convert(TOK_IFELSE);
                        $$ = $1->adopt($3, $5, $7);
                        destroy($2,$4);
                        destroy($6); }
