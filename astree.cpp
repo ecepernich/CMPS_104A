@@ -61,7 +61,7 @@ void astree::dump_tree (FILE* outfile, astree* tree, int depth) {
    int i=0;
    for (i=0;i<depth+1;i++)
    {
-      fprintf(outfile, "|\t");
+      fprintf(outfile, "| ");
    }   
    astree::print(outfile, tree, depth);
    fprintf (outfile, "\n");
