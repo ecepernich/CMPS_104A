@@ -15,7 +15,7 @@
 %verbose
 
 %initial-action {
-   parser::root = new astree(TOK_ROOT, {0, 0, 0}, "<<ROOT>>");
+   parser::root = new astree(TOK_ROOT, {0, 0, 0}, "");
 }
 
 
