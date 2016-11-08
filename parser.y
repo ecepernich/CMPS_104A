@@ -142,7 +142,8 @@ while          : TOK_WHILE '(' expr ')' statement    {
                                         destroy($2, $4); }
                ;
 
-ifelse         : TOK_IF '(' expr ')' statement %prec TOK_ELSE { $1->adopt($3, $5);
+ifelse         : TOK_IF '(' expr ')' statement %prec TOK_ELSE { 
+                                                 $1->adopt($3, $5);
                                                  destroy($2, $4); }
                | TOK_IF '(' expr ')' statement TOK_ELSE statement { 
                        $1->symbol=TOK_IFELSE;
