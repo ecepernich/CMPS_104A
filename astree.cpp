@@ -59,10 +59,10 @@ void astree::dump_node (FILE* outfile) {
 
 void astree::dump_tree (FILE* outfile, astree* tree, int depth) {
    int i=0;
-   //for (i=0;i<depth+1;i++)
-   //{
-   //   fprintf(outfile, "|\t");
-   //}   
+   for (i=0;i<depth+1;i++)
+   {
+      fprintf(outfile, "|\t");
+   }   
    astree::print(outfile, tree, depth);
    fprintf (outfile, "\n");
    for (astree* child: children) child->dump_tree 
