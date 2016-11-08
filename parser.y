@@ -202,7 +202,7 @@ call           : TOK_IDENT '(' ')'             { $2->symbol=TOK_VOID;
                                                  destroy($3);
                                                  $$ = $1->adopt($2); }
                | TOK_IDENT '(' callrepeat ')'  { 
-                                        $2->symbol=TOK_CALL;
+                                        //$2->symbol=TOK_CALL;
                                         destroy($4);
                                         $$ = $2->adopt($1, $3); }
                ;
