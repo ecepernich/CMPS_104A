@@ -222,7 +222,7 @@ variable       : TOK_IDENT                { $$ = $1; }
 constant       : TOK_INTCON        { $$ = $1; }
                | TOK_CHARCON       { $$ = $1; }
                | TOK_STRINGCON     { $$ = $1; }
-               | TOK_NULLCON       { $$ = $1; }
+               | TOK_NULL          { $$ = $1; }
                ;
 
 
