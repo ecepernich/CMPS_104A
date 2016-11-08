@@ -188,17 +188,16 @@ int main (int argc, char** argv) {
       exit(1);
    }
 
-
-   int parse_rc = yyparse();
-   if (!parse_rc) {
-      printf("Parse error");
-   }
+   //int parse_rc = yyparse();
+   //if (!parse_rc) {
+   //   printf("Parse error");
+   //}
     //replace yylex()
    for(;;) //for loop ends at EOF
    {
       int yyint=yylex(); //get tok
       if (yyint==YYEOF) break; //break @ EOF
-      //string_set::intern(yytext);
+      string_set::intern(yytext);
    }
 
    cpplines(yyin, (char*)file_name); //use cpplines on the file
