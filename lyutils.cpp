@@ -57,9 +57,9 @@ int yylval_token(int symbol)
            lexer::lloc.filenr, //file#
            lexer::lloc.linenr, //line#
            lexer::lloc.offset, //offset
-           ast1->symbol, //symbol # code
+           yylval->symbol, //symbol # code
            parser::get_tname(symbol), //symbol
-           ast1->lexinfo->c_str()); //lexinfo
+           yylval->lexinfo->c_str()); //lexinfo
    return symbol; //end
 }
 
