@@ -188,6 +188,8 @@ int main (int argc, char** argv) {
       exit(1);
    }
 
+
+   cpplines(yyin, (char*)file_name); //use cpplines on the file
    yyparse();
    //if (!parse_rc) {
    //   printf("Parse error");
@@ -200,7 +202,7 @@ int main (int argc, char** argv) {
       string_set::intern(yytext);
    }
 
-   cpplines(yyin, (char*)file_name); //use cpplines on the file
+   
 
 
    
