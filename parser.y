@@ -219,10 +219,10 @@ variable       : TOK_IDENT                { $$ = $1; }
                                             $$ = $2->adopt($1, $3); }
                ;
 
-constant       : TOK_INT        { $$ = $1; }
-               | TOK_CHAR       { $$ = $1; }
-               | TOK_STRING     { $$ = $1; }
-               | TOK_NULL       { $$ = $1; }
+constant       : TOK_INTCON        { $$ = $1; }
+               | TOK_CHARCON       { $$ = $1; }
+               | TOK_STRINGCON     { $$ = $1; }
+               | TOK_NULLCON       { $$ = $1; }
                ;
 
 
