@@ -103,8 +103,11 @@ functionrepeat : functionrepeat ',' identdecl  { $$ = $1->adopt($3);
                | identdecl                     { $$ = $1; }
                ;
 
-identdecl      : basetype TOK_DECLID   { $$ = $1->adopt($2); }
-               | basetype TOK_ARRAY TOK_DECLID  { 
+identdecl      : basetype TOK_IDENT   { 
+                                      $2->symbol=TOK_DECLID;
+                                      $$ = $1->adopt($2); }
+               | basetype TOK_ARRAY TOK_IDENT  { 
+                                      $3->symbol=TOK_DECLID;
                                       $$ = $2->adopt($1, $3); }
                ;
 
