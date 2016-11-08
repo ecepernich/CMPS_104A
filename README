@@ -24,3 +24,8 @@
  not together. The bitbucket repo can be found here: 
  https://bitbucket.org/leahlang4d/cmps_104a We have made 
  it public, so if you want to look at it, it should be accessible. 
+
+ The astree prints oclib.oh before it prints the file it's making.
+ This is because our .tok file printed the oclib tokens before the
+ file tokens for assignment 2. There is a semicolon token ';' line
+ that separates the oclib astree nodes and the file astree nodes. 
