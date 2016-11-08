@@ -2,7 +2,7 @@
 // Elizabeth Cepernich (eceperni@ucsc.edu)
 // Leah Langford (llangfor@ucsc.edu)
 // CMPS 104A Fall 2016
-// Assignment 2: .tok file
+// Assignment 3: .ast file
 
 #include <string>
 using namespace std;

@@ -1,8 +1,8 @@
 %{
-    // Elizabeth Cepernich
-    // Leah Langford
+    // Elizabeth Cepernich (eceperni@ucsc.edu)
+    // Leah Langford (llangfor@ucsc.edu)
     // CMPS 104A Fall 2016
-    // November 7, 2016
+    // Assignment 3: .ast file
 
     #include "astree.h"
     #include "lyutils.h"
@@ -42,8 +42,7 @@
 %start start
 
 %%
-start         : program  { parser::root = $1; 
-                           $$ = $1; }
+start         : program  { parser::root = $1; }
               ;
 
 program       : program structdef    { $$ = $1->adopt($2); }
@@ -229,10 +228,7 @@ constant       : TOK_INTCON        { $$ = $1; }
                ;
 
 
-
 %%
-
-
 
 const char* parser::get_tname (int symbol) {
    return yytname [YYTRANSLATE (symbol)];
