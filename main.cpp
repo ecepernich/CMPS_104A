@@ -188,7 +188,7 @@ int main (int argc, char** argv) {
       exit(1);
    }
 
-   //int parse_rc = yyparse();
+   yyparse();
    //if (!parse_rc) {
    //   printf("Parse error");
    //}
