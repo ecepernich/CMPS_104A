@@ -188,27 +188,23 @@ int main (int argc, char** argv) {
       exit(1);
    }
 
-   yyparse();
-   //if (!parse_rc) {
-   //   printf("Parse error");
-   //}
-    //replace yylex()
-   //for(;;) //for loop ends at EOF
-   //{
-   //   int yyint=yylex(); //get tok
-   //   if (yyint==YYEOF) break; //break @ EOF
-   //   string_set::intern(yytext);
-   //}
-
+   yyparse(); //replaces yylex()
    cpplines(yyin, (char*)file_name); //use cpplines on the file
 
-
-   
-
    strfile=fopen(str_name,"w"); //open .str file to write
+   if (!strfile) //file could not be opened
+   {
+      fprintf(stderr, "Could not open a new .str file.\n");
+      exit(1);
+   }
    string_set::dump (strfile); //write the stringset to output file
    fclose(strfile); //close program.str - the file is now reitten
    astfile=fopen(ast_name,"w");
+   if (!astfile) //file could not be opened
+   {
+      fprintf(stderr, "Could not open a new .ast file.\n");
+      exit(1);
+   }
    astree::dump(astfile, parser::root);
    fclose(astfile);
 
