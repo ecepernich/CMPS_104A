@@ -46,10 +46,6 @@ astree* astree::adopt_sym(astree* child, int symbol_) {
    return adopt (child);
 }
 
-void astree::convert(int symbol_)
-{
-   symbol = symbol_;
-}
 
 void astree::dump_node (FILE* outfile) {
    fprintf (outfile, "%p->{%s %zd.%zd.%zd \"%s\":",

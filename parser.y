@@ -55,12 +55,12 @@ program       : program structdef    { $$ = $1->adopt($2); }
               ;
 
 structdef     : TOK_STRUCT TOK_IDENT '{' '}' { 
-                          $2->convert(TOK_TYPEID);
+                          $2->symbol=TOK_TYPEID;
                           $$ = $1->adopt($2);
                           destroy($3);
                           destroy($4); }
               | TOK_STRUCT TOK_IDENT '{' structrepeat '}'  { 
-                          $2->convert(TOK_TYPEID);
+                          $2->symbol=TOK_TYPEID;
                           $$ = $1->adopt($2,$4);
                           destroy($3, $5); }
               ;
@@ -69,10 +69,14 @@ structrepeat  : structrepeat fielddecl ';'   { $$ = $1->adopt($2); }
               | fielddecl ';'                { $$ = $1; }
               ;
 
-fielddecl     : basetype TOK_IDENT              { 
-                               $$ = $1->adopt_sym($2, TOK_FIELD); }
-              | basetype TOK_ARRAY TOK_IDENT    { 
-                               $$ = $2->adopt_sym($1, TOK_FIELD); }
+fielddecl     : basetype TOK_IDENT              {  
+                               $1->symbol=TOK_FIELD; 
+                               $1->adopt($2); 
+                               $$ = $1; }
+              | basetype TOK_ARRAY TOK_IDENT    {  
+                               $2->symbol=TOK_FIELD;
+                               $2->adopt($1);
+                               $$ = $1; }
               ;
 
 basetype      : TOK_VOID          { $$ = $1; }
@@ -83,14 +87,14 @@ basetype      : TOK_VOID          { $$ = $1; }
               ;
 
 function      : identdecl '(' ')' block  { 
-                    $2->convert(TOK_PARAMLIST);
-                    $3->convert(TOK_FUNCTION);
+                    $2->symbol=TOK_PARAMLIST;
+                    $3->symbol=TOK_FUNCTION;
                     $$ = $3->adopt($1,$2,$4); }
                                 
               | identdecl '(' functionrepeat ')' ';'  { 
-                    $2->convert(TOK_PARAMLIST);
+                    $2->symbol=TOK_PARAMLIST;
                     $2->adopt($3);
-                    $4->convert(TOK_PROTOTYPE);
+                    $4->symbol=TOK_PROTOTYPE;
                     $$ = $4->adopt($1,$2,$5); }
               ;
 
@@ -99,18 +103,18 @@ functionrepeat : functionrepeat ',' identdecl  { $$ = $1->adopt($3);
                | identdecl                     { $$ = $1; }
                ;
 
-identdecl      : basetype TOK_IDENT   { $2->convert(TOK_DECLID); 
+identdecl      : basetype TOK_IDENT   { $2->symbol=TOK_DECLID; 
                                         $$ = $1->adopt($2); }
                | basetype TOK_ARRAY TOK_IDENT  { 
-                                      $3->convert(TOK_DECLID); 
+                                      $3->symbol=TOK_DECLID; 
                                       $$ = $2->adopt($1, $3); }
                ;
 
 block          : '{' '}'               { destroy($2); 
-                                         $1->convert(TOK_BLOCK); 
+                                         $1->symbol=TOK_BLOCK; 
                                          $$ = $1}
                |'{' blockrepeat '}'   { destroy($3);
-                                        $1->convert(TOK_BLOCK);
+                                        $1->symbol=TOK_BLOCK;
                                         $$=$1->adopt($2); }
                ;
 
@@ -128,7 +132,7 @@ statement      : block           { $$ = $1; }
                ;
 
 vardecl        : identdecl '=' expr ';'    { destroy($4);
-                                             $2->convert(TOK_VARDECL);
+                                             $2->symbol=TOK_VARDECL;
                                              $$ = $2->adopt($1, $3); }
                ;
 
@@ -140,13 +144,13 @@ while          : TOK_WHILE '(' expr ')' statement    {
 ifelse         : TOK_IF '(' expr ')' statement %prec TOK_ELSE { $1->adopt($3, $5);
                                                  destroy($2, $4); }
                | TOK_IF '(' expr ')' statement TOK_ELSE statement { 
-                       $1->convert(TOK_IFELSE);
+                       $1->symbol=TOK_IFELSE;
                        $$ = $1->adopt($3, $5, $7);
                        destroy($2,$4);
                        destroy($6); }
                ;
 
-return         : TOK_RETURN ';'         { $1->convert(TOK_RETURNVOID);
+return         : TOK_RETURN ';'         { $1->symbol=TOK_RETURNVOID;
                                          $$ = $1; }
                | TOK_RETURN expr ';'    { $1->adopt($2);
                                           $$ = $1; }
@@ -176,31 +180,31 @@ binoperation   : expr '+' expr        { $$ = $2->adopt($1, $3); }
                | expr TOK_LE expr     { $$ = $2->adopt($1, $3); }
                ;
 
-unoperation    : '+' expr  %prec TOK_POS     { $1->convert(TOK_POS); 
+unoperation    : '+' expr  %prec TOK_POS     { $1->symbol=TOK_POS; 
                                         $$ = $1->adopt($2); }
-               | '-' expr   %prec TOK_NEG    { $1->convert(TOK_NEG); 
+               | '-' expr   %prec TOK_NEG    { $1->symbol=TOK_NEG; 
                                         $$ = $1->adopt($2); }
                | '!' expr             { $$ = $1->adopt($2); }
                | TOK_NEW expr         { $$ = $1->adopt($2); }
             
 allocator      : TOK_NEW TOK_IDENT '(' ')'        { 
-                                    $2->convert(TOK_TYPEID); 
+                                    $2->symbol=TOK_TYPEID; 
                                     $$ = $1->adopt($2); }
                | TOK_NEW TOK_STRING '(' expr ')'  { 
-                                    $4->convert(TOK_NEWSTRING); 
+                                    $4->symbol=TOK_NEWSTRING; 
                                     $$ = $1->adopt($2, $4); 
                                     destroy($3, $5); }
                | TOK_NEW basetype '[' expr ']'    { 
-                                    $4->convert(TOK_NEWARRAY); 
+                                    $4->symbol=TOK_NEWARRAY; 
                                     $$ = $1->adopt($2, $4); 
                                     destroy($3, $5); }
                ;
 
-call           : TOK_IDENT '(' ')'             { $2->convert(TOK_VOID); 
+call           : TOK_IDENT '(' ')'             { $2->symbol=TOK_VOID; 
                                                  destroy($3);
                                                  $$ = $1->adopt($2); }
                | TOK_IDENT '(' callrepeat ')'  { 
-                                        $2->convert(TOK_CALL);
+                                        $2->symbol=TOK_CALL;
                                         destroy($4);
                                         $$ = $2->adopt($1, $3); }
                ;
@@ -211,9 +215,9 @@ callrepeat     : callrepeat ',' expr        { $$ = $1->adopt($2);
                ;
 
 variable       : TOK_IDENT                { $$ = $1; }
-               | expr '[' expr ']'        { $2->convert(TOK_INDEX); 
+               | expr '[' expr ']'        { $2->symbol=TOK_INDEX; 
                                             $$ = $2->adopt($1, $3); }
-               | expr '.' TOK_IDENT       { $3->convert(TOK_FIELD); 
+               | expr '.' TOK_IDENT       { $3->symbol=TOK_FIELD; 
                                             $$ = $2->adopt($1, $3); }
                ;
 
