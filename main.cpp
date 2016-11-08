@@ -190,7 +190,7 @@ int main (int argc, char** argv) {
 
 
    int parse_rc = yyparse();
-   if (parse_rc) {
+   if (!parse_rc) {
       printf("Parse error");
    }
     //replace yylex()
