@@ -110,7 +110,7 @@ identdecl      : basetype TOK_DECLID   { $$ = $1->adopt($2); }
 
 block          : '{' '}'               { destroy($2); 
                                          $1->symbol=TOK_BLOCK; 
-                                         $$ = $1}
+                                         $$ = $1; }
                |'{' blockrepeat '}'   { destroy($3);
                                         $1->symbol=TOK_BLOCK;
                                         $$=$1->adopt($2); }
