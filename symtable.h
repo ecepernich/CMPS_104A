@@ -29,3 +29,4 @@ struct symbol {
 };
 
 symbol* new_sym(astree* node);	
+void insert_sym(symbol_table* symbtab, astree* node);

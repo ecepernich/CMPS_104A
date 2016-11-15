@@ -26,7 +26,9 @@ symbol* new_sym(astree* node){
 
 
 //need insert function 
-
+void insert_sym(symbol_table* symtab, astree* node){
+        symbol* sym = new_symbol(node);
+	em
 
 
 
