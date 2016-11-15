@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include <vector>
 #include <bitset>
-
+#include <utility>
 
 
 //taken from pdf 2.2
@@ -17,8 +17,8 @@ enum {  ATTR_void, ATTR_int, ATTR_null, ATTR_string, ATTR_struct, ATTR_array,
 using attr_bitset = bitset<ATTR_bitset_size>;
 
 struct symbol;
-using symbol_table = unordered_map< string*, symbol*>;
-using symbol_entry = symbol_table::value_type;
+using symbol_table = unordered_map<const string*, symbol*>;
+using symbol_entry =pair<const string*, symbol*>;
 //each entry in the table is a pair<const string*,symbol*>
 struct symbol {
         attr_bitset attributes;
