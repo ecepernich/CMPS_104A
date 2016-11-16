@@ -15,12 +15,12 @@
 symbol* new_sym(astree* node){
         symbol* sym = new symbol();
         sym->attributes = node->attributes;
-	sym->fields = node->fields;
+	sym->fields = nullptr;
         sym->filenr = node->filenr;
         sym->linenr = node->linenr;
         sym->offset = node->offset;
         //would parameters be null?
-        sym->parameters = node->parameters;
+        //sym->parameters = node->parameters;
         sym->block_nr = node->block_nr;
         return sym;
 
@@ -29,8 +29,8 @@ symbol* new_sym(astree* node){
 void insert_sym(symbol_table* symtab, astree* node){
         symbol* sym = new_symbol(node);
 	symbol entry* ry = < node->lexinfo, sym > //lexinfo is the pointer to stringset in astree.cpp
-
-
+        symtab->insert(ry);
+}
 
 //need lookup function 
    
