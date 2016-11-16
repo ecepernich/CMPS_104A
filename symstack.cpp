@@ -30,26 +30,30 @@ void symstack::define_ident(astree* tree)
 	}
 	//else
 	//{
-		symbol_stack.pushback(tree);
+		symbol_stack.pushback(tree); //??????
+		//insert into symbol table
 	//}
 
 
 }
 
-void symstack::search_ident(astree* tree)
+symbol* symstack::search_ident(astree* tree)
 {
 
 	for (symbol_table:symbol_stack)
 	{
-		symbol_table temp=
 		if (symbol_table==nullptr)
-		{
-
-		}
+		{ }
 		else
 		{
-
+			symbol* s=search_ident(tree->symbol);
+			// some search function (not this one)
+			if (s != nullptr)
+			{
+				return s;
+			}
 		}
 	}
+	return nullptr;
 
 }
