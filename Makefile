@@ -1,7 +1,7 @@
 # Elizabeth Cepernich (eceperni@ucsc.edu)
 # Leah Langford (llangfor@ucsc.edu)
 # CMPS 104A Fall 2016
-# Assignment 3: .ast file
+# Assignment 4: .sym file
 
 MKFILE  = Makefile
 NOINCLUDE = ci clean spotless
