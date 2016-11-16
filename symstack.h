@@ -18,5 +18,5 @@ class symstack
 	void enter_block();
 	void leave_block();
 	void define_ident(astree* tree);
-	void search_ident(astree* tree);
+	symbol* search_ident(astree* tree);
 };
