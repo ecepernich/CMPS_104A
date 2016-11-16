@@ -7,7 +7,7 @@
 //nested hashtable?
 
 
-int next_block=1;
+next_block=1;
 
 void symstack::enter_block()
 {
@@ -19,8 +19,7 @@ void symstack::enter_block()
 void symstack::leave_block()
 {
 	symbol_stack.popback(); //pop next_block
-	symbol_stack.popback(); //pop nullptr
-	next_block--; //move back in block#
+	next_block--; //move back in block# ????
 }
 
 void symstack::define_ident(astree* tree)
