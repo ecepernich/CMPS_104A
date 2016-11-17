@@ -10,6 +10,7 @@
 
 //upcoming switch statement for something
 
+//declare child vars
 	switch(node->symbol)
 	{
 		case TOK_ROOT:
@@ -27,9 +28,13 @@
 
 
 		case TOK_NEW:
-		case TOK_TYPEID:
+		case TOK_TYPEID: {
+			node->attr[attr_typeid]=1;
+			break; }
 		case TOK_DECLID:
-		case TOK_FIELD: 
+		case TOK_FIELD: {
+			node->attr[attr_field]=1;
+			break; }
 		case TOK_FUNCTION:
 		case TOK_PROTOTYPE: 
 
@@ -42,7 +47,10 @@
 		case TOK_ARRAY:
 		case TOK_NEWARRAY: 
 		case TOK_VOID:
-		case TOK_INDEX: 
+		case TOK_INDEX: {
+			node->attr[attr_vaddr]=1;
+			node->attr[attr_lval]=1;
+			break; }
 		case TOK_IDENT:
 		case TOK_STRUCT:
 		case TOK_IF:
@@ -50,22 +58,54 @@
 		case TOK_WHILE:
 
 		case '+':
-		case '-':
+		case '-': {
+			node->attr[attr_int]=1;
+			node->attr[attr_vreg]=1;
+			// children?
+			break; }
+
 		case '*':
 		case '/':
-		case '%': 
-		case '!':
+		case '%': {
+			node->attr[attr_int]=1;
+			node->attr[attr_vreg]=1;
+			//children ?
+		}
+		case '!': {
+			node->attr[attr_bool]=1;
+			node->attr[attr_vreg]=1;
+			//children?
+			break;
+		}
 		case '=':
 		case TOK_EQ:
 		case TOK_GT:
 		case TOK_GE:
 		case TOK_LT:
 		case TOK_LE:
+		case TOK_POS:
+		case TOK_NEG:
 
-		case TOK_INTCON:
-		case TOK_CHARCON:
-		case TOK_STRINGCON:
-		case TOK_NULL:
+		case TOK_INTCON: {
+			node->attr[attr_int]=1;
+			node->attr[attr_const]=1;
+			break;
+		}
+		case TOK_CHARCON: {
+			node->attr[attr_char]=1;
+			node->attr[attr_const]=1;
+			break;
+		}
+		case TOK_STRINGCON: {
+			node->attr[attr_string]=1;
+			node->attr[attr_const]=1;
+			break;
+		}
+		case TOK_NULL: {
+			node->attr[attr_null]=1;
+			node->attr[attr_const]=1;
+			break;
+		}
 
 			break;
 	}
