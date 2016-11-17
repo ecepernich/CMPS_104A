@@ -11,6 +11,13 @@
 //upcoming switch statement for something
 
 //declare child vars
+
+	astree* left=nullptr;
+	astree* right=nullptr;
+
+	// children size check?
+	left=node->children.popback();
+	right=node->children.popback();
 	switch(node->symbol)
 	{
 		case TOK_ROOT:
@@ -34,18 +41,32 @@
 		case TOK_DECLID:
 		case TOK_FIELD: {
 			node->attr[attr_field]=1;
+			// 1 child?
 			break; }
 		case TOK_FUNCTION:
 		case TOK_PROTOTYPE: 
 
-		case TOK_CALL:
+		case TOK_CALL: {
+
+			//finding symbols???
+
+		}
 		case TOK_CHAR:
 		case TOK_INT:
 		case TOK_BOOL
-		case TOK_VOID:
+		case TOK_VOID: {
+			node->attr[attr_void]=1;
+			//left child?
+			break;
+		}
 		case TOK_STRING:
 		case TOK_ARRAY:
-		case TOK_NEWARRAY: 
+		case TOK_NEWARRAY: {
+
+			node->attr[attr_array]=1;
+			node->attr[attr_vreg]=1;
+			break;
+		}
 		case TOK_VOID:
 		case TOK_INDEX: {
 			node->attr[attr_vaddr]=1;
@@ -61,7 +82,7 @@
 		case '-': {
 			node->attr[attr_int]=1;
 			node->attr[attr_vreg]=1;
-			// children?
+			// 2 children?
 			break; }
 
 		case '*':
@@ -69,12 +90,12 @@
 		case '%': {
 			node->attr[attr_int]=1;
 			node->attr[attr_vreg]=1;
-			//children ?
+			// 2 children?
 		}
 		case '!': {
 			node->attr[attr_bool]=1;
 			node->attr[attr_vreg]=1;
-			//children?
+			// 1 child?
 			break;
 		}
 		case '=':
