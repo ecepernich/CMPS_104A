@@ -44,4 +44,5 @@ symbol* search_symbol(symbol_table* symtab, astree* node){
 
 }
         
- 
+//3. get name for symbol from typecheck
+// I am not really sure what to do here 
