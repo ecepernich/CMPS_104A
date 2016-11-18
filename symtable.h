@@ -10,13 +10,6 @@
 
 
 //taken from pdf 2.2
-//move to astree.h
-enum {  ATTR_void, ATTR_int, ATTR_null, ATTR_string, ATTR_struct, ATTR_array, 
-        ATTR_function, ATTR_variable, ATTR_field, ATTR_typeid, ATTR_param, ATTR_lval
-        ATTR_vreg, ATTR_vaddr, ATTR_bitset_size,
-};
-using attr_bitset = bitset<ATTR_bitset_size>;
-
 struct symbol;
 using symbol_table = unordered_map<const string*, symbol*>;
 using symbol_entry =pair<const string*, symbol*>;
@@ -30,4 +23,5 @@ struct symbol {
 };
 
 symbol* new_sym(astree* node);	
-void insert_sym(symbol_table* symbtab, astree* node);
+void insert_symbol(symbol_table* symbtab, astree* node);
+search_symbol(symbol_table* symtab, astree* node);
