@@ -35,5 +35,6 @@ void insert_symbol(symbol_table* symtab, astree* node){
 //need lookup function 
    
 
-search_symbol(symbol_table* symtab, astree* node){
+symbol* search_symbol(symbol_table* symtab, astree* node){
+        sting* lexinfo = 
  
