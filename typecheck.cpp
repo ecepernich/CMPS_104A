@@ -47,7 +47,11 @@
 		case TOK_DECLID:
 		case TOK_FIELD: {
 			node->attr[attr_field]=1;
-			// 1 child?
+			if (left!=nullptr)
+			{
+				left->attr[attr_field]=1;
+				//give child type to parent
+			}
 			break; }
 		case TOK_FUNCTION:
 		case TOK_PROTOTYPE: 
