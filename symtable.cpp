@@ -41,6 +41,7 @@ symbol* search_symbol(symbol_table* symtab, astree* node){
                 return nullptr;
         symbol* sym = new_symbol(node); //and create a new symbol 
         symbol_entry* entry = < node->lexinfo, sym >; //add it as an entry 
+        //return entry?
 
 }
         
