@@ -123,7 +123,7 @@
 			break;
 		}
 		case TOK_CHARCON: {
-			node->attr[attr_char]=1;
+			node->attr[attr_int]=1;
 			node->attr[attr_const]=1;
 			break;
 		}

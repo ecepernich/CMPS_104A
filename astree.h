@@ -34,6 +34,8 @@ struct astree {
    location lloc;            // source location
    const string* lexinfo;    // pointer to lexical information
    vector<astree*> children; // children of this n-way node
+   attr_bitset attr;
+
 
    // Functions.
    astree (int symbol, const location&, const char* lexinfo);
