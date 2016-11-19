@@ -16,8 +16,14 @@
 	astree* right=nullptr;
 
 	// children size check?
-	left=node->children.popback();
-	right=node->children.popback();
+	if (node->children[0]!=nullptr)
+	{
+		left=node->children[0];
+	}
+	if (node->children[1]!=nullptr)
+	{
+		right=node->children[1];
+	}
 	switch(node->symbol)
 	{
 		case TOK_ROOT:
