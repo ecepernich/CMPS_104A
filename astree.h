@@ -48,7 +48,7 @@ struct astree {
    static void dump (FILE* outfile, astree* tree);
    static void print (FILE* outfile, astree* tree, int depth = 0);
 };
-
+void print_attr(astree* node, FILE* outfile);
 astree* makefunction(astree* identdecl, astree* paramlist, astree* block);
 astree* makeprototype(astree* identdecl, astree* paramlist);
 
