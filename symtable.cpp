@@ -12,7 +12,7 @@
 #include "astree.h"
 #include "typcheck.h"
 
-symbol* new_sym(astree* node){
+symbol* new_symbol(astree* node){
         symbol* sym = new symbol();
         sym->attributes = node->attributes;
 	sym->fields = nullptr;
@@ -33,7 +33,7 @@ void insert_symbol(symbol_table* symtab, astree* node){
 }
 
 //need lookup function 
-   
+
 
 symbol* search_symbol(symbol_table* symtab, astree* node){
         string* lexinfo = node->lexinfo;
@@ -41,7 +41,7 @@ symbol* search_symbol(symbol_table* symtab, astree* node){
                 return nullptr;
         symbol* sym = new_symbol(node); //and create a new symbol 
         symbol_entry* entry = < node->lexinfo, sym >; //add it as an entry 
-        //return entry?
+        return entry.second; //want it to return the symbol
 
 }
         
