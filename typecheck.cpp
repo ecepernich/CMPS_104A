@@ -3,18 +3,28 @@
 // CMPS 104A Fall 2016
 // Assignment 4: .sym file
 
-//implementing figure 1 grammar
-
-
+//helper print function
+void printhelper(FILE* symfile, astree* node, int block_nr)
+{
+	astree* left=node->children[0];
+	fprintf (outfile, "%s (%zd.%zd.%zd) %d \n",
+            left->lexinfo->c_str(), node->lloc.filenr, node->lloc.linenr, 
+            node->lloc.offset, block_nr);
+	fprintf(symfile, "%s", enumhelper(node->attr).c_str());
+	fprintf(symfile, "\n");
+}
 
 
 //upcoming switch statement for something
 
 
 //declare child vars
+void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, symtable* symbol_table)
+{
 
 	astree* left=nullptr;
 	astree* right=nullptr;
+	symbol* s;
 
 	// children size check?
 	if (node->children[0]!=nullptr)
@@ -174,4 +184,5 @@
 
 			break;
 	}
+}
 	
