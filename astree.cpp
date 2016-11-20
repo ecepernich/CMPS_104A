@@ -85,6 +85,25 @@ void astree::print (FILE* outfile, astree* tree, int depth) {
    }
 }
 
+void print_attr(astree* node, FILE* outfile){
+   if(node->attr[attr_void])     fprintf(outfile, "%s\n",void);
+   if(node->attr[attr_int])      fprintf(outfile, "%s\n",int);
+   if(node->attr[attr_null])     fprintf(outfile, "%s\n",null);
+   if(node->attr[attr_string])   fprintf(outfile, "%s\n",string);
+   if(node->attr[attr_struct])   fprintf(outfile, "%s\n",struct);
+   if(node->attr[attr_array])    fprintf(outfile, "%s\n",array);
+   if(node->attr[attr_function]) fprintf(outfile, "%s\n",function);
+   if(node->attr[attr_variable]) fprintf(outfile, "%s\n",variable);
+   if(node->attr[attr_field])    fprintf(oufile, "%s\n",field);
+   if(node->attr[attr_typeid])   fprintf(outfile, "%s\n",typeid );
+   if(node->attr[attr_param])    fprintf(outfile, "%s\n", param);
+   if(node->attr[attr_lval])     fprintf(outfile, "%s\n", lval);
+   if(node->attr[attr_const])    fprintf(outfile, "%s\n",const);
+   if(node->attr[attr_vreg])     fprintf(outfile, "%s\n",vreg);
+   if(node->attr[attr_vaddr])    fprintf(outfile, "%s\n",vaddr);
+   if(node->attr_bitset_size)    fprintf(outfile, "%s\n",bitset_size );
+}
+
 
 astree* makefunction(astree* identdecl, astree* paramlist, astree* block)
 {
