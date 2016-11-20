@@ -24,8 +24,11 @@ void symstack::leave_block()
 
 void symstack::define_ident(astree* tree)
 {
-	if (symbol_stack.back()==nullptr)
+	if (symbol_stack.back()==nullptr) // if there is nothing in the symtable, create a new table and add it to the symtable
 	{
+		
+		symbol* sym = new symbol;
+		insert_symbol
 		symbol_stack.back()=new symbol_table;
 	}
 	//else
