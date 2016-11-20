@@ -25,10 +25,10 @@ void symstack::leave_block()
 void symstack::define_ident(astree* node)
 {
 	if (symbol_stack.back()==nullptr) // if there is nothing in the symtable, create a new table and add it to the symtable
-	{
+	//{
 		symbol_stack.back()=new symbol_table;
 		insert_symbol(symbol_stack.back, node);
-	}
+	//}
 	//else
 	//{
 		//symbol_stack.pushback(tree); //??????
