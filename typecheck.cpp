@@ -34,13 +34,20 @@
 		case '}':
 		case '[':
 		case ']':
-		case ';':
+		case ';':      break;
 
 		case TOK_RETURN: break;
+		case TOK_RETURNVOID: break;
 		case TOK_PARAM:  break;
 
 
 		case TOK_NEW:
+		    left=node->children[0];
+			for (i=0;i<15;i++)
+			{
+				node->attr[i]=left->attr[i];
+			}
+			break;
 		case TOK_TYPEID: {
 			node->attr[attr_typeid]=1;
 			break; }
@@ -72,9 +79,14 @@
 		case TOK_STRING:
 		case TOK_ARRAY:
 		case TOK_NEWARRAY: {
-
+			left=node->children[0];
+			for (i=0;i<7;i++)
+			{
+				node->attr[i]=left->attr[i];
+			}
 			node->attr[attr_array]=1;
 			node->attr[attr_vreg]=1;
+
 			break;
 		}
 		case TOK_VOID:
