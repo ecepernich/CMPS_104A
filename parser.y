@@ -89,13 +89,24 @@ basetype      : TOK_VOID          { $$ = $1; }
 function      : identdecl '(' ')' block  { 
                     $2->symbol=TOK_PARAMLIST;
                     $3->symbol=TOK_FUNCTION;
-                    $$ = $3->adopt($1,$2,$4); }
+                    $$ = makefunction($1,$2,$4); }
+
+              | identdecl '(' ')' ';'  { 
+                    $2->symbol=TOK_PARAMLIST;
+                    $3->symbol=TOK_FUNCTION;
+                    $$ = makeprototype($1,$2); }
                                 
               | identdecl '(' functionrepeat ')' ';'  { 
                     $2->symbol=TOK_PARAMLIST;
                     $2->adopt($3);
                     $4->symbol=TOK_PROTOTYPE;
-                    $$ = $4->adopt($1,$2,$5); }
+                    $$ = makeprototype($1, $2); }
+
+              | identdecl '(' functionrepeat ')' block  { 
+                    $2->symbol=TOK_PARAMLIST;
+                    $2->adopt($3);
+                    $4->symbol=TOK_PROTOTYPE;
+                    $$ = makefunction($1, $2, $5); }
               ;
 
 functionrepeat : functionrepeat ',' identdecl  { $$ = $1->adopt($3);

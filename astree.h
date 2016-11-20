@@ -49,6 +49,9 @@ struct astree {
    static void print (FILE* outfile, astree* tree, int depth = 0);
 };
 
+astree* makefunction(astree* identdecl, astree* paramlist, astree* block);
+astree* makeprototype(astree* identdecl, astree* paramlist);
+
 void destroy (astree* tree1, astree* tree2 = nullptr);
 
 void errllocprintf (const location&, const char* format, const char*);

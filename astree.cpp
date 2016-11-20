@@ -86,6 +86,19 @@ void astree::print (FILE* outfile, astree* tree, int depth) {
 }
 
 
+astree* makefunction(astree* identdecl, astree* paramlist, astree* block)
+{
+   astree* f=new astree(TOK_FUNCTION, identdecl->lloc,"");
+   return f->adopt(identdect, paramlist, block);
+}
+
+astree* makeprototype(astree* identdecl, astree* paramlist)
+{
+   astree* f=new astree(TOK_PROTOTYPE, identdecl->lloc,"");
+   return f->adopt(identdect, paramlist);
+}
+
+
 void destroy (astree* tree1, astree* tree2) {
    if (tree1 != nullptr) delete tree1;
    if (tree2 != nullptr) delete tree2;
