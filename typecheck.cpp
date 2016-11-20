@@ -10,6 +10,7 @@
 
 //upcoming switch statement for something
 
+
 //declare child vars
 
 	astree* left=nullptr;
@@ -26,18 +27,17 @@
 	}
 	switch(node->symbol)
 	{
-		case TOK_ROOT:
-
-		case '(':
-		case ')':
+		case TOK_ROOT: break;
+		case '(':      break;
+		case ')':      break;
 		case '{':
 		case '}':
 		case '[':
 		case ']':
 		case ';':
 
-		case TOK_RETURN:
-		case TOK_PARAM:
+		case TOK_RETURN: break;
+		case TOK_PARAM:  break;
 
 
 		case TOK_NEW:
@@ -84,6 +84,28 @@
 			break; }
 		case TOK_IDENT:
 		case TOK_STRUCT:
+			left=node->children[0];
+			printhelp(node);
+			fprintf(symfile, node->lexinfo.c_str() + " \" "+left->lexinfo.c_str()+" \"");
+			left->attr[attr_struct]=1;
+			insert_symbol(struct_table, left);
+			right=node->children[1];
+			while(right!=nullptr)
+			{
+				astree* leftchild=right->children[0];
+				fprintf(symfile, leftchild->lexinfo.c_str());
+				fprintf(symfile, right->loc.c_str());
+				fprintf(symfile, "field {"+ left->lexinfo.c_str()+"}");
+				if (search_table(struct_table, right) == search_table(struct_table, left))
+				{
+					fprintf(symfile, "struct "+right->lexinfo.c_str());
+				}
+				else
+				{
+					fprintf(symfile, right->lexinfo.c_str());
+				}
+			}
+			break;
 		case TOK_IF:
 		case TOK_IFELSE:
 		case TOK_WHILE:

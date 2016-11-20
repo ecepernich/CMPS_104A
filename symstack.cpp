@@ -6,6 +6,11 @@
 //PDF part 3.2 This will help to build the symbol table 
 //nested hashtable?
 
+#include "symtable.h"
+#include "symstack.h"
+#include "astree.h"
+#include "typcheck.h"
+
 
 next_block=1;
 
@@ -30,8 +35,10 @@ void symstack::define_ident(astree* tree)
 	}
 	//else
 	//{
-		symbol_stack.pushback(tree); //??????
+		//symbol_stack.pushback(tree); //??????
 		//insert into symbol table
+		insert_symbol(symbol_stack.back(), tree);
+
 	//}
 
 
@@ -46,7 +53,7 @@ symbol* symstack::search_ident(astree* tree)
 		{ }
 		else
 		{
-			symbol* s=search_ident(tree->symbol);
+			symbol* s=search_symbol(symbol_table, tree);
 			// some search function (not this one)
 			if (s != nullptr)
 			{
