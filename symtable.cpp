@@ -27,6 +27,7 @@ symbol* new_symbol(astree* node)
 //need insert function 
 void insert_symbol(symbol_table* symtab, astree* node){
         symbol* sym = new_symbol(node);
+        string* lexinfo = (string *)node->lexinfo;
 	symbol_entry* entry = < node->lexinfo, sym > //lexinfo is the pointer to stringset in astree.cpp
         symtab->insert(entry);
 }
@@ -35,7 +36,7 @@ void insert_symbol(symbol_table* symtab, astree* node){
 
 
 symbol* search_symbol(symbol_table* symtab, astree* node){
-        string* lexinfo = node->lexinfo;
+        string* lexinfo = (string *)node->lexinfo; //after create symbol
         if(!symtab->count(lexinfo)) //if we can't find the symbol return null
                 return nullptr;
         symbol* sym = new_symbol(node); //and create a new symbol 
@@ -46,7 +47,10 @@ symbol* search_symbol(symbol_table* symtab, astree* node){
   
 //look up identifier name
 symbol* search_type_name(symbol_table* symtab, astree* node){
-        if(symtab == nullptr || node == null)
-                return nullptr;
-        symbol_entry
+        if(symtab == nullptr || node == nullptr) return nullptr;
+        string* type_name = (string *) node->type_name;
+      //need to check if table is if(!table_name->count)
+        symbol_entry* entry = *symtab->find<type_name>;
+        return entry.second;
+
 }      
