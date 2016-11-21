@@ -4,16 +4,22 @@
 // Assignment 4: .sym file
 
 //helper print function
+#include "astree.h"
+#include "auxlib.h"
+#include "symstack.h"
+#include "symtable.h"
+
 void printhelper(FILE* symfile, astree* node, int block_nr)
 {
     astree* left=node->children[0];
     fprintf (outfile, "%s (%zd.%zd.%zd) %d \n",
             left->lexinfo->c_str(), node->lloc.filenr, node->lloc.linenr, 
             node->lloc.offset, block_nr);
-    fprintf(symfile, "%s", enumhelper(node->attr).c_str());
+    print_attr(node);
     fprintf(symfile, "\n");
 }
 
+astree* current_struct=nullptr;
 
 //upcoming switch statement for something
 
@@ -41,10 +47,10 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
         case TOK_ROOT: break;
         case '(':      break;
         case ')':      break;
-        case '{':
-        case '}':
-        case '[':
-        case ']':
+        case '{':      break;
+        case '}':      break;
+        case '[':      break;
+        case ']':      break;
         case ';':      break;
 
         case TOK_RETURN: break;
@@ -52,16 +58,18 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
         case TOK_PARAM:  break;
 
 
-        case TOK_NEW:
+        case TOK_NEW: {
             left=node->children[0];
             for (i=0;i<15;i++)
             {
                 node->attr[i]=left->attr[i];
             }
             break;
+        }
         case TOK_TYPEID: {
             node->attr[attr_typeid]=1;
-            break; }
+            break; 
+        }
         case TOK_DECLID:
         case TOK_FIELD: {
             node->attr[attr_field]=1;
@@ -74,7 +82,8 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
                     node->attr[i]=left->attr[i];
                 }
             }
-            break; }
+            break; 
+        }
         case TOK_FUNCTION:
         case TOK_INT:
             left=node->children[0];
@@ -88,23 +97,31 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
                     node->attr[i]=left->attr[i];
                 }
             }
-        case TOK_PROTOTYPE: 
+        case TOK_PROTOTYPE: {
+            break;
+        }
 
         case TOK_CALL: {
 
             //finding symbols???
-
+            break;
         }
         case TOK_CHAR:
-        case TOK_INT:
         case TOK_BOOL
         case TOK_VOID: {
             left=node->children[0];
             left->attr[attr_void]=1;
-            //left child?
             break;
         }
-        case TOK_STRING:
+        case TOK_STRING: {
+            left=node->children[0];
+            left->attr[attr_string]=1;
+            for (i=0;i<7;i++)
+            {
+                node->attr[i]=left->attr[i];
+            }
+
+        }
         case TOK_ARRAY: {
             left=node->children[0];
             left->attr[attr_array]=1;
@@ -127,16 +144,21 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
 
             break;
         }
-        case TOK_VOID:
+        case TOK_VOID: {
+            left=node->children[0];
+            left->attr[attr_void]=1;
+        }
         case TOK_INDEX: {
             node->attr[attr_vaddr]=1;
             node->attr[attr_lval]=1;
-            break; }
+            break; 
+        }
         case TOK_IDENT:
-        case TOK_STRUCT:
+        case TOK_STRUCT: {
+            current_struct=node;
             left=node->children[0];
             printhelp(node);
-            fprintf(symfile, node->lexinfo.c_str() + " \" "+left->lexinfo.c_str()+" \"");
+            fprintf(symfile, node->lexinfo.c_str() + " \""+left->lexinfo.c_str()+"\"");
             left->attr[attr_struct]=1;
             insert_symbol(struct_table, left);
             right=node->children[1];
@@ -156,9 +178,10 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
                 }
             }
             break;
-        case TOK_IF:
-        case TOK_IFELSE:
-        case TOK_WHILE:
+        }
+        case TOK_IF:       break;
+        case TOK_IFELSE:   break;
+        case TOK_WHILE:    break;
 
         case '+':
         case '-': {
@@ -184,8 +207,8 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
                     errprintf("Error: not type int & int.\n");
                 }
             }
-            break; }
-
+            break; 
+        }
         case '*':
         case '/':
         case '%': {
@@ -204,7 +227,7 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
                     errprintf("Error: not type int & int.\n");
                 }
             }
-            // 2 children?
+            break;
         }
         case '!': {
             node->attr[attr_bool]=1;
@@ -218,8 +241,6 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
         case TOK_GE:
         case TOK_LT:
         case TOK_LE:
-        case TOK_POS:
-        case TOK_NEG:
 
         case TOK_INTCON: {
             node->attr[attr_int]=1;
