@@ -46,7 +46,7 @@ symbol* search_symbol(symbol_table* symtab, astree* node){
 }
   
 //look up identifier name
-symbol* search_type_name(symbol_table* symtab, astree* node){
+void symbol* search_type_name(symbol_table* symtab, astree* node){
         if(symtab == nullptr || node == nullptr) return nullptr;
         string* type_name = (string *) node->type_name;
         if(!table_name->count(node->lexinfo)==0); //number of elements in the range 
