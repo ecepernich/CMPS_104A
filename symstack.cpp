@@ -29,29 +29,20 @@ void symstack::leave_block()
 
 void symstack::define_ident(astree* node)
 {
-	if (symbol_stack.back()==nullptr) // if there is nothing in the symtable, create a new table and add it to the symtable
-	//{
+	if (symbol_stack.back()==nullptr){ // if there is nothing in the symtable, create a new table and add it to the symtable
 		symbol_stack.back()=new symbol_table;
-		insert_symbol(symbol_stack.back, node);
-	//}
-	//else
-	//{
-		//symbol_stack.pushback(tree); //??????
-		//insert into symbol table
-		insert_symbol(symbol_stack.back(), tree);
-
-	//}
+        }
+		insert_symbol(symbol_stack.back(), node);
 }
 
 symbol* symstack::search_ident(astree* node)
 {
-
-	for (symbol_table:symbol_stack)
+	for (auto symbol_table:symbol_stack) //ranged-based loop aka executes a loop over a range
 	{
 		if (symbol_table==nullptr)
-		{ }
-		else
-		{
+		{ 
+         return nullptr;
+		}else{
 			symbol* s =search_symbol(symbol_table, node);
 			// some search function (not this one)
 			if (s != nullptr)
