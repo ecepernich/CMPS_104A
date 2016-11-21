@@ -14,6 +14,10 @@
 #include "string_set.h"
 #include "lyutils.h"
 
+
+#include <iostream>
+#include <set>
+
 astree::astree (int symbol_, const location& lloc_, const char* info) {
    symbol = symbol_;
    lloc = lloc_;
