@@ -52,8 +52,6 @@ astree* current_field=nullptr;
 
 //upcoming switch statement for something
 
-
-//declare child vars
 void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, symtable* symbol_table)
 {
 
@@ -382,4 +380,13 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
         }
     }
 }
-    
+
+
+void typecheck(FILE* symfile, astree* parseroot, symstack* symbol_stack, symtable* symbol_table)
+{
+    for (astree* child: parseroot->children) 
+    {
+      typecheck(symfile, child, symbol_stack, symbol_table);
+    }
+    typecheck_function(symfile, parseroot, symbol_stack, symbol_table);
+}
