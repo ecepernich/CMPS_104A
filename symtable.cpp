@@ -49,7 +49,8 @@ symbol* search_symbol(symbol_table* symtab, astree* node){
 symbol* search_type_name(symbol_table* symtab, astree* node){
         if(symtab == nullptr || node == nullptr) return nullptr;
         string* type_name = (string *) node->type_name;
-      //need to check if table is if(!table_name->count)
+        if(!table_name->count(node->lexinfo)==0); //number of elements in the range 
+                //[first,last] that compare equal to val
         symbol_entry* entry = *symtab->find<type_name>;
         return entry.second;
 
