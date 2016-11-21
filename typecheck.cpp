@@ -35,6 +35,18 @@ void printhelper(FILE* symfile, astree* node)
     fprintf(symfile, "\n");
 }
 
+bool primcheck(astree* left, astree* right)
+{
+    for (size_t i=0;i<attr_function;i++)
+    {
+        if (left->attr[i]==1 && right->attr[i]==1)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 astree* current_struct=nullptr;
 astree* current_field=nullptr;
 
@@ -253,6 +265,11 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
                 {
                     errprintf("Error: not type int.\n");
                 }
+                else
+                {
+                    node->attr[attr_vreg]=1;
+                    node->attr[attr_int]=1;
+                }
             }
             else //typecheck int +/- int
             {
@@ -284,17 +301,60 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             break;
         }
         case '!': {
-            node->attr[attr_int]=1;
-            node->attr[attr_vreg]=1;
-            // 1 child?
+            left=node->children[0];
+            if (left==nullptr)
+            {
+                break;
+            }
+            if (!left->attr[attr_int])
+            {
+                errprintf("Error: not type int.\n");
+            }
+            else
+            {
+                node->attr[attr_vreg]=1;
+                node->attr[attr_int]=1;
+            }
             break;
         }
-        case '=':
+        case '=': {
+            left=node->children[0];
+            right=node->children[1];
+            break;
+        }
         case TOK_EQ:
+        case TOK_NE: {
+            left=node->children[0];
+            right=node->children[1];
+            if (primcheck(left, right))
+            {
+                //node->attr[attr_bool]=1;
+                node->attr[attr_vreg]=1;                
+            }
+            elseif ()
+            else
+            {
+                errprintf("Types do not match.\n");
+            }
+            break;
+        }
         case TOK_GT:
         case TOK_GE:
         case TOK_LT:
-        case TOK_LE:
+        case TOK_LE:  {
+            left=node->children[0];
+            right=node->children[1];
+            if (primcheck(left, right))
+            {
+                //node->attr[attr_bool]=1;
+                node->attr[attr_vreg]=1;                
+            }
+            else
+            {
+                errprintf("Types do not match.\n");
+            }
+            break;
+        }
 
         case TOK_INTCON: {
             node->attr[attr_int]=1;
