@@ -79,7 +79,7 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
 
         case TOK_NEW: {
             left=node->children[0];
-            for (size_t i=0;i<15;i++)
+            for (size_t i=0;i<attr_bitset_size;i++)
             {
                 if (left->attr[i]) { node->attr[i]=1; }
             }
