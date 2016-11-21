@@ -99,13 +99,13 @@ void print_attr(astree* node, FILE* outfile)
    if(node->attr[ATTR_function]) fprintf(outfile, "function ");
    if(node->attr[ATTR_variable]) fprintf(outfile, "variable ");
    if(node->attr[ATTR_field])    fprintf(outfile, "field ");
-   if(node->attr[attr_typeid])   fprintf(outfile, "typeid ");
-   if(node->attr[attr_param])    fprintf(outfile, "param ");
-   if(node->attr[attr_lval])     fprintf(outfile, "lval ");
-   if(node->attr[attr_const])    fprintf(outfile, "const ");
-   if(node->attr[attr_vreg])     fprintf(outfile, "vreg ");
-   if(node->attr[attr_vaddr])    fprintf(outfile, "vaddr ");
-   if(node->attr_bitset_size)    fprintf(outfile, "bitset_size ");
+   if(node->attr[ATTR_typeid])   fprintf(outfile, "typeid ");
+   if(node->attr[ATTR_param])    fprintf(outfile, "param ");
+   if(node->attr[ATTR_lval])     fprintf(outfile, "lval ");
+   if(node->attr[ATTR_const])    fprintf(outfile, "const ");
+   if(node->attr[ATTR_vreg])     fprintf(outfile, "vreg ");
+   if(node->attr[ATTR_vaddr])    fprintf(outfile, "vaddr ");
+   if(node->attr[ATTR_bitset_size])    fprintf(outfile, "bitset_size ");
 }
 
 
