@@ -90,15 +90,15 @@ void astree::print (FILE* outfile, astree* tree, int depth) {
 
 void print_attr(astree* node, FILE* outfile)
 {
-   if(node->attr[attr_void])     fprintf(outfile, "void ");
-   if(node->attr[attr_int])      fprintf(outfile, "int ");
-   if(node->attr[attr_null])     fprintf(outfile, "null ");
-   if(node->attr[attr_string])   fprintf(outfile, "string ");
-   if(node->attr[attr_struct])   fprintf(outfile, "struct ");
-   if(node->attr[attr_array])    fprintf(outfile, "array ");
-   if(node->attr[attr_function]) fprintf(outfile, "function ");
-   if(node->attr[attr_variable]) fprintf(outfile, "variable ");
-   if(node->attr[attr_field])    fprintf(outfile, "field ");
+   if(node->attr[ATTR_void])     fprintf(outfile, "void ");
+   if(node->attr[ATTR_int])      fprintf(outfile, "int ");
+   if(node->attr[ATTR_null])     fprintf(outfile, "null ");
+   if(node->attr[ATTR_string])   fprintf(outfile, "string ");
+   if(node->attr[ATTR_struct])   fprintf(outfile, "struct ");
+   if(node->attr[ATTR_array])    fprintf(outfile, "array ");
+   if(node->attr[ATTR_function]) fprintf(outfile, "function ");
+   if(node->attr[ATTR_variable]) fprintf(outfile, "variable ");
+   if(node->attr[ATTR_field])    fprintf(outfile, "field ");
    if(node->attr[attr_typeid])   fprintf(outfile, "typeid ");
    if(node->attr[attr_param])    fprintf(outfile, "param ");
    if(node->attr[attr_lval])     fprintf(outfile, "lval ");
