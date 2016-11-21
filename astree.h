@@ -37,7 +37,7 @@ struct astree {
    vector<astree*> children; // children of this n-way node
    attr_bitset attr;
    size_t block_nr;
-   struct symbol *sym //TA said to add 
+   struct symbol *sym; //TA said to add 
 
 
    // Functions.
