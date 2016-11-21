@@ -99,13 +99,11 @@ function      : identdecl '(' ')' block  {
               | identdecl '(' functionrepeat ')' ';'  { 
                     $2->symbol=TOK_PARAMLIST;
                     $2->adopt($3);
-                    $4->symbol=TOK_PROTOTYPE;
                     $$ = makeprototype($1, $2); }
 
               | identdecl '(' functionrepeat ')' block  { 
                     $2->symbol=TOK_PARAMLIST;
                     $2->adopt($3);
-                    $4->symbol=TOK_PROTOTYPE;
                     $$ = makefunction($1, $2, $5); }
               ;
 

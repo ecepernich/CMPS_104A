@@ -106,8 +106,8 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             //finding symbols???
             break;
         }
-        case TOK_CHAR:
-        case TOK_BOOL
+        case TOK_CHAR:    break;
+        case TOK_BOOL:    break;
         case TOK_VOID: {
             left=node->children[0];
             left->attr[attr_void]=1;
@@ -157,7 +157,7 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
         case TOK_STRUCT: {
             current_struct=node;
             left=node->children[0];
-            printhelp(node);
+            printhelp(symfile, node, block_nr);
             fprintf(symfile, node->lexinfo.c_str() + " \""+left->lexinfo.c_str()+"\"");
             left->attr[attr_struct]=1;
             insert_symbol(struct_table, left);
@@ -182,7 +182,6 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
         case TOK_IF:       break;
         case TOK_IFELSE:   break;
         case TOK_WHILE:    break;
-
         case '+':
         case '-': {
             node->attr[attr_int]=1;
@@ -230,7 +229,7 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             break;
         }
         case '!': {
-            node->attr[attr_bool]=1;
+            node->attr[attr_int]=1;
             node->attr[attr_vreg]=1;
             // 1 child?
             break;
@@ -262,8 +261,10 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             node->attr[attr_const]=1;
             break;
         }
-
+        default:
+        {
             break;
+        }
     }
 }
     
