@@ -12,13 +12,15 @@
 #include "astree.h"
 #include "typcheck.h"
 
-symbol* new_symbol(astree* node){
+symbol* new_symbol(astree* node)
+{
         symbol* sym = new symbol();
-        sym->attributes = node->attributes;
-	sym->fields = nullptr;
-        sym->filenr = node->filenr;
-        sym->linenr = node->linenr;
-        sym->offset = node->offset;
+        sym->attr = node->attr;
+	    sym->fields = nullptr;
+	    sym->lloc = node->lloc;
+        //sym->filenr = node->filenr;
+        //sym->linenr = node->linenr;
+        //sym->offset = node->offset;
         //would parameters be null?
         //sym->parameters = node->parameters; parameters is not needed cause its called in .h file
         sym->block_nr = node->block_nr;

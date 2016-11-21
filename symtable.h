@@ -17,7 +17,7 @@ using symbol_entry =pair<const string*, symbol*>;
 struct symbol {
         attr_bitset attributes;
         symbol_table* fields;
-        size_t filenr, linenr, offset;
+        location lloc;
         size_t block_nr;
         vector<symbol*>* parameters;
 };

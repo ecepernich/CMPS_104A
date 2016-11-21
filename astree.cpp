@@ -20,6 +20,7 @@ astree::astree (int symbol_, const location& lloc_, const char* info) {
    lexinfo = string_set::intern (info);
    // vector defaults to empty -- no children
    attr=0;
+   block_nr=0;
 }
 
 astree::~astree() {
@@ -77,15 +78,18 @@ void astree::print (FILE* outfile, astree* tree, int depth) {
    {
       fprintf(outfile, "|   ");
    } 
-   fprintf (outfile, "%s \"%s\" (%zd.%zd.%zd)\n",
+   fprintf (outfile, "%s \"%s\" (%zd.%zd.%zd) ",
             parser::get_tname (tree->symbol), tree->lexinfo->c_str(),
             tree->lloc.filenr, tree->lloc.linenr, tree->lloc.offset);
+   print_attr(tree, outfile);
+   fprintf("\n");
    for (astree* child: tree->children) {
       astree::print (outfile, child, depth + 1);
    }
 }
 
-void print_attr(astree* node, FILE* outfile){
+void print_attr(astree* node, FILE* outfile)
+{
    if(node->attr[attr_void])     fprintf(outfile, "void ");
    if(node->attr[attr_int])      fprintf(outfile, "int ");
    if(node->attr[attr_null])     fprintf(outfile, "null ");

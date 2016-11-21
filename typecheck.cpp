@@ -9,17 +9,34 @@
 #include "symstack.h"
 #include "symtable.h"
 
-void printhelper(FILE* symfile, astree* node, int block_nr)
+void printhelper(FILE* symfile, astree* node)
 {
     astree* left=node->children[0];
-    fprintf (outfile, "%s (%zd.%zd.%zd) %d \n",
+    fprintf (symfile, "%s (%zd.%zd.%zd) \n",
             left->lexinfo->c_str(), node->lloc.filenr, node->lloc.linenr, 
-            node->lloc.offset, block_nr);
-    print_attr(node);
+            node->lloc.offset);
+    if (node->attr[attr_struct]) { fprintf(symfile, "struct \"%s",
+                        current_struct>lexinfo.c_str(),"\" "); }
+    if (node->attr[attr_field]) { fprintf(symfile, "field {%s"+
+                        current_field->lexinfo.c_str(),"} "); }
+    if (node->attr[attr_function]) { fprintf(symfile, "function "); }
+    if (node->attr[attr_void]) { fprintf(symfile, "void "); }
+    if (node->attr[attr_int]) { fprintf(symfile, "int "); }
+    if (node->attr[attr_null]) { fprintf(symfile, "null "); }
+    if (node->attr[attr_string]) { fprintf(symfile, "string "); }
+    if (node->attr[attr_const]) { fprintf(symfile, "const "); }
+    if (node->attr[attr_array]) { fprintf(symfile, "array "); }
+    if (node->attr[attr_typeid]) { fprintf(symfile, "type_id "); }
+    if (node->attr[attr_vreg]) { fprintf(symfile, "vreg "); }
+    if (node->attr[attr_vaddr]) { fprintf(symfile, "vaddr "); }
+    if (node->attr[attr_variable]) { fprintf(symfile, "variable "); }
+    if (node->attr[attr_lval]) { fprintf(symfile, "lval "); }
+    if (node->attr[attr_param]) { fprintf(symfile, "param "); }
     fprintf(symfile, "\n");
 }
 
 astree* current_struct=nullptr;
+astree* current_field=nullptr;
 
 //upcoming switch statement for something
 
@@ -60,9 +77,9 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
 
         case TOK_NEW: {
             left=node->children[0];
-            for (i=0;i<15;i++)
+            for (size_t i=0;i<15;i++)
             {
-                node->attr[i]=left->attr[i];
+                if (left->attr[i]) { node->attr[i]=1; }
             }
             break;
         }
@@ -70,16 +87,19 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             node->attr[attr_typeid]=1;
             break; 
         }
-        case TOK_DECLID:
+        case TOK_DECLID: {
+            symbol_stack->define_ident(node);
+            break;
+        }
         case TOK_FIELD: {
             node->attr[attr_field]=1;
             left=node->children[0];
             if (left!=nullptr)
             {
                 left->attr[attr_field]=1;
-                for (i=0;i<7;i++)
+                for (size_t i=0;i<attr_function;i++)
                 {
-                    node->attr[i]=left->attr[i];
+                    if (left->attr[i]) { node->attr[i]=1; }
                 }
             }
             break; 
@@ -92,12 +112,31 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             else
             {
                 left->attr[attr_int]=1;
-                for (i=0;i<7;i++)
+                for (size_t i=0;i<attr_function;i++)
                 {
-                    node->attr[i]=left->attr[i];
+                    if (left->attr[i]) { node->attr[i]=1; }
                 }
             }
         case TOK_PROTOTYPE: {
+            left=node->children[0];
+            astree* left2=left->children[0];
+            current_field=left;
+
+            node->attr[attr_function]=1;
+            left->attr[attr_function]=1;
+            left2->attr[attr_function]=1;
+            printhelper(symfile, left2);
+
+            right=node->children[1];
+            while(right!=nullptr)
+            {
+                left=right->children[0];
+                left->attr[attr_field]=1;
+                left->attr[attr_variable]=1;
+                left->attr[attr_lval]=1;
+                printhelper(symfile, left);
+                right=right->children[1];
+            }
             break;
         }
 
@@ -116,9 +155,9 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
         case TOK_STRING: {
             left=node->children[0];
             left->attr[attr_string]=1;
-            for (i=0;i<7;i++)
+            for (size_t i=0;i<attr_function;i++)
             {
-                node->attr[i]=left->attr[i];
+                if (left->attr[i]) { node->attr[i]=1; }
             }
 
         }
@@ -135,9 +174,9 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
         }
         case TOK_NEWARRAY: {
             left=node->children[0];
-            for (i=0;i<7;i++)
+            for (size_t i=0;i<attr_function;i++)
             {
-                node->attr[i]=left->attr[i];
+                if (left->attr[i]) { node->attr[i]=1; }
             }
             node->attr[attr_array]=1;
             node->attr[attr_vreg]=1;
@@ -153,29 +192,42 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             node->attr[attr_lval]=1;
             break; 
         }
-        case TOK_IDENT:
-        case TOK_STRUCT: {
+        case TOK_IDENT:  {
+            s=lookup_ident(node);
+            if (s==nullptr)
+            {
+                s=search_symbol(symbol_table, node);
+            }
+            if (s==nullptr)
+            {
+                errprintf("Undefined identifier \n");
+            }
+            else
+            {
+                node->attr=s->attr;
+            }
+            break;
+        }
+        case TOK_STRUCT: 
+        {
             current_struct=node;
+
             left=node->children[0];
-            printhelp(symfile, node, block_nr);
-            fprintf(symfile, node->lexinfo.c_str() + " \""+left->lexinfo.c_str()+"\"");
+
+            node->attr[attr_struct]=1;
             left->attr[attr_struct]=1;
+            printhelper(symfile, left);
+
             insert_symbol(struct_table, left);
+            s=search_symbol(struct_table, left);
+            s->fields=new symbol_table;
+
             right=node->children[1];
             while(right!=nullptr)
             {
                 astree* leftchild=right->children[0];
-                fprintf(symfile, leftchild->lexinfo.c_str());
-                fprintf(symfile, right->loc.c_str());
-                fprintf(symfile, "field {"+ left->lexinfo.c_str()+"}");
-                if (search_table(struct_table, right) == search_table(struct_table, left))
-                {
-                    fprintf(symfile, "struct "+right->lexinfo.c_str());
-                }
-                else
-                {
-                    fprintf(symfile, right->lexinfo.c_str());
-                }
+                printhelper(leftchild);
+                right=right->children[1];
             }
             break;
         }
