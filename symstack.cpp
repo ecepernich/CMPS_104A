@@ -9,7 +9,7 @@
 #include "symtable.h"
 #include "symstack.h"
 #include "astree.h"
-#include "typcheck.h"
+#include "typecheck.h"
 #include <iostream>
 
 

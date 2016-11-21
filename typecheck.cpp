@@ -8,6 +8,7 @@
 #include "auxlib.h"
 #include "symstack.h"
 #include "symtable.h"
+#include "typecheck.h"
 
 void printhelper(FILE* symfile, astree* node)
 {
@@ -116,7 +117,7 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             }
             break; 
         }
-        case TOK_FUNCTION: //////////////////////////////////////////////////////
+         //////////////////////////////////////////////////////
         case TOK_INT: {
             left=node->children[0];
             if (left==nullptr)
@@ -131,6 +132,7 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             }
             break;
         }
+        case TOK_FUNCTION:
         case TOK_PROTOTYPE: {
             left=node->children[0];
             astree* left2=left->children[0];
@@ -151,10 +153,23 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
                 printhelper(symfile, left);
                 right=right->children[1];
             }
+
+
             break;
         }
 
         case TOK_CALL: {      ///////////////////////////////////////////////////////
+
+
+            node->attr[attr_call]=1; ////2g
+            node-attr=node->children[0]->sym->attr;
+            node->attr[attr_vreg]=1;
+            node->attr.flip(attr_function);
+            node->typename=node->children[0]->sym0>ttname
+
+
+            //output: puts (loc) {0} void function 
+            //          s (loc) {0} string const lval variable param
 
             //finding symbols???
             break;

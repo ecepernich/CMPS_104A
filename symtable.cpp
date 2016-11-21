@@ -10,7 +10,7 @@
 //
 #include "symtable.h"
 #include "astree.h"
-#include "typcheck.h"
+#include "typecheck.h"
 
 symbol* new_symbol(astree* node)
 {
