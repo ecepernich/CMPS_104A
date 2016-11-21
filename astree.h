@@ -6,6 +6,7 @@
 #ifndef __ASTREE_H__
 #define __ASTREE_H__
 
+#include <bitset>
 #include <string>
 #include <vector>
 using namespace std;

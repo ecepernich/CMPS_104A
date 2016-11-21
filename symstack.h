@@ -7,6 +7,10 @@
 
 //struct symstack
 
+
+
+
+
 extern size_t next_block;
 
 class symstack

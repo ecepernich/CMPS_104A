@@ -143,15 +143,24 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             left2->attr[attr_function]=1;
             printhelper(symfile, left2);
 
-            right=node->children[1]->children[0];
+            middle=node->children[1]->children[0];
             while(right!=nullptr)
             {
-                left=right->children[0];
+                left=middle->children[0];
                 left->attr[attr_param]=1;
                 left->attr[attr_variable]=1;
                 left->attr[attr_lval]=1;
                 printhelper(symfile, left);
-                right=right->children[1];
+                middle=middle->children[1];
+            }
+
+            if (node->symbol==TOK_PROTOTYPE)
+            {
+                break;
+            }
+            else
+            {
+
             }
 
 

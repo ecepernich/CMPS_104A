@@ -11,6 +11,7 @@
 #include "astree.h"
 #include "typecheck.h"
 #include <iostream>
+#include <unordered_map>
 
 
 next_block=1;

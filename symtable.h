@@ -7,6 +7,7 @@
 #include <vector>
 #include <bitset>
 #include <utility>
+#include <string>
 
 
 //taken from pdf 2.2
