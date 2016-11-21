@@ -220,8 +220,8 @@ call           : TOK_IDENT '(' ')'             { $2->symbol=TOK_VOID;
                                         $$ = $2->adopt($1, $3); }
                ;
 
-callrepeat     : callrepeat ',' expr        { $$ = $1->adopt($2); 
-                                              destroy($3); }
+callrepeat     : callrepeat ',' expr        { $$ = $1->adopt($3); 
+                                              destroy($2); }
                | expr                       { $$ = $1; }
                ;
 
