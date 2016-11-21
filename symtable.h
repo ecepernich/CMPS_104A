@@ -10,6 +10,12 @@
 #include <string>
 
 
+#include <stdio.h>
+#include <map>
+
+#include "astree.h"
+
+
 //taken from pdf 2.2
 struct symbol;
 using symbol_table = unordered_map<const string*, symbol*>;
