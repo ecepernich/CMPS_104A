@@ -10,21 +10,21 @@
 #include "symstack.h"
 #include "astree.h"
 #include "typcheck.h"
+#include <iostream>
 
 
 next_block=1;
 
 void symstack::enter_block()
 {
-	symbol_stack.pushback(nullptr); //add nullptr 
-	symbol_stack.pushback(next_block); //add next_block
-	next_block++; //move forward for block#
+	next_block++;
+	symbol_stack.push_back(nullptr); //adds null pointer at end of vector
 }
 
 void symstack::leave_block()
 {
 	symbol_stack.popback(); //pop next_block
-	next_block--; //move back in block# ????
+	//next_block--; //move back in block# ???? Don't think we habe to move back a block 
 }
 
 void symstack::define_ident(astree* node)
@@ -52,7 +52,7 @@ symbol* symstack::search_ident(astree* node)
 		{ }
 		else
 		{
-			symbol* s=search_symbol(symbol_table, tree);
+			symbol* s =search_symbol(symbol_table, node);
 			// some search function (not this one)
 			if (s != nullptr)
 			{
