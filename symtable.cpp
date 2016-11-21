@@ -18,9 +18,6 @@ symbol* new_symbol(astree* node)
         sym->attr = node->attr;
 	    sym->fields = nullptr;
 	    sym->lloc = node->lloc;
-        //sym->filenr = node->filenr;
-        //sym->linenr = node->linenr;
-        //sym->offset = node->offset;
         //would parameters be null?
         //sym->parameters = node->parameters; parameters is not needed cause its called in .h file
         sym->block_nr = node->block_nr;

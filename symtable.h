@@ -15,7 +15,7 @@ using symbol_table = unordered_map<const string*, symbol*>;
 using symbol_entry =pair<const string*, symbol*>;
 //each entry in the table is a pair<const string*,symbol*>
 struct symbol {
-        attr_bitset attributes;
+        attr_bitset attr;
         symbol_table* fields;
         location lloc;
         size_t block_nr;
@@ -24,4 +24,4 @@ struct symbol {
 
 symbol* new_sym(astree* node);	
 void insert_symbol(symbol_table* symbtab, astree* node);
-search_symbol(symbol_table* symtab, astree* node);
+symbol* search_symbol(symbol_table* symtab, astree* node);

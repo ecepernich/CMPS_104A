@@ -72,8 +72,10 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
 
         case TOK_RETURN: break;
         case TOK_RETURNVOID: break;
-        case TOK_PARAM:  break;
+        case TOK_PARAM:  {
 
+            break;
+        }
 
         case TOK_NEW: {
             left=node->children[0];
@@ -104,8 +106,8 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             }
             break; 
         }
-        case TOK_FUNCTION:
-        case TOK_INT:
+        case TOK_FUNCTION: //////////////////////////////////////////////////////
+        case TOK_INT: {
             left=node->children[0];
             if (left==nullptr)
                 {break;}
@@ -117,6 +119,8 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
                     if (left->attr[i]) { node->attr[i]=1; }
                 }
             }
+            break;
+        }
         case TOK_PROTOTYPE: {
             left=node->children[0];
             astree* left2=left->children[0];
@@ -127,11 +131,11 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             left2->attr[attr_function]=1;
             printhelper(symfile, left2);
 
-            right=node->children[1];
+            right=node->children[1]->children[0];
             while(right!=nullptr)
             {
                 left=right->children[0];
-                left->attr[attr_field]=1;
+                left->attr[attr_param]=1;
                 left->attr[attr_variable]=1;
                 left->attr[attr_lval]=1;
                 printhelper(symfile, left);
@@ -140,7 +144,7 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             break;
         }
 
-        case TOK_CALL: {
+        case TOK_CALL: {      ///////////////////////////////////////////////////////
 
             //finding symbols???
             break;
@@ -159,7 +163,7 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             {
                 if (left->attr[i]) { node->attr[i]=1; }
             }
-
+            break;
         }
         case TOK_ARRAY: {
             left=node->children[0];
@@ -208,8 +212,7 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             }
             break;
         }
-        case TOK_STRUCT: 
-        {
+        case TOK_STRUCT: {
             current_struct=node;
 
             left=node->children[0];
