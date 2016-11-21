@@ -401,6 +401,7 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
         }
         default:
         {
+            errprintf("Not a valid TOK.\n");
             break;
         }
     }

@@ -4,3 +4,9 @@
 // Assignment 4: .sym file
 
 
+#include "auxlib.h"
+#include "lyutils.h"
+#include "symstack.h"
+
+void typecheck(FILE* symfile, astree* node, symstack* symbol_stack, 
+	symtable* symbol_table);
