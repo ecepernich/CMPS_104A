@@ -6,10 +6,8 @@
 //PDF part 3.2 This will help to build the symbol table 
 //nested hashtable?
 
-#include "symtable.h"
 #include "symstack.h"
 #include "astree.h"
-#include "typecheck.h"
 #include <iostream>
 #include <unordered_map>
 
