@@ -9,6 +9,7 @@
 #include "symstack.h"
 #include "symtable.h"
 #include "typecheck.h"
+#include "lyutils.h"
 
 void printhelper(FILE* symfile, astree* node)
 {
