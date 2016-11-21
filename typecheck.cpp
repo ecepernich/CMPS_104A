@@ -16,23 +16,23 @@ void printhelper(FILE* symfile, astree* node)
     fprintf (symfile, "%s (%zd.%zd.%zd) \n",
             left->lexinfo->c_str(), node->lloc.filenr, node->lloc.linenr, 
             node->lloc.offset);
-    if (node->attr[attr_struct]) { fprintf(symfile, "struct \"%s",
+    if (node->attr[ATTR_struct]) { fprintf(symfile, "struct \"%s",
                         current_struct>lexinfo.c_str(),"\" "); }
-    if (node->attr[attr_field]) { fprintf(symfile, "field {%s"+
+    if (node->attr[ATTR_field]) { fprintf(symfile, "field {%s"+
                         current_field->lexinfo.c_str(),"} "); }
-    if (node->attr[attr_function]) { fprintf(symfile, "function "); }
-    if (node->attr[attr_void]) { fprintf(symfile, "void "); }
-    if (node->attr[attr_int]) { fprintf(symfile, "int "); }
-    if (node->attr[attr_null]) { fprintf(symfile, "null "); }
-    if (node->attr[attr_string]) { fprintf(symfile, "string "); }
-    if (node->attr[attr_const]) { fprintf(symfile, "const "); }
-    if (node->attr[attr_array]) { fprintf(symfile, "array "); }
-    if (node->attr[attr_typeid]) { fprintf(symfile, "type_id "); }
-    if (node->attr[attr_vreg]) { fprintf(symfile, "vreg "); }
-    if (node->attr[attr_vaddr]) { fprintf(symfile, "vaddr "); }
-    if (node->attr[attr_variable]) { fprintf(symfile, "variable "); }
-    if (node->attr[attr_lval]) { fprintf(symfile, "lval "); }
-    if (node->attr[attr_param]) { fprintf(symfile, "param "); }
+    if (node->attr[ATTR_function]) { fprintf(symfile, "function "); }
+    if (node->attr[ATTR_void]) { fprintf(symfile, "void "); }
+    if (node->attr[ATTR_int]) { fprintf(symfile, "int "); }
+    if (node->attr[ATTR_null]) { fprintf(symfile, "null "); }
+    if (node->attr[ATTR_string]) { fprintf(symfile, "string "); }
+    if (node->attr[ATTR_const]) { fprintf(symfile, "const "); }
+    if (node->attr[ATTR_array]) { fprintf(symfile, "array "); }
+    if (node->attr[ATTR_typeid]) { fprintf(symfile, "type_id "); }
+    if (node->attr[ATTR_vreg]) { fprintf(symfile, "vreg "); }
+    if (node->attr[ATTR_vaddr]) { fprintf(symfile, "vaddr "); }
+    if (node->attr[ATTR_variable]) { fprintf(symfile, "variable "); }
+    if (node->attr[ATTR_lval]) { fprintf(symfile, "lval "); }
+    if (node->attr[ATTR_param]) { fprintf(symfile, "param "); }
     fprintf(symfile, "\n");
 }
 
@@ -97,7 +97,7 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             break;
         }
         case TOK_TYPEID: {
-            node->attr[attr_typeid]=1;
+            node->attr[ATTR_typeid]=1;
             break; 
         }
         case TOK_DECLID: {
@@ -105,11 +105,11 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             break;
         }
         case TOK_FIELD: {
-            node->attr[attr_field]=1;
+            node->attr[ATTR_field]=1;
             left=node->children[0];
             if (left!=nullptr)
             {
-                left->attr[attr_field]=1;
+                left->attr[ATTR_field]=1;
                 for (size_t i=0;i<attr_function;i++)
                 {
                     if (left->attr[i]) { node->attr[i]=1; }
@@ -124,8 +124,8 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
                 {break;}
             else
             {
-                left->attr[attr_int]=1;
-                for (size_t i=0;i<attr_function;i++)
+                left->attr[ATTR_int]=1;
+                for (size_t i=0;i<ATTR_function;i++)
                 {
                     if (left->attr[i]) { node->attr[i]=1; }
                 }
@@ -138,18 +138,18 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             astree* left2=left->children[0];
             current_field=left;
 
-            node->attr[attr_function]=1;
-            left->attr[attr_function]=1;
-            left2->attr[attr_function]=1;
+            node->attr[ATTR_function]=1;
+            left->attr[ATTR_function]=1;
+            left2->attr[ATTR_function]=1;
             printhelper(symfile, left2);
 
             middle=node->children[1]->children[0];
             while(right!=nullptr)
             {
                 left=middle->children[0];
-                left->attr[attr_param]=1;
-                left->attr[attr_variable]=1;
-                left->attr[attr_lval]=1;
+                left->attr[ATTR_param]=1;
+                left->attr[ATTR_variable]=1;
+                left->attr[ATTR_lval]=1;
                 printhelper(symfile, left);
                 middle=middle->children[1];
             }
@@ -170,10 +170,10 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
         case TOK_CALL: {      ///////////////////////////////////////////////////////
 
 
-            node->attr[attr_call]=1; ////2g
+            node->attr[ATTR_call]=1; ////2g
             node-attr=node->children[0]->sym->attr;
-            node->attr[attr_vreg]=1;
-            node->attr.flip(attr_function);
+            node->attr[ATTR_vreg]=1;
+            node->attr.flip(ATTR_function);
             node->typename=node->children[0]->sym0>ttname
 
 
@@ -187,13 +187,13 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
         case TOK_BOOL:    break;
         case TOK_VOID: {
             left=node->children[0];
-            left->attr[attr_void]=1;
+            left->attr[ATTR_void]=1;
             break;
         }
         case TOK_STRING: {
             left=node->children[0];
-            left->attr[attr_string]=1;
-            for (size_t i=0;i<attr_function;i++)
+            left->attr[ATTR_string]=1;
+            for (size_t i=0;i<ATTR_function;i++)
             {
                 if (left->attr[i]) { node->attr[i]=1; }
             }
@@ -201,33 +201,33 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
         }
         case TOK_ARRAY: {
             left=node->children[0];
-            left->attr[attr_array]=1;
+            left->attr[ATTR_array]=1;
             astree* leftleft=nullptr;
             if (left->children[0]!=nullptr)
             {
                 leftleft=left->children[0];
             }
-            leftleft->attr[attr_array]=1;
+            leftleft->attr[ATTR_array]=1;
             break;
         }
         case TOK_NEWARRAY: {
             left=node->children[0];
-            for (size_t i=0;i<attr_function;i++)
+            for (size_t i=0;i<ATTR_function;i++)
             {
                 if (left->attr[i]) { node->attr[i]=1; }
             }
-            node->attr[attr_array]=1;
-            node->attr[attr_vreg]=1;
+            node->attr[ATTR_array]=1;
+            node->attr[ATTR_vreg]=1;
 
             break;
         }
         case TOK_VOID: {
             left=node->children[0];
-            left->attr[attr_void]=1;
+            left->attr[ATTR_void]=1;
         }
         case TOK_INDEX: {
-            node->attr[attr_vaddr]=1;
-            node->attr[attr_lval]=1;
+            node->attr[ATTR_vaddr]=1;
+            node->attr[ATTR_lval]=1;
             break; 
         }
         case TOK_IDENT:  {
@@ -251,8 +251,8 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
 
             left=node->children[0];
 
-            node->attr[attr_struct]=1;
-            left->attr[attr_struct]=1;
+            node->attr[ATTR_struct]=1;
+            left->attr[ATTR_struct]=1;
             printhelper(symfile, left);
 
             insert_symbol(struct_table, left);
@@ -273,8 +273,8 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
         case TOK_WHILE:    break;
         case '+':
         case '-': {
-            node->attr[attr_int]=1;
-            node->attr[attr_vreg]=1;
+            node->attr[ATTR_int]=1;
+            node->attr[ATTR_vreg]=1;
             left=node->children[0];
             right=node->children[1];
             if (left==nullptr)
@@ -283,19 +283,19 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             }
             if (right==nullptr) //typecheck +/- int
             {
-                if (!left->attr[attr_int])
+                if (!left->attr[ATTR_int])
                 {
                     errprintf("Error: not type int.\n");
                 }
                 else
                 {
-                    node->attr[attr_vreg]=1;
-                    node->attr[attr_int]=1;
+                    node->attr[ATTR_vreg]=1;
+                    node->attr[ATTR_int]=1;
                 }
             }
             else //typecheck int +/- int
             {
-                if (!left->attr[attr_int] || !right->attr[attr_int])
+                if (!left->attr[ATTR_int] || !right->attr[ATTR_int])
                 {
                     errprintf("Error: not type int & int.\n");
                 }
@@ -305,8 +305,8 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
         case '*':
         case '/':
         case '%': {
-            node->attr[attr_int]=1;
-            node->attr[attr_vreg]=1;
+            node->attr[ATTR_int]=1;
+            node->attr[ATTR_vreg]=1;
             left=node->children[0];
             right=node->children[1];
             if (right==nullptr || left==nullptr) //typecheck 2 ints
@@ -315,7 +315,7 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             }
             else //typecheck int *///% int
             {
-                if (!left->attr[attr_int] || !right->attr[attr_int])
+                if (!left->attr[ATTR_int] || !right->attr[ATTR_int])
                 {
                     errprintf("Error: not type int & int.\n");
                 }
@@ -328,14 +328,14 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             {
                 break;
             }
-            if (!left->attr[attr_int])
+            if (!left->attr[ATTR_int])
             {
                 errprintf("Error: not type int.\n");
             }
             else
             {
-                node->attr[attr_vreg]=1;
-                node->attr[attr_int]=1;
+                node->attr[ATTR_vreg]=1;
+                node->attr[ATTR_int]=1;
             }
             break;
         }
@@ -351,7 +351,7 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             if (primcheck(left, right))
             {
                 //node->attr[attr_bool]=1;
-                node->attr[attr_vreg]=1;                
+                node->attr[ATTR_vreg]=1;                
             }
             elseif ()
             else
@@ -369,7 +369,7 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             if (primcheck(left, right))
             {
                 //node->attr[attr_bool]=1;
-                node->attr[attr_vreg]=1;                
+                node->attr[ATTR_vreg]=1;                
             }
             else
             {
@@ -379,23 +379,23 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
         }
 
         case TOK_INTCON: {
-            node->attr[attr_int]=1;
-            node->attr[attr_const]=1;
+            node->attr[ATTR_int]=1;
+            node->attr[ATTR_const]=1;
             break;
         }
         case TOK_CHARCON: {
-            node->attr[attr_int]=1;
-            node->attr[attr_const]=1;
+            node->attr[ATTR_int]=1;
+            node->attr[ATTR_const]=1;
             break;
         }
         case TOK_STRINGCON: {
-            node->attr[attr_string]=1;
-            node->attr[attr_const]=1;
+            node->attr[ATTR_string]=1;
+            node->attr[ATTR_const]=1;
             break;
         }
         case TOK_NULL: {
-            node->attr[attr_null]=1;
-            node->attr[attr_const]=1;
+            node->attr[ATTR_null]=1;
+            node->attr[ATTR_const]=1;
             break;
         }
         default:
