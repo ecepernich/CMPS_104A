@@ -28,7 +28,7 @@ symbol* new_symbol(astree* node)
 void insert_symbol(symbol_table* symtab, astree* node){
         symbol* sym = new_symbol(node);
 	symbol_entry* entry = < node->lexinfo, sym > //lexinfo is the pointer to stringset in astree.cpp
-        symtab->insert(ry);
+        symtab->insert(entry);
 }
 
 //need lookup function 
@@ -43,6 +43,10 @@ symbol* search_symbol(symbol_table* symtab, astree* node){
         return entry.second; //want it to return the symbol
 
 }
-        
-//3. get name for symbol from typecheck
-// I am not really sure what to do here 
+  
+//look up identifier name
+symbol* search_type_name(symbol_table* symtab, astree* node){
+        if(symtab == nullptr || node == null)
+                return nullptr;
+        symbol_entry
+}      

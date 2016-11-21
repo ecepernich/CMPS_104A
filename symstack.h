@@ -17,6 +17,6 @@ class symstack
 	vector <symbol_table> symbol_stack;
 	void enter_block();
 	void leave_block();
-	void define_ident(astree* tree);
-	symbol* search_ident(astree* tree);
+	void define_ident(astree* node);
+	symbol* search_ident(astree* node);
 };

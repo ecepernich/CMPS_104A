@@ -25,3 +25,4 @@ struct symbol {
 symbol* new_sym(astree* node);	
 void insert_symbol(symbol_table* symbtab, astree* node);
 symbol* search_symbol(symbol_table* symtab, astree* node);
+symbol* search_type_name(symbol_table* symtab, astree* node);
