@@ -11,8 +11,8 @@ MKDEPS    = g++ -MM -std=gnu++14
 GRIND     = valgrind --leak-check=full --show-reachable=yes
 BISON = bison --defines=${PARSEHDR} --output=${PARCECPP}
 
-HDRSRC = astree.h auxlib.h lyutils.h string_set.h
-CPPSRC = astree.cpp auxlib.cpp lyutils.cpp string_set.cpp main.cpp
+HDRSRC = astree.h auxlib.h lyutils.h string_set.h typecheck.h symstack.h symtable.h
+CPPSRC = astree.cpp auxlib.cpp lyutils.cpp string_set.cpp main.cpp typecheck.cpp symstack.cpp symtable.cpp
 LSOURCES  = scanner.l
 YSOURCES  = parser.y 
 HYGEN     = yyparse.h 
