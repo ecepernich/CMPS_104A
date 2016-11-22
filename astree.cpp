@@ -116,7 +116,8 @@ const char* compare(check* all, check* current)
 {
    if (all->lexinfo->c_str()==current->lexinfo->c_str())
    {
-      case(all->param)
+      int swap=all->param;
+      case(swap)
       {
          case TOK_STRING: {
             return "string ";
@@ -134,7 +135,7 @@ const char* compare(check* all, check* current)
    {
       for (check* child: all->list) 
       {
-         check::compare(child, current);
+         compare(child, current);
       }
    }
    return "";
