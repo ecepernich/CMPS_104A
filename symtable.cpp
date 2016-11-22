@@ -20,11 +20,11 @@ symbol* new_symbol(astree* node)
 {
         symbol* sym = new symbol();
         sym->attr = node->attr;
-	    sym->fields = nullptr;
-	    sym->lloc = node->lloc;
+        sym->fields = nullptr;
+        sym->lloc = node->lloc;
         //would parameters be null?
         //sym->parameters = node->parameters; parameters is not needed cause its called in .h file
-        sym->block_nr = node->block_nr;
+        sym->block_nr=node->block_nr;
         return sym;
 
 
@@ -32,14 +32,15 @@ symbol* new_symbol(astree* node)
 void insert_symbol(symbol_table* symtab, astree* node){
         symbol* sym = new_symbol(node);
         string* lexinfo = (string *)node->lexinfo;
-	symbol_entry* entry = < node->lexinfo, sym > //lexinfo is the pointer to stringset in astree.cpp
+        symbol_entry* entry = < node->lexinfo, sym > //lexinfo is the pointer to stringset in astree.cpp
         symtab->insert(entry);
 }
 
 //need lookup function 
 
 
-symbol* search_symbol(symbol_table* symtab, astree* node){
+symbol* search_symbol(symbol_table* symtab, astree* node)
+{
         string* lexinfo = (string *)node->lexinfo; //after create symbol
         if(!symtab->count(lexinfo)) //if we can't find the symbol return null
                 return nullptr;
@@ -52,11 +53,11 @@ symbol* search_symbol(symbol_table* symtab, astree* node){
 //look up identifier name
 symbol* search_type_name(symbol_table* symtab, astree* node)
 {
-        if(symtab == nullptr || node == nullptr) return nullptr;
+        if(symtab == nullptr || node == nullptr) { return nullptr; }
         string* type_name = (string *) node->type_name;
         if(!table_name->count(node->lexinfo)==0); {}//number of elements in the range 
                 //[first,last] that compare equal to val
         symbol_entry* entry = *symtab->find<type_name>;
         return entry.second;
 
-}      
+}
