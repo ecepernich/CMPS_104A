@@ -20,9 +20,10 @@ struct location {
 
 struct check {
    const string* lexinfo;
+   int param;
    vector<check*> list;
 
-   check(const char* lexinfo);
+   check(const char* lexinfo, int param);
    void add(check* newcheck);
    bool compare(check* all, check* current);
 };

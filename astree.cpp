@@ -100,9 +100,10 @@ void errllocprintf (const location& lloc, const char* format,
               buffer);
 }
 
-check::check (const char* info) 
+check::check (const char* info, int param_) 
 {
    lexinfo = string_set::intern (info);
+   param=param_;
    // vector defaults to empty -- no children
 }
 
