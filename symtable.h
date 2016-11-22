@@ -15,7 +15,6 @@
 
 #include "astree.h"
 
-
 struct symbol {
         attr_bitset attr;
         symbol_table* fields;
