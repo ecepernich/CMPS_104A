@@ -217,6 +217,8 @@ int main (int argc, char** argv) {
    }
    astree::dump(astfile, parser::root);
    fclose(astfile);
+   symfile=fopen(sym_name,"w");
+   fclose(symfile);
 
    int closepipe=pclose(yyin); //close the pipe for the file
    eprint_status(cpp_line.c_str(), closepipe); //check command status
