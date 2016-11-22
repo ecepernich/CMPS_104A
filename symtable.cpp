@@ -8,13 +8,14 @@
 //2. search symbol table
 //3. get type name for symbol from typecheck
 //
+
 #include "symtable.h"
-#include "astree.h"
 #include <bitset>
 #include <iostream>
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include "astree.h"
 
 symbol* new_symbol(astree* node)
 {
@@ -26,13 +27,13 @@ symbol* new_symbol(astree* node)
         //sym->parameters = node->parameters; parameters is not needed cause its called in .h file
         sym->block_nr=node->block_nr;
         return sym;
-
+}
 
 //need insert function 
 void insert_symbol(symbol_table* symtab, astree* node){
         symbol* sym = new_symbol(node);
-        string* lexinfo = (string *)node->lexinfo;
-        symbol_entry* entry = < node->lexinfo, sym > //lexinfo is the pointer to stringset in astree.cpp
+        //string* lexinfo = (string *)node->lexinfo;
+        symbol_entry entry = symbol_entry (const_cast<string*>(node->lexinfo), sym);  //lexinfo is the pointer to stringset in astree.cpp
         symtab->insert(entry);
 }
 
@@ -45,8 +46,8 @@ symbol* search_symbol(symbol_table* symtab, astree* node)
         if(!symtab->count(lexinfo)) //if we can't find the symbol return null
                 return nullptr;
         symbol* sym = new_symbol(node); //and create a new symbol 
-        symbol_entry* entry = < node->lexinfo, sym >; //add it as an entry 
-        return entry.second; //want it to return the symbol
+        symbol_entry entry = symbol_entry(const_cast<string*> (node->lexinfo), sym ); //add it as an entry 
+       return entry.second; //want it to return the symbol
 
 }
   

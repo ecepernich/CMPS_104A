@@ -22,7 +22,7 @@ void printhelper(FILE* symfile, astree* node)
             node->lloc.offset);
     if (node->attr[ATTR_struct]) { fprintf(symfile, "struct \"%s\" ",
                         current_struct->lexinfo->c_str()); }
-    if (node->attr[ATTR_field]) { fprintf(symfile, "field {%s} "+
+    if (node->attr[ATTR_field]) { fprintf(symfile, "field {%s} ",
                         current_field->lexinfo->c_str()); }
     if (node->attr[ATTR_function]) { fprintf(symfile, "function "); }
     if (node->attr[ATTR_void]) { fprintf(symfile, "void "); }
@@ -55,10 +55,10 @@ bool primcheck(astree* left, astree* right)
 
 //upcoming switch statement for something
 
-void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, symtable* symbol_table)
+void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, symbol_table* symbol_table)
 {
 
-    int block_nr=0;
+    //int block_nr=0;
     astree* left=nullptr;
     astree* right=nullptr;
     symbol* s;
@@ -85,14 +85,14 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
 
         case TOK_RETURN: break;
         case TOK_RETURNVOID: break;
-        case TOK_PARAM:  {
+        case TOK_PARAMLIST:  {
 
             break;
         }
 
         case TOK_NEW: {
             left=node->children[0];
-            for (size_t i=0;i<attr_bitset_size;i++)
+            for (size_t i=0;i<ATTR_bitset_size;i++)
             {
                 if (left->attr[i]) { node->attr[i]=1; }
             }
@@ -186,7 +186,7 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             break;
         }
         case TOK_CHAR:    break;
-        case TOK_BOOL:    break;
+        //case TOK_BOOL:    break;
         case TOK_VOID: {
             left=node->children[0];
             left->attr[ATTR_void]=1;
@@ -229,7 +229,7 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             break; 
         }
         case TOK_IDENT:  {
-            s=search_ident(node);
+            s=symbol_stack->search_ident(node);
             if (s==nullptr)
             {
                 s=search_symbol(symbol_table, node);
@@ -253,9 +253,9 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             left->attr[ATTR_struct]=1;
             printhelper(symfile, left);
 
-            insert_symbol(struct_table, left);
-            s=search_symbol(struct_table, left);
-            s->fields=new symbol_table;
+            insert_symbol(symbol_table, left);
+            s = search_symbol(symbol_table, left);
+            //s->fields=new symbol_table;
 
             right=node->children[1];
             while(right!=nullptr)
@@ -404,7 +404,7 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
 }
 
 
-void typecheck(FILE* symfile, astree* parseroot, symstack* symbol_stack, symtable* symbol_table)
+void typecheck(FILE* symfile, astree* parseroot, symstack* symbol_stack, symbol_table* symbol_table)
 {
     for (astree* child: parseroot->children) 
     {

@@ -3,6 +3,10 @@
 // CMPS 104A Fall 2016
 // Assignment 4: .sym file
 
+#ifndef _SYMTABLE_H
+#define _SYMTABLE_H
+
+#include "astree.h"
 #include <unordered_map>
 #include <vector>
 #include <bitset>
@@ -12,13 +16,13 @@
 
 //#include <stdio.h>
 
-#include "astree.h"
+
 
 struct symbol;
 using symbol_table=unordered_map<const string*, symbol*>;
 using symbol_entry=pair<const string*, symbol*>;
 
-struct symbol {
+struct symbol{
         attr_bitset attr;
         symbol_table* fields;
         location lloc;
@@ -33,3 +37,4 @@ symbol* new_symbol(astree* node);
 void insert_symbol(symbol_table* symbtab, astree* node);
 symbol* search_symbol(symbol_table* symtab, astree* node);
 symbol* search_type_name(symbol_table* symtab, astree* node);
+#endif

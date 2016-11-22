@@ -6,8 +6,9 @@
 //PDF part 3.2 This will help to build the symbol table 
 //nested hashtable?
 
-#include "symstack.h"
 #include "astree.h"
+#include "symstack.h"
+#include "symtable.h"
 #include <iostream>
 #include <unordered_map>
 
@@ -20,7 +21,7 @@ void symstack::enter_block()
 
 void symstack::leave_block()
 {
-	symbol_stack.popback(); //pop next_block
+	symbol_stack.pop_back(); //pop next_block
 	//next_block--; //move back in block# ???? Don't think we habe to move back a block 
 }
 

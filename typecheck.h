@@ -9,4 +9,4 @@
 #include "symstack.h"
 
 void typecheck(FILE* symfile, astree* node, symstack* symbol_stack, 
-	symtable* symbol_table);
+	symbol_table* symbol_table);
