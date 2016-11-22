@@ -7,6 +7,7 @@
 #define __ASTREE_H__
 
 #include "auxlib.h"
+#include "symtable.h"
 
 #include <bitset>
 #include <string>
