@@ -25,7 +25,6 @@ struct check {
 
    check(const char* lexinfo, int param);
    void add(check* newcheck);
-   bool compare(check* all, check* current);
 };
 
 
@@ -52,5 +51,8 @@ struct astree {
 void destroy (astree* tree1, astree* tree2 = nullptr);
 
 void errllocprintf (const location&, const char* format, const char*);
+
+const char* compare(check* all, check* current);
+
 
 #endif

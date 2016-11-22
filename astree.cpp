@@ -112,11 +112,23 @@ void check::add(check* newcheck)
    if (newcheck != nullptr) list.push_back (newcheck);
 }
 
-bool check::compare(check* all, check* current)
+const char* check::compare(check* all, check* current)
 {
-   if (all->lexinfo==current->lexinfo)
+   if (all->lexinfo->c_str()==current->lexinfo->c_str())
    {
-      return true;
+      case(all->param)
+      {
+         case TOK_STRING: {
+            return "string ";
+         }
+         case TOK_INT: {
+            return "int "
+         }
+         case TOK_VOID:
+         {
+            return "void ";
+         }
+      }
    }
    else
    {
@@ -125,5 +137,5 @@ bool check::compare(check* all, check* current)
          check::compare(child, current);
       }
    }
-   return false;
+   return "";
 }
