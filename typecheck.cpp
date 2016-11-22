@@ -21,9 +21,9 @@ void printhelper(FILE* symfile, astree* node)
             left->lexinfo->c_str(), node->lloc.filenr, node->lloc.linenr, 
             node->lloc.offset);
     if (node->attr[ATTR_struct]) { fprintf(symfile, "struct \"%s",
-                        current_struct->lexinfo.c_str(),"\" "); }
+                        current_struct->lexinfo->c_str(),"\" "); }
     if (node->attr[ATTR_field]) { fprintf(symfile, "field {%s"+
-                        current_field->lexinfo.c_str(),"} "); }
+                        current_field->lexinfo->c_str(),"} "); }
     if (node->attr[ATTR_function]) { fprintf(symfile, "function "); }
     if (node->attr[ATTR_void]) { fprintf(symfile, "void "); }
     if (node->attr[ATTR_int]) { fprintf(symfile, "int "); }
