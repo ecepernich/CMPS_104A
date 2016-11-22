@@ -11,6 +11,9 @@
 #include "typecheck.h"
 #include "lyutils.h"
 
+astree* current_struct=nullptr;
+astree* current_field=nullptr;
+
 void printhelper(FILE* symfile, astree* node)
 {
     astree* left=node->children[0];
@@ -18,7 +21,7 @@ void printhelper(FILE* symfile, astree* node)
             left->lexinfo->c_str(), node->lloc.filenr, node->lloc.linenr, 
             node->lloc.offset);
     if (node->attr[ATTR_struct]) { fprintf(symfile, "struct \"%s",
-                        current_struct>lexinfo.c_str(),"\" "); }
+                        current_struct->lexinfo.c_str(),"\" "); }
     if (node->attr[ATTR_field]) { fprintf(symfile, "field {%s"+
                         current_field->lexinfo.c_str(),"} "); }
     if (node->attr[ATTR_function]) { fprintf(symfile, "function "); }
@@ -39,7 +42,7 @@ void printhelper(FILE* symfile, astree* node)
 
 bool primcheck(astree* left, astree* right)
 {
-    for (size_t i=0;i<attr_function;i++)
+    for (size_t i=0;i<ATTR_function;i++)
     {
         if (left->attr[i]==1 && right->attr[i]==1)
         {
@@ -49,8 +52,6 @@ bool primcheck(astree* left, astree* right)
     return false;
 }
 
-astree* current_struct=nullptr;
-astree* current_field=nullptr;
 
 //upcoming switch statement for something
 
@@ -111,7 +112,7 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             if (left!=nullptr)
             {
                 left->attr[ATTR_field]=1;
-                for (size_t i=0;i<attr_function;i++)
+                for (size_t i=0;i<ATTR_function;i++)
                 {
                     if (left->attr[i]) { node->attr[i]=1; }
                 }

@@ -7,12 +7,6 @@
 
 //struct symstack
 
-
-
-
-#ifndef __symtable_h
-#define __symtable_h
-
 #include "symtable.h"
 
 
