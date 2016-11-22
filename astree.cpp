@@ -117,7 +117,7 @@ const char* compare(check* all, check* current)
    if (all->lexinfo->c_str()==current->lexinfo->c_str())
    {
       int swap=all->param;
-      case(swap)
+      switch(swap)
       {
          case TOK_STRING: {
             return "string ";
