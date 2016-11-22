@@ -18,8 +18,8 @@ void printhelper(FILE* symfile, astree* node)
 {
     astree* left=node->children[0];
     fprintf (symfile, "%s (%zd.%zd.%zd) \n",
-            left->lexinfo->c_str(), node->lloc.filenr, node->lloc.linenr, 
-            node->lloc.offset);
+        left->lexinfo->c_str(), node->lloc.filenr, node->lloc.linenr, 
+        node->lloc.offset);
     if (node->attr[ATTR_struct]) { fprintf(symfile, "struct \"%s\" ",
                         current_struct->lexinfo->c_str()); }
     if (node->attr[ATTR_field]) { fprintf(symfile, "field {%s} ",
@@ -55,7 +55,8 @@ bool primcheck(astree* left, astree* right)
 
 //upcoming switch statement for something
 
-void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, symbol_table* symbol_table)
+void typecheck_function(FILE* symfile, astree* node, 
+            symstack* symbol_stack, symbol_table* symbol_table)
 {
 
     //int block_nr=0;
@@ -168,8 +169,7 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
 
             break;
         }
-
-        case TOK_CALL: {      ///////////////////////////////////////////////////////
+        case TOK_CALL: {
 
 
             node->attr[ATTR_function]=1; ////2g
@@ -404,7 +404,8 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
 }
 
 
-void typecheck(FILE* symfile, astree* parseroot, symstack* symbol_stack, symbol_table* symbol_table)
+void typecheck(FILE* symfile, astree* parseroot, 
+            symstack* symbol_stack, symbol_table* symbol_table)
 {
     for (astree* child: parseroot->children) 
     {

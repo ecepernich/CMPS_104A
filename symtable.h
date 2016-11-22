@@ -33,7 +33,7 @@ struct symbol{
 //taken from pdf 2.2
 //each entry in the table is a pair<const string*,symbol*>
 
-symbol* new_symbol(astree* node);	
+symbol* new_symbol(astree* node);   
 void insert_symbol(symbol_table* symbtab, astree* node);
 symbol* search_symbol(symbol_table* symtab, astree* node);
 symbol* search_type_name(symbol_table* symtab, astree* node);

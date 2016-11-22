@@ -24,7 +24,6 @@ symbol* new_symbol(astree* node)
         sym->fields = nullptr;
         sym->lloc = node->lloc;
         //would parameters be null?
-        //sym->parameters = node->parameters; parameters is not needed cause its called in .h file
         sym->block_nr=node->block_nr;
         return sym;
 }
@@ -33,8 +32,8 @@ symbol* new_symbol(astree* node)
 void insert_symbol(symbol_table* symtab, astree* node){
         symbol* sym = new_symbol(node);
         //string* lexinfo = (string *)node->lexinfo;
-        symbol_entry entry = symbol_entry (const_cast<string*>(node->lexinfo), sym);  //lexinfo is the pointer to stringset in astree.cpp
-        symtab->insert(entry);
+        symbol_entry entry = symbol_entry 
+                        (const_cast<string*>(node->lexinfo), sym);
 }
 
 //need lookup function 
@@ -42,30 +41,13 @@ void insert_symbol(symbol_table* symtab, astree* node){
 
 symbol* search_symbol(symbol_table* symtab, astree* node)
 {
-        string* lexinfo = (string *)node->lexinfo; //after create symbol
-        if(!symtab->count(lexinfo)) //if we can't find the symbol return null
+        string* lexinfo = (string *)node->lexinfo; 
+        if(!symtab->count(lexinfo)) //if we can't
                 return nullptr;
         symbol* sym = new_symbol(node); //and create a new symbol 
-        symbol_entry entry = symbol_entry(const_cast<string*> (node->lexinfo), sym ); //add it as an entry 
+        symbol_entry entry = symbol_entry
+                (const_cast<string*> (node->lexinfo), sym ); 
        return entry.second; //want it to return the symbol
 
 }
 
-
-/*void dumb(symbol_table* symtab){
-    cout<<"\tTable size ": <<symtab->size()<<end1;
-    for(auto it = symtab->begin(); it != symtab->end(); it++){    //was going to dump out function he
-    } 
-//}
-  
-//look up identifier name
-//symbol* search_type_name(symbol_table* symtab, astree* node)
-//{
-//        if(symtab == nullptr || node == nullptr) { return nullptr; }
-//        string* type_name = (string *) node->type_name;
-//        if(!table_name->count(node->lexinfo)==0); {}//number of elements in the range 
-//                //[first,last] that compare equal to val
-//        symbol_entry* entry = *symtab->find<type_name>;
-//        return entry.second;
-
-//}

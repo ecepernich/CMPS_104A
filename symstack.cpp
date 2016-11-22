@@ -22,12 +22,12 @@ void symstack::enter_block()
 void symstack::leave_block()
 {
 	symbol_stack.pop_back(); //pop next_block
-	//next_block--; //move back in block# ???? Don't think we habe to move back a block 
+	//next_block--; //move back in block# ???? D
 }
 
 void symstack::define_ident(astree* node)
 {
-	if (symbol_stack.back()==nullptr){ // if there is nothing in the symtable, create a new table and add it to the symtable
+	if (symbol_stack.back()==nullptr){ // if t
 		symbol_stack.back()=new symbol_table;
         }
 		insert_symbol(symbol_stack.back(), node);
@@ -35,7 +35,7 @@ void symstack::define_ident(astree* node)
 
 symbol* symstack::search_ident(astree* node)
 {
-	for (auto symbol_table:symbol_stack) //ranged-based loop aka executes a loop over a range
+	for (auto symbol_table:symbol_stack) //ranged-based loop a
 	{
 		if (symbol_table==nullptr)
 		{ 
