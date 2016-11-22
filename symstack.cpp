@@ -15,40 +15,40 @@
 
 void symstack::enter_block()
 {
-	next_block++;
-	symbol_stack.push_back(nullptr); //adds null pointer at end of vector
+    next_block++;
+    symbol_stack.push_back(nullptr); //adds null pointer at end of vector
 }
 
 void symstack::leave_block()
 {
-	symbol_stack.pop_back(); //pop next_block
-	//next_block--; //move back in block# ???? D
+    symbol_stack.pop_back(); //pop next_block
+    //next_block--; //move back in block# ???? D
 }
 
 void symstack::define_ident(astree* node)
 {
-	if (symbol_stack.back()==nullptr){ // if t
-		symbol_stack.back()=new symbol_table;
+    if (symbol_stack.back()==nullptr){ // if t
+        symbol_stack.back()=new symbol_table;
         }
-		insert_symbol(symbol_stack.back(), node);
+        insert_symbol(symbol_stack.back(), node);
 }
 
 symbol* symstack::search_ident(astree* node)
 {
-	for (auto symbol_table:symbol_stack) //ranged-based loop a
-	{
-		if (symbol_table==nullptr)
-		{ 
+    for (auto symbol_table:symbol_stack) //ranged-based loop a
+    {
+        if (symbol_table==nullptr)
+        { 
          return nullptr;
-		}else{
-			symbol* s =search_symbol(symbol_table, node);
-			// some search function (not this one)
-			if (s != nullptr)
-			{
-				return s;
-			}
-		}
-	}
-	return nullptr;
+        }else{
+            symbol* s =search_symbol(symbol_table, node);
+            // some search function (not this one)
+            if (s != nullptr)
+            {
+                return s;
+            }
+        }
+    }
+    return nullptr;
 
 }
