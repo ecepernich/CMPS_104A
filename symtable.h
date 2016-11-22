@@ -17,9 +17,8 @@
 
 
 //taken from pdf 2.2
-struct symbol;
-using symbol_table = unordered_map<const string*, symbol*>;
-using symbol_entry =pair<const string*, symbol*>;
+using symbol_table=unordered_map<const string*, symbol*>;
+using symbol_entry=pair<const string*, symbol*>;
 //each entry in the table is a pair<const string*,symbol*>
 struct symbol {
         attr_bitset attr;
