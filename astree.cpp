@@ -123,7 +123,7 @@ const char* compare(check* all, check* current)
             return "string ";
          }
          case TOK_INT: {
-            return "int "
+            return "int ";
          }
          case TOK_VOID:
          {
