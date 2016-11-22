@@ -18,6 +18,13 @@ struct location {
    size_t offset;
 };
 
+struct location2 {
+   size_t filenr;
+   size_t linenr;
+   size_t offset;
+};
+
+
 struct astree {
 
    // Fields.
@@ -37,14 +44,6 @@ struct astree {
    static void dump (FILE* outfile, astree* tree);
    static void print (FILE* outfile, astree* tree, int depth = 0);
 };
-
-struct check{
-  const string* lexinfo;
-  vector<check*> list;
-
-  check(const char* lexinfo);
-
-}
 
 void destroy (astree* tree1, astree* tree2 = nullptr);
 

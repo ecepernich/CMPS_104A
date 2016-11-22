@@ -99,9 +99,3 @@ void errllocprintf (const location& lloc, const char* format,
               lexer::filename (lloc.filenr), lloc.linenr, lloc.offset,
               buffer);
 }
-
-check::check (const char* info) 
-{
-   lexinfo = string_set::intern (info);
-   // vector defaults to empty -- no children
-}
