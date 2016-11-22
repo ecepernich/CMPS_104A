@@ -20,8 +20,10 @@ struct location {
 
 struct check {
    const string* lexinfo;
+   vector<check*> list;
 
    check(const char* lexinfo);
+   void add(check* newcheck);
 };
 
 

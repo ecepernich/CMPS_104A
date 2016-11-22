@@ -105,3 +105,8 @@ check::check (const char* info)
    lexinfo = string_set::intern (info);
    // vector defaults to empty -- no children
 }
+
+void check::addcheck(chech* newcheck)
+{
+   int i=0;
+}
