@@ -50,6 +50,13 @@ symbol* search_symbol(symbol_table* symtab, astree* node)
        return entry.second; //want it to return the symbol
 
 }
+
+
+/*void dumb(symbol_table* symtab){
+    cout<<"\tTable size ": <<symtab->size()<<end1;
+    for(auto it = symtab->begin(); it != symtab->end(); it++){    //was going to dump out function he
+    } 
+//}
   
 //look up identifier name
 //symbol* search_type_name(symbol_table* symtab, astree* node)
