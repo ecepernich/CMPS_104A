@@ -108,5 +108,5 @@ check::check (const char* info)
 
 void check::add(check* newcheck)
 {
-   int i=0;
+   if (newcheck != nullptr) list.push_back (newcheck);
 }
