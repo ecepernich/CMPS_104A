@@ -38,6 +38,14 @@ struct astree {
    static void print (FILE* outfile, astree* tree, int depth = 0);
 };
 
+struct check{
+  const string* lexinfo;
+  vector<check*> list;
+
+  check(const char* lexinfo);
+
+}
+
 void destroy (astree* tree1, astree* tree2 = nullptr);
 
 void errllocprintf (const location&, const char* format, const char*);
