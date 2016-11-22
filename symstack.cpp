@@ -12,8 +12,6 @@
 #include <unordered_map>
 
 
-next_block=1;
-
 void symstack::enter_block()
 {
 	next_block++;

@@ -20,10 +20,10 @@ void printhelper(FILE* symfile, astree* node)
     fprintf (symfile, "%s (%zd.%zd.%zd) \n",
             left->lexinfo->c_str(), node->lloc.filenr, node->lloc.linenr, 
             node->lloc.offset);
-    if (node->attr[ATTR_struct]) { fprintf(symfile, "struct \"%s",
-                        current_struct->lexinfo->c_str(),"\" "); }
-    if (node->attr[ATTR_field]) { fprintf(symfile, "field {%s"+
-                        current_field->lexinfo->c_str(),"} "); }
+    if (node->attr[ATTR_struct]) { fprintf(symfile, "struct \"%s\" ",
+                        current_struct->lexinfo->c_str()); }
+    if (node->attr[ATTR_field]) { fprintf(symfile, "field {%s} "+
+                        current_field->lexinfo->c_str()); }
     if (node->attr[ATTR_function]) { fprintf(symfile, "function "); }
     if (node->attr[ATTR_void]) { fprintf(symfile, "void "); }
     if (node->attr[ATTR_int]) { fprintf(symfile, "int "); }
@@ -223,17 +223,13 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
 
             break;
         }
-        case TOK_VOID: {
-            left=node->children[0];
-            left->attr[ATTR_void]=1;
-        }
         case TOK_INDEX: {
             node->attr[ATTR_vaddr]=1;
             node->attr[ATTR_lval]=1;
             break; 
         }
         case TOK_IDENT:  {
-            s=lookup_ident(node);
+            s=search_ident(node);
             if (s==nullptr)
             {
                 s=search_symbol(symbol_table, node);
