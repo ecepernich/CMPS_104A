@@ -113,5 +113,16 @@ void check::add(check* newcheck)
 
 bool check::compare(check* all, check* current)
 {
+   if (all->lexinfo==current->lexinfo)
+   {
+      return true;
+   }
+   else
+   {
+      for (check* child: all->list) 
+      {
+         check::compare(child, current);
+      }
+   }
    return false;
 }
