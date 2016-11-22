@@ -19,7 +19,9 @@ struct location {
 };
 
 struct check {
-   size_t filenr;
+   const string* lexinfo;
+
+   check(const char* lexinfo);
 };
 
 
