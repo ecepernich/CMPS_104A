@@ -18,10 +18,8 @@ struct location {
    size_t offset;
 };
 
-struct location2 {
+struct check {
    size_t filenr;
-   size_t linenr;
-   size_t offset;
 };
 
 
