@@ -16,7 +16,7 @@
 void symstack::enter_block()
 {
     next_block++;
-    symbol_stack.push_back(nullptr); //adds null pointer at end of vector
+    symbol_stack.push_back(nullptr); // null pointer at end of vector
 }
 
 void symstack::leave_block()
