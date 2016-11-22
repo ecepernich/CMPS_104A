@@ -145,7 +145,7 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             left2->attr[ATTR_function]=1;
             printhelper(symfile, left2);
 
-            middle=node->children[1]->children[0];
+            astree* middle=node->children[1]->children[0];
             while(right!=nullptr)
             {
                 left=middle->children[0];
@@ -261,7 +261,7 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
             while(right!=nullptr)
             {
                 astree* leftchild=right->children[0];
-                printhelper(leftchild);
+                printhelper(symfile, leftchild);
                 right=right->children[1];
             }
             break;
@@ -351,7 +351,6 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
                 //node->attr[attr_bool]=1;
                 node->attr[ATTR_vreg]=1;                
             }
-            elseif ()
             else
             {
                 errprintf("Types do not match.\n");
