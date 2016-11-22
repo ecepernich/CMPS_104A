@@ -106,7 +106,7 @@ check::check (const char* info)
    // vector defaults to empty -- no children
 }
 
-void check::addcheck(chech* newcheck)
+void check::addcheck(check* newcheck)
 {
    int i=0;
 }
