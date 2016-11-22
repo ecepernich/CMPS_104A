@@ -112,7 +112,7 @@ void check::add(check* newcheck)
    if (newcheck != nullptr) list.push_back (newcheck);
 }
 
-const char* check::compare(check* all, check* current)
+const char* compare(check* all, check* current)
 {
    if (all->lexinfo->c_str()==current->lexinfo->c_str())
    {
