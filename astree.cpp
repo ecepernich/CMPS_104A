@@ -110,3 +110,8 @@ void check::add(check* newcheck)
 {
    if (newcheck != nullptr) list.push_back (newcheck);
 }
+
+bool check::compare(check* all, check* current)
+{
+   return false;
+}

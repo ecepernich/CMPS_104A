@@ -24,6 +24,7 @@ struct check {
 
    check(const char* lexinfo);
    void add(check* newcheck);
+   bool compare(check* all, check* current);
 };
 
 
