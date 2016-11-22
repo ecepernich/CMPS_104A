@@ -16,9 +16,10 @@
 using namespace std;
 
 
-enum {  ATTR_void, ATTR_int, ATTR_null, ATTR_string, ATTR_struct, ATTR_array, 
-        ATTR_function, ATTR_variable, ATTR_field, ATTR_typeid, ATTR_param, ATTR_lval,
-        ATTR_const, ATTR_vreg, ATTR_vaddr, ATTR_bitset_size
+enum {  ATTR_void, ATTR_int, ATTR_null, ATTR_string, ATTR_struct, 
+        ATTR_array, ATTR_function, ATTR_variable, ATTR_field, 
+        ATTR_typeid, ATTR_param, ATTR_lval, ATTR_const, ATTR_vreg, 
+        ATTR_vaddr, ATTR_bitset_size
 };
 using attr_bitset = bitset<ATTR_bitset_size>;
 
@@ -54,7 +55,8 @@ struct astree {
    static void print (FILE* outfile, astree* tree, int depth = 0);
 };
 void print_attr(astree* node, FILE* outfile);
-astree* makefunction(astree* identdecl, astree* paramlist, astree* block);
+astree* makefunction(astree* identdecl, 
+                  astree* paramlist, astree* block);
 astree* makeprototype(astree* identdecl, astree* paramlist);
 
 void destroy (astree* tree1, astree* tree2 = nullptr);

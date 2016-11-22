@@ -113,7 +113,8 @@ void print_attr(astree* node, FILE* outfile)
 }
 
 
-astree* makefunction(astree* identdecl, astree* paramlist, astree* block)
+astree* makefunction(astree* identdecl, astree* paramlist, 
+                                                 astree* block)
 {
    astree* f=new astree(TOK_FUNCTION, identdecl->lloc,"");
    return f->adopt(identdecl, paramlist, block);
