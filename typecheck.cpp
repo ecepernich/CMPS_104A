@@ -172,11 +172,11 @@ void typecheck_function(FILE* symfile, astree* node, symstack* symbol_stack, sym
         case TOK_CALL: {      ///////////////////////////////////////////////////////
 
 
-            node->attr[ATTR_call]=1; ////2g
-            node-attr=node->children[0]->sym->attr;
-            node->attr[ATTR_vreg]=1;
-            node->attr.flip(ATTR_function);
-            node->typename=node->children[0]->sym0>ttname
+            node->attr[ATTR_function]=1; ////2g
+            //node-attr=node->children[0]->sym->attr;
+            //node->attr[ATTR_vreg]=1;
+            //node->attr.flip(ATTR_function);
+            //node->typename=node->children[0]->sym0>ttname
 
 
             //output: puts (loc) {0} void function 
