@@ -29,6 +29,7 @@ const string cpp="/usr/bin/cpp";
 string cpp_line=cpp; //Not from cppstrtok.cpp
 constexpr size_t LINESIZE=1024; 
 extern astree* yyparse_astree;
+size_t next_block = 1;
 
 //values for flag checks
 string d_flag=""; //The flag used for -D___
