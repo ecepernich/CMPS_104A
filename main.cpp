@@ -219,7 +219,7 @@ int main (int argc, char** argv) {
    symfile=fopen(sym_name,"w");
    symstack* s=new symstack;
    symbol_table* type_table = new symbol_table;
-   s->stack.push_back(new symbol_table);
+   s->symbol_stack.push_back(new symbol_table);
    typecheck(symfile, parser::root, s, type_table);
    fclose(symfile);
 
