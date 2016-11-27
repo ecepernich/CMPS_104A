@@ -165,8 +165,7 @@ void typecheck_function(FILE* symfile, astree* node,
                 left->attr[ATTR_variable]=1;
                 left->attr[ATTR_lval]=1;
                 printhelper(symfile, left);
-                middle=middle->children[1];
-                if (node->children.size()>=2)
+                if (middle->children.size()>=2)
                 {
                     middle=middle->children[1];
                 }
