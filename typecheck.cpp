@@ -158,7 +158,7 @@ void typecheck_function(FILE* symfile, astree* node,
             printhelper(symfile, left2);
 
             astree* middle=node->children[1]->children[0];
-            while(right!=nullptr)
+            while(middle!=nullptr)
             {
                 left=middle->children[0];
                 left->attr[ATTR_param]=1;
@@ -166,6 +166,11 @@ void typecheck_function(FILE* symfile, astree* node,
                 left->attr[ATTR_lval]=1;
                 printhelper(symfile, left);
                 middle=middle->children[1];
+                if (node->children.size()>=2)
+                {
+                    middle=middle->children[1];
+                }
+                else { middle=nullptr; }
             }
 
             if (node->symbol==TOK_PROTOTYPE)
