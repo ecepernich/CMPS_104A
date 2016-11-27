@@ -20,7 +20,9 @@ using namespace std;
 #include "string_set.h"
 #include "astree.h"
 #include "lyutils.h"
-//#include "yyparse.h"
+#include "symstack.h"
+#include "symtable.h"
+#include "typecheck.h"
 
 /*public values*/
 
@@ -90,7 +92,7 @@ int main (int argc, char** argv) {
     exec::execname = basename(argv[0]);
     yy_flex_debug=0; //set to 0 to prevent stdout
     yydebug=0;
-   int x; //x is the int for the getopt function
+    int x; //x is the int for the getopt function
 
    //Flag checks 
    while ((x=getopt(argc, argv, "ly@:D:")) != -1) //read arg flags
@@ -191,6 +193,8 @@ int main (int argc, char** argv) {
          fprintf(stderr, "Error: %s does not exist.\n",file_name);
          exit(1); //Failure and exit because the file was not found
    }
+
+   // .tok file
    tokfile=fopen(tok_name, "w"); //open tok file
    if (!tokfile) //file could not be opened
    {
@@ -201,6 +205,7 @@ int main (int argc, char** argv) {
    yyparse(); //replaces yylex()
    cpplines(yyin, (char*)file_name); //use cpplines on the file
 
+   // .str file
    strfile=fopen(str_name,"w"); //open .str file to write
    if (!strfile) //file could not be opened
    {
@@ -209,6 +214,16 @@ int main (int argc, char** argv) {
    }
    string_set::dump (strfile); //write the stringset to output file
    fclose(strfile); //close program.str - the file is now reitten
+
+   // .sym file
+   symfile=fopen(sym_name,"w");
+   symstack* s=new symstack;
+   symbol_table* type_table = new symbol_table;
+   s->stack.push_back(new symbol_table);
+   typecheck(symfile, parser::root, s, type_table);
+   fclose(symfile);
+
+   // .ast file
    astfile=fopen(ast_name,"w");
    if (!astfile) //file could not be opened
    {
@@ -217,8 +232,7 @@ int main (int argc, char** argv) {
    }
    astree::dump(astfile, parser::root);
    fclose(astfile);
-   symfile=fopen(sym_name,"w");
-   fclose(symfile);
+
 
    int closepipe=pclose(yyin); //close the pipe for the file
    eprint_status(cpp_line.c_str(), closepipe); //check command status
