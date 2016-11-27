@@ -384,7 +384,7 @@ void typecheck_function(FILE* symfile, astree* node,
         case TOK_GE:
         case TOK_LT:
         case TOK_LE:  {
-            f (node->children.size()>=1)
+            if (node->children.size()>=1)
             {
                 left=node->children[0];
             }
