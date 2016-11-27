@@ -216,7 +216,7 @@ void typecheck_function(FILE* symfile, astree* node,
             break;
         }
         case TOK_STRING: {
-            if (node->children[0].size()>=1)
+            if (node->children.size()>=1)
             {
                 left=node->children[0];
                 left->attr[ATTR_string]=1;
