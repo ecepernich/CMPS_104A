@@ -16,7 +16,7 @@ astree* current_field=nullptr;
 
 void printhelper(FILE* symfile, astree* node)
 {
-    
+    astree* left=nullptr;   
     if (node->children.size()>=1)
     {
         left=node->children[0];
@@ -332,7 +332,11 @@ void typecheck_function(FILE* symfile, astree* node,
             break;
         }
         case '!': {
-            left=node->children[0];
+            if (node->children.size()>=1)
+            {
+                left=node->children[0];
+            }
+            else { left=nullptr; }
             if (left==nullptr)
             {
                 break;
@@ -355,8 +359,16 @@ void typecheck_function(FILE* symfile, astree* node,
         }
         case TOK_EQ:
         case TOK_NE: {
-            left=node->children[0];
-            right=node->children[1];
+            if (node->children.size()>=1)
+            {
+                left=node->children[0];
+            }
+            else { left=nullptr; }
+            if (node->children.size()>=2)
+            {
+                right=node->children[1];
+            }
+            else { right=nullptr; }
             if (primcheck(left, right))
             {
                 //node->attr[attr_bool]=1;
@@ -372,8 +384,16 @@ void typecheck_function(FILE* symfile, astree* node,
         case TOK_GE:
         case TOK_LT:
         case TOK_LE:  {
-            left=node->children[0];
-            right=node->children[1];
+            f (node->children.size()>=1)
+            {
+                left=node->children[0];
+            }
+            else { left=nullptr; }
+            if (node->children.size()>=2)
+            {
+                right=node->children[1];
+            }
+            else { right=nullptr; }
             if (primcheck(left, right))
             {
                 //node->attr[attr_bool]=1;
