@@ -157,7 +157,15 @@ void typecheck_function(FILE* symfile, astree* node,
             left2->attr[ATTR_function]=1;
             printhelper(symfile, left2);
 
-            astree* middle=node->children[1]->children[0];
+            astree* middle=nullptr;
+
+            node->children[1]->children[0];
+            if (node->children[1]->children.size()>=1)
+            {
+                middle=node->children[1]->children[0];
+            }
+            else { middle=nullptr; }
+
             while(middle!=nullptr)
             {
                 left=middle->children[0];
