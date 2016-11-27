@@ -216,12 +216,16 @@ void typecheck_function(FILE* symfile, astree* node,
             break;
         }
         case TOK_STRING: {
-            left=node->children[0];
-            left->attr[ATTR_string]=1;
-            for (size_t i=0;i<ATTR_function;i++)
+            if (node->children[0].size()>=1)
             {
-                if (left->attr[i]) { node->attr[i]=1; }
+                left=node->children[0];
+                left->attr[ATTR_string]=1;
+                for (size_t i=0;i<ATTR_function;i++)
+                {
+                    if (left->attr[i]) { node->attr[i]=1; }
+                }
             }
+            else { left=nullptr; }
             break;
         }
         case TOK_ARRAY: {
