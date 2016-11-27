@@ -65,11 +65,11 @@ void typecheck_function(FILE* symfile, astree* node,
     symbol* s;
 
     // children size check?
-    if (node->children[0]!=nullptr)
+    if (node->children.size()>=1)
     {
         left=node->children[0];
     }
-    if (node->children[1]!=nullptr)
+    if (node->children.size()>=2)
     {
         right=node->children[1];
     }
