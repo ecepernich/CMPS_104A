@@ -45,11 +45,13 @@ char* str_name=NULL;
 char* tok_name=NULL;
 char* ast_name=NULL;
 char* sym_name=NULL;
+char* oil_name=NULL;
 
 FILE* strfile; //files accessible to other files
 FILE* tokfile;
 FILE* astfile;
 FILE* symfile;
+FILE* oilfile;
 
 //chomp from cppstrtok.cpp
 void chomp (char* string, char delim) {
@@ -149,22 +151,26 @@ int main (int argc, char** argv) {
             char* copytok=new char[base_string.length()];
             char* copyast=new char[base_string.length()];
             char* copysym=new char[base_string.length()];
+            char* copyoil=new char[base_string.length()];
 
             strcpy(copystr,base_string.c_str());
             strcpy(copytok,base_string.c_str());
             strcpy(copyast,base_string.c_str());
             strcpy(copysym,base_string.c_str());
+            strcpy(copyoil,base_string.c_str());
 
             base_name=copystr;
             str_name=copystr;
             tok_name=copytok;
             ast_name=copyast;
             sym_name=copysym;
+            oil_name=copyoil;
 
             strcat(str_name,".str"); //add the .str suffix
             strcat(tok_name,".tok"); //add the .tok suffix
             strcat(ast_name,".ast"); //add the .tok suffix
             strcat(sym_name,".sym"); //add the .sym suffix 
+            strcat(oil_name,".oil"); //add the .sym suffix 
 
          }
          else //the string file_name does not contain .oc
@@ -222,6 +228,10 @@ int main (int argc, char** argv) {
    s->symbol_stack.push_back(new symbol_table);
    typecheck(symfile, parser::root, s, type_table);
    fclose(symfile);
+
+   // .oil file
+   oilfile=fopen(oil_name,"w");
+   fclose(oilfile);
 
    // .ast file
    astfile=fopen(ast_name,"w");
