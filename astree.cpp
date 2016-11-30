@@ -25,7 +25,7 @@ astree::astree (int symbol_, const location& lloc_, const char* info) {
    // vector defaults to empty -- no children
    attr=0;
    block_nr=0;
-   emit_code=" ";
+   emit_code=string_set::intern (" ");
 }
 
 astree::~astree() {
