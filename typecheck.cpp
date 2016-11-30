@@ -269,8 +269,8 @@ void typecheck_function(FILE* symfile, astree* node,
             break;
         }
         case TOK_STRUCT: {
-            current_struct=node;
-            current_field=node;
+            current_struct=left;
+            current_field=left;
 
             node->attr[ATTR_struct]=1;
             left->attr[ATTR_struct]=1;
