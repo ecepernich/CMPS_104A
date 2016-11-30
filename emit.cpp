@@ -30,6 +30,14 @@ void emit_function(FILE* oilfile)
 
 void emit_stringcon(FILE* oilfile)
 {
+	//expected result:
+	//char* s1 = "Hello World!\n"
+	emit_code = "s" + node -> blocknr
+	node->emit_code = "s" + node-> blocknr
+
+	fprintf(oilfile, "char*%s=%s", node->emit_code, node->lexinfo-c_str());
+
+	//push s1 into vector(string) queue_stringcon?
 
 }
 
