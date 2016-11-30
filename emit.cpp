@@ -46,6 +46,29 @@ void emit_stringcon(FILE* oilfile)
 
 }
 
+void emit_params(astree* node, FILE* oilfile){
+	astree* paramhead = nullptr;
+	if(node->children.size() >= 2){
+		paramhead = node->children[1];
+		fprintf(oil, "%s",paramhead->emit_code );
+		int i = 0;
+		astree* plist = nullptr;
+		if (paramhead->children.size()>=1){
+			while(plist != nullptr)
+				fprintf(oil, "%s",plist->emit_code);
+			    //maybe switch 
+			     i++
+		}
+		if (paramhead->children.size()>+ i+1)
+		{
+			plist = paramhead->children[i];
+		}else{
+			plist= nullptr;
+		}
+	}
+
+}
+
 void emit(astree* node,FILE* oilfile)
 {
 	switch(node->symbol){
