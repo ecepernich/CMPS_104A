@@ -11,4 +11,4 @@ void emit_program(FILE* oilfile);
 void emit_stringdef(FILE* oilfile);
 void emit_function(FILE* oilfile);
 void emit_stringcon(FILE* oilfile);
-void emit(FILE* oilfile);
+void emit(astree* node,FILE* oilfile);
