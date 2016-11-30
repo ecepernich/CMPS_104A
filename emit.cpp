@@ -36,6 +36,16 @@ void emit_stringcon(FILE* oilfile)
 void emit(astree* node,FILE* oilfile)
 {
 	switch(node->symbol){
+		case TOK_PROTOTYPE:
+		     break;
+
+		case TOK_STRINGCON:
+		     {emit_stringcon(oilfile, node)
+		      break;
+		      }
+		case TOK_CALL:
+            //expected result:__puts(s1)
+
                 
  }
 }
