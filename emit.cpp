@@ -33,7 +33,9 @@ void emit_stringcon(FILE* oilfile)
 
 }
 
-void emit(FILE* oilfile)
+void emit(astree* node,FILE* oilfile)
 {
-	
+	switch(node->symbol){
+                
+ }
 }
