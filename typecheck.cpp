@@ -27,7 +27,7 @@ void printhelper(FILE* symfile, astree* node)
     }
     else
     {
-        fprintf (symfile, "%s (%zd.%zd.%zd) \n",
+        fprintf (symfile, "%s (%zd.%zd.%zd) ",
         node->lexinfo->c_str(), node->lloc.filenr, node->lloc.linenr, 
         node->lloc.offset);
     }
