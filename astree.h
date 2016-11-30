@@ -40,6 +40,7 @@ struct astree {
    vector<astree*> children; // children of this n-way node
    attr_bitset attr;
    size_t block_nr;
+   const string* emit_code;
    //symbol* sym; //TA said to add 
 
 
