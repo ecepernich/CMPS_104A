@@ -21,6 +21,9 @@
 astree::astree (int symbol_, const location& lloc_, const char* info) {
    symbol = symbol_;
    lloc = lloc_;
+   string test="s";
+   int i=5;
+   cout << test << i << endl;
    lexinfo = string_set::intern (info);
    // vector defaults to empty -- no children
    attr=0;
