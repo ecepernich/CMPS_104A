@@ -48,7 +48,6 @@ void printhelper(FILE* symfile, astree* node)
     if (node->attr[ATTR_variable]) { fprintf(symfile, "variable "); }
     if (node->attr[ATTR_lval]) { fprintf(symfile, "lval "); }
     if (node->attr[ATTR_param]) { fprintf(symfile, "param "); }
-    fprintf (symfile, "\n");
 
     fprintf(symfile, "\n");
 }
