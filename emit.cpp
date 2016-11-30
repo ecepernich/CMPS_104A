@@ -1,8 +1,9 @@
 #include "emit.h"
 
-void emit_everything()
+void emit_everything(oilfile, astree* root)
 {
-
+	emit_header(oilfile);
+	
 }
 
 void emit_header(oilfile)
