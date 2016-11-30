@@ -261,5 +261,10 @@ int main (int argc, char** argv) {
 
    yylex_destroy(); //clear yylex
    return EXIT_SUCCESS; //Success and exit with file written
+   free(str_name);
+   free(tok_name);
+   free(ast_name);
+   free(sym_name);
+   free(oil_name);
 }
 
