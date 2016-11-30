@@ -273,7 +273,7 @@ void typecheck_function(FILE* symfile, astree* node,
 
             node->attr[ATTR_struct]=1;
             left->attr[ATTR_struct]=1;
-            //printhelper(symfile, left);
+            printhelper(symfile, left);
 
             insert_symbol(symbol_table, left);
             s=search_symbol(symbol_table, left);
@@ -286,7 +286,7 @@ void typecheck_function(FILE* symfile, astree* node,
                 if(right->children.size()>=1)
                 {
                     leftchild=right->children[0];
-                    //printhelper(symfile, leftchild);
+                    printhelper(symfile, leftchild);
                 }
                 if(right->children.size()>=2)
                 {
@@ -457,3 +457,4 @@ void typecheck(FILE* symfile, astree* parseroot,
     }
     typecheck_function(symfile, parseroot, symbol_stack, symbol_table);
 }
+
