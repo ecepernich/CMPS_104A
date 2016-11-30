@@ -214,7 +214,6 @@ void typecheck_function(FILE* symfile, astree* node,
             break;
         }
         case TOK_CHAR:    break;
-        case TOK_BOOL:    break;
         case TOK_VOID: {
             left->attr[ATTR_void]=1;
             break;
