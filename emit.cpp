@@ -28,6 +28,11 @@ void emit_function(FILE* oilfile)
 
 }
 
+void emit_function_name(astree* node, FILE* oilfile){
+	astree* left = node->children[0];
+	fprintf(oilfile, "__%s", lexinfo-c_str());
+}
+
 void emit_stringcon(FILE* oilfile)
 {
 	//expected result:
