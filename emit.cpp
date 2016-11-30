@@ -5,9 +5,10 @@ void emit_everything()
 
 }
 
-void emit_header()
+void emit_header(oilfile)
 {
-
+	fprintf(oilfile,"define __OCLIB_C__\n");
+	fprintf(oilfile, "#include \"oclib.oh\"\n");
 }
 
 void emit_program()
