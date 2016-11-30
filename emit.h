@@ -7,8 +7,8 @@
 
 void emit_everything(FILE* oilfile, astree* root);
 void emit_header(FILE* oilfile);
-void emit_program(FILE* oilfile);
-void emit_stringdef(FILE* oilfile);
-void emit_function(FILE* oilfile);
-void emit_stringcon(FILE* oilfile);
+void emit_program(FILE* oilfile, astree* root);
+void emit_stringdef(FILE* oilfile, astree* root);
+void emit_function(FILE* oilfile, astree* node);
+void emit_stringcon(FILE* oilfile, astree* node);
 void emit(astree* node,FILE* oilfile);
