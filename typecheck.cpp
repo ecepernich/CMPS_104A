@@ -283,7 +283,7 @@ void typecheck_function(FILE* symfile, astree* node,
                 astree* leftchild=nullptr;
                 if(right->children.size()>=1)
                 {
-                    leftchild=1right->children[0];
+                    leftchild=right->children[0];
                     //printhelper(symfile, leftchild);
                 }
                 if(right->children.size()>=2)
