@@ -27,9 +27,9 @@ void printhelper(FILE* symfile, astree* node)
     }
     else
     {
-        fprintf (symfile, "%s (%zd.%zd.%zd) ",
+        fprintf (symfile, "%s (%zd.%zd.%zd) {%ul} ",
         node->lexinfo->c_str(), node->lloc.filenr, node->lloc.linenr, 
-        node->lloc.offset);
+        node->lloc.offset,node->block_nr);
     }
     if (node->attr[ATTR_struct]) { fprintf(symfile, "struct \"%s\" ",
                         current_struct->lexinfo->c_str()); }
