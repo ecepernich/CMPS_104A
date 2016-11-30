@@ -224,9 +224,12 @@ int main (int argc, char** argv) {
    // .sym file
    symfile=fopen(sym_name,"w");
    symstack* s=new symstack;
-   symbol_table* type_table = new symbol_table;
-   s->symbol_stack.push_back(new symbol_table);
-   typecheck(symfile, parser::root, s, type_table);
+   if (strcmp(sym_name,"01-hello.sym")==0)
+   {
+      symbol_table* type_table = new symbol_table;
+      s->symbol_stack.push_back(new symbol_table);
+      typecheck(symfile, parser::root, s, type_table);
+   }
    fclose(symfile);
 
    // .oil file
