@@ -157,6 +157,8 @@ void typecheck_function(FILE* symfile, astree* node,
             node->attr[ATTR_function]=1;
             left->attr[ATTR_function]=1;
             left2->attr[ATTR_function]=1;
+            left->block_nr=node->block_nr+1;
+            left2->block_nr=left->block_nr;
             printhelper(symfile, left2);
 
             astree* middle=nullptr;
@@ -175,6 +177,7 @@ void typecheck_function(FILE* symfile, astree* node,
                 left->attr[ATTR_variable]=1;
                 left->attr[ATTR_lval]=1;
                 fprintf(symfile,"\t");
+                left2->block_nr=left->block_nr+1;
                 printhelper(symfile, left);
                 if (middle->children.size()>=2)
                 {
