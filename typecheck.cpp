@@ -21,7 +21,7 @@ void printhelper(FILE* symfile, astree* node)
     {
         left=node->children[0];
         astree* left=node->children[0];
-        fprintf (symfile, "%s (%zd.%zd.%zd) \n",
+        fprintf (symfile, "%s (%zd.%zd.%zd) ",
         left->lexinfo->c_str(), node->lloc.filenr, node->lloc.linenr, 
         node->lloc.offset);
     }
@@ -48,6 +48,8 @@ void printhelper(FILE* symfile, astree* node)
     if (node->attr[ATTR_variable]) { fprintf(symfile, "variable "); }
     if (node->attr[ATTR_lval]) { fprintf(symfile, "lval "); }
     if (node->attr[ATTR_param]) { fprintf(symfile, "param "); }
+    fprintf (symfile, "\n");
+
     fprintf(symfile, "\n");
 }
 
