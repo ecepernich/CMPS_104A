@@ -287,6 +287,7 @@ void typecheck_function(FILE* symfile, astree* node,
                 if(right->children.size()>=1)
                 {
                     leftchild=right->children[0];
+                    fprintf(symfile, "\t");
                     printhelper(symfile, leftchild);
                 }
                 if(right->children.size()>=2)
