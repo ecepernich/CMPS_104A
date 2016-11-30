@@ -1,27 +1,39 @@
 #include "emit.h"
 
-int strincon_nr=0;
+int stringcon_nr=0;
+int intcon_nr=0;
+int charcon_nr=0;
 
 void emit_everything(oilfile, astree* root)
 {
-    emit_header(oilfile);
+    emit_header(oilfile); //DONE
     emit_program(oilfile, root);
     emit_main(oilfile, root);
-
 }
 
-void emit_header(FILE* oilfile)
+void emit_header(FILE* oilfile)  //DONE
 {
     fprintf(oilfile,"define __OCLIB_C__\n");
     fprintf(oilfile, "#include \"oclib.oh\"\n");
 }
 
-void emit_program(FILE* oilfile)
+void emit_program(FILE* oilfile, astree* node)
+{
+    emit_stuctdef(oilfile, node);
+    emit_stringdef(oilfile, node);
+    emit_vardef(oilfile, node);
+    emit_function(oilfile, node);
+}
+
+void emit_structdef(FILE* oilfile, astree* node)
 {
 
 }
+void emit_stringdef(FILE* oilfile, astree* node)
+{
 
-void emit_stringdef(FILE* oilfile)
+}
+void emit_vardef(FILE* oilfile, astree* node)
 {
 
 }
@@ -36,7 +48,7 @@ void emit_function(FILE* oilfile, astre* node)
     {
         emit_params(oilfile, node);
     }
-    if (node->children.size()>=3)
+    if (node->children.size()>=3 && node->symbol==TOK_FUNCTION)
     {
         emit_function_body(oilfile, node);
     }
@@ -55,12 +67,31 @@ void emit_stringcon(FILE* oilfile, astree* node)
     stringcon_nr++;
     string varname = "s";
     cout << varname << stringcon_nr << endl;
-    node->emit_code = varname;
+    node->emit_code=varname->c_str();
 
-    fprintf(oilfile, "char* %s = %s", node->emit_code, node->lexinfo-c_str());
+    fprintf(oilfile, "char* %s = %s", node->emit_code, node->lexinfo->c_str());
+}
+void emit_intcon(FILE* oilfile, astree* node)
+{
+    //expected result:
+    //char* s1 = "Hello World!\n"
+    intcon_nr++;
+    string varname = "a";
+    cout << varname << intcon_nr << endl;
+    node->emit_code=varname->c_str();
 
-    //push s1 into vector(string) queue_stringcon?
+    fprintf(oilfile, "int* %s = %s", node->emit_code, node->lexinfo->c_str());
+}
+void emit_charcon(FILE* oilfile, astree* node)
+{
+    //expected result:
+    //char* s1 = "Hello World!\n"
+    charcon_nr++;
+    string varname = "c";
+    cout << varname << charon_nr << endl;
+    node->emit_code=varname->c_str();
 
+    fprintf(oilfile, "char* %s = %s", node->emit_code, node->lexinfo->c_str());
 }
 
 void emit_params(astree* node, FILE* oilfile)
@@ -77,7 +108,7 @@ void emit_params(astree* node, FILE* oilfile)
         {
             while(plist!=nullptr)
             {
-                fprintf(oilfile, "%s",plist->emit_code);
+                fprintf(oilfile, ";\n %s",plist->emit_code);
                 //maybe switch 
                 i++;
                 if (paramhead->children.size()>=(i+1))
@@ -100,19 +131,39 @@ void emit_function_body(FILE* oilfile, astree* node)
     //
 }
 
-void emit(astree* node,FILE* oilfile)
+void emit(astree* node, FILE* oilfile)
 {
-    switch(node->symbol){
+    switch(node->symbol)
+    {
         case TOK_PROTOTYPE:
-             break;
-
-        case TOK_STRINGCON:
-             {emit_stringcon(oilfile, node)
-              break;
-              }
+        {
+            fprintf(oilfile, "We hit prototype.\n");
+            break;
+        }
+        case TOK_STRINGCON: 
+        {
+            emit_stringcon(oilfile, node)
+            break;
+        }
+        case TOK_INTINGCON: 
+        {
+            emit_intcon(oilfile, node)
+            break;
+        }
+        case TOK_CHARCON: 
+        {
+            emit_charcon(oilfile, node)
+            break;
+        }
         case TOK_FUNCTION:
-        case TOK_CALL:
+        case TOK_CALL: 
+        {
+            emit_function(oilfile, node);
+            break;
             //expected result:__puts(s1)
+        }
+        default:
+            break;
 
                 
  }
