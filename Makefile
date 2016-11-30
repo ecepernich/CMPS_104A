@@ -62,7 +62,7 @@ clean :
 	- rm ${OBJECTS} ${ALLGENS} ${REPORTS} checksource.log gmake.log
 
 spotless : clean
-	- rm ${EXECBIN} *.err *.out *.ast *.sym *.tok *.str
+	- rm ${EXECBIN} *.err *.out *.ast *.sym *.tok *.str *.oil
 
 checksource : ${ALLSRC}
 	checksource ${ALLSRC}
