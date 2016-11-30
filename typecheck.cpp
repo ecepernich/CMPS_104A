@@ -20,7 +20,6 @@ void printhelper(FILE* symfile, astree* node)
     if (node->children.size()>=1)
     {
         left=node->children[0];
-        astree* left=node->children[0];
         fprintf (symfile, "%s (%zd.%zd.%zd) ",
         left->lexinfo->c_str(), node->lloc.filenr, node->lloc.linenr, 
         node->lloc.offset);
@@ -29,7 +28,7 @@ void printhelper(FILE* symfile, astree* node)
     {
         fprintf (symfile, "%s (%zd.%zd.%zd) {%zu} ",
         node->lexinfo->c_str(), node->lloc.filenr, node->lloc.linenr, 
-        node->lloc.offset,node->block_nr);
+        node->lloc.offset, node->block_nr);
     }
     if (node->attr[ATTR_struct]) { fprintf(symfile, "struct \"%s\" ",
                         current_struct->lexinfo->c_str()); }
@@ -157,8 +156,7 @@ void typecheck_function(FILE* symfile, astree* node,
             node->attr[ATTR_function]=1;
             left->attr[ATTR_function]=1;
             left2->attr[ATTR_function]=1;
-            left->block_nr=node->block_nr+1;
-            left2->block_nr=left->block_nr;
+
             printhelper(symfile, left2);
 
             astree* middle=nullptr;
@@ -167,6 +165,7 @@ void typecheck_function(FILE* symfile, astree* node,
             if (node->children[1]->children.size()>=1)
             {
                 middle=node->children[1]->children[0];
+                middle->block_nr=middle->block_nr+1;
             }
             else { middle=nullptr; }
 
@@ -177,7 +176,7 @@ void typecheck_function(FILE* symfile, astree* node,
                 left->attr[ATTR_variable]=1;
                 left->attr[ATTR_lval]=1;
                 fprintf(symfile,"\t");
-                left2->block_nr=left->block_nr+1;
+                left->block_nr=middle->block_nr+1;
                 printhelper(symfile, left);
                 if (middle->children.size()>=2)
                 {
@@ -214,8 +213,8 @@ void typecheck_function(FILE* symfile, astree* node,
             //finding symbols???
             break;
         }
-        //case TOK_CHAR:    break;
-        //case TOK_BOOL:    break;
+        case TOK_CHAR:    break;
+        case TOK_BOOL:    break;
         case TOK_VOID: {
             left->attr[ATTR_void]=1;
             break;
@@ -281,7 +280,6 @@ void typecheck_function(FILE* symfile, astree* node,
 
             insert_symbol(symbol_table, left);
             s=search_symbol(symbol_table, left);
-            //s->fields=new symbol_table;
 
             right=node->children[1];
             while(right!=nullptr)
