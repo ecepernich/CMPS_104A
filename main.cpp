@@ -234,6 +234,10 @@ int main (int argc, char** argv) {
 
    // .oil file
    oilfile=fopen(oil_name,"w");
+   if (strcmp(oil_name,"01-hello.oil")==0)
+   {
+      //emit_everything(oilfile, parse::root);
+   }
    fclose(oilfile);
 
    // .ast file
