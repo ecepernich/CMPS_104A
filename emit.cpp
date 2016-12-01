@@ -10,10 +10,31 @@ void emit_header(FILE* oilfile)  //DONE
     fprintf(oilfile, "#include \"oclib.oh\"\n\n");
 }
 
-void emit_structdef(FILE* oilfile, astree* node)
+void emit_structdef(FILE* oilfile, astree* root)
 {
-
+    emit_structdecl(oilfile, root);
+    for (astree* child: root->children) 
+    {
+      emit_structdecl(oilfile, child);
+    }
 }
+void emit_structdecl(FILE* oilfile, astree* node)
+{
+    if (node->symbol==TOK_STRUCT)
+    {
+        astree* left=nullptr;
+        astree* right=nullptr;
+        if (node->children.size()>=1)
+        {
+            left=node->children[0];
+        }
+        if (node->children.size()>=2)
+        {
+            right=node->children[1];
+        }       
+    }
+}
+
 void emit_stringdef(FILE* oilfile, astree* node)
 {
     emit_stringcon(oilfile, node);
