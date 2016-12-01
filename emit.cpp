@@ -87,11 +87,11 @@ void emit_charcon(FILE* oilfile, astree* node)
 void emit_function_name(FILE* oilfile, astree* node) //DONE
 {
     astree* left=node->children[0];
-    fprintf(oilfile, "  __%s ",left->lexinfo->c_str());
+    fprintf(oilfile, "  __%s",left->lexinfo->c_str());
 }
 void emit_params(FILE* oilfile, astree* node)
 {
-    fprintf(oilfile, " (");
+    fprintf(oilfile, "(");
     astree* paramhead = nullptr;
     if(node->children.size()>=2)
     {
