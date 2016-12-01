@@ -19,26 +19,31 @@ void emit_header(FILE* oilfile)  //DONE
 
 void emit_type(FILE* oilfile, astree* node)
 {
-    switch(node->symbol)
+    switch(node->lexinfo->c_str())
     {
-        case TOK_INT: {
+        case "int": {
 
             break;
         }
-        case TOK_STRING: {
-            
-            break;
-        }
-        case TOK_CHAR: {
+        case "string": {
 
             break;
         }
-        case TOK_IDENT: {
+        case "char": {
+
+            break;
+        }
+        case "bool": {
+
+            break;
+        }
+        case "void": {
 
             break;
         }
         default:
         {
+
             break;
         }
     }
