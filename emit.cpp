@@ -48,8 +48,9 @@ void emit_structdecl(FILE* oilfile, astree* node)
                     {
                         rleft=right->children[0];
                         printf("We got %s\n", rleft->lexinfo->c_str());
-                        std::string fieldname="s_";
+                        std::string fieldname="f_";
                         fieldname.append(left->lexinfo->c_str());
+                        fieldname.append("_");
                         fieldname.append(rleft->lexinfo->c_str());
                         right->emit_code=fieldname.c_str();
                         fprintf(oilfile, "\t%s \n", right->emit_code);
