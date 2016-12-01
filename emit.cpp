@@ -155,7 +155,7 @@ void emit(FILE* oilfile, astree* node)
 
 void emit_main(FILE* oilfile, astree* root)
 {
-    fprintf(oilfile, "void __ocmain(void)\n{ \n");
+    fprintf(oilfile, "\n\nvoid __ocmain(void)\n{ \n");
     for (astree* child: root->children) 
     {
       emit(oilfile, child);
