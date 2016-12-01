@@ -47,7 +47,6 @@ void emit_structdecl(FILE* oilfile, astree* node)
                     while(right!=nullptr)
                     {
                         rleft=right->children[0];
-                        printf("We got %s\n", rleft->lexinfo->c_str());
                         std::string fieldname="f_";
                         fieldname.append(left->lexinfo->c_str());
                         fieldname.append("_");
