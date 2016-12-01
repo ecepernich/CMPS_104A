@@ -22,6 +22,7 @@ void emit_stringdef(FILE* oilfile, astree* node)
       emit_stringdef(oilfile, child);
     }
 }
+
 void emit_vardef(FILE* oilfile, astree* node)
 {
     emit_var(oilfile, node);
@@ -49,7 +50,7 @@ void emit_function(FILE* oilfile, astree* node)
 
 void emit_var(FILE* oilfile, astree* node)
 {
-    if (node->symbol==TOK_VARDECL)
+    /*if (node->symbol==TOK_VARDECL)
     {
         astree* left=nullptr;
         astree* left2=nullptr;
@@ -65,7 +66,7 @@ void emit_var(FILE* oilfile, astree* node)
                                    left2->lexinfo->c_str());
             }
         }
-    }
+    }*/
 }
 
 void emit_stringcon(FILE* oilfile, astree* node)
