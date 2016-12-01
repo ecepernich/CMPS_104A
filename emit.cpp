@@ -35,9 +35,8 @@ void emit_structdecl(FILE* oilfile, astree* node)
             fprintf(oilfile, "\n}\n");    
     }
 }
-
-void emit_stringdef(FILE* oilfile, astree* node)
-{
+}
+void emit_stringdef(FILE* oilfile, astree* node){
     emit_stringcon(oilfile, node);
     for (astree* child: node->children) 
     {
