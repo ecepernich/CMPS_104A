@@ -36,7 +36,12 @@ void emit_vardecl(FILE* oilfile, astree* node)
 {
     if (node->symbol==TOK_VARDECL)
     {
-        printf("wooooo");
+        astree* left=nullptr;
+        astree* left2=nullptr;
+        if (node->children.size()>=1)
+        {
+            printf("WOOOOOOOOO\n");
+        }
     }
 }
 
