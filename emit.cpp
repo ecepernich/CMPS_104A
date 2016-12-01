@@ -70,7 +70,7 @@ void emit_charcon(FILE* oilfile, astree* node)
     //char* s1 = "Hello World!\n"
     charcon_nr++;
     string varname = "c";
-    cout << varname << charon_nr << endl;
+    cout << varname << charcon_nr << endl;
     node->emit_code=varname.c_str();
 
     fprintf(oilfile, "char* %s = %s", node->emit_code, node->lexinfo->c_str());
@@ -82,7 +82,7 @@ void emit_function_name(FILE* oilfile, astree* node) //DONE
     astree* left=node->children[0];
     fprintf(oilfile, "__%s ",node->lexinfo->c_str());
 }
-void emit_params(astree* node, FILE* oilfile)
+void emit_params(FILE* oilfile, astree* node)
 {
     fprintf(oilfile, " (");
     astree* paramhead = nullptr;
@@ -159,7 +159,7 @@ void emit_main(FILE* oilfile, astree* root)
 
 void emit_program(FILE* oilfile, astree* node)
 {
-    emit_stuctdef(oilfile, node);
+    emit_structdef(oilfile, node);
     emit_stringdef(oilfile, node);
     emit_vardef(oilfile, node);
     emit_function(oilfile, node);
