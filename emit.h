@@ -12,6 +12,7 @@ void emit_program(FILE* oilfile, astree* node);
 void emit_structdef(FILE* oilfile, astree* node);
 void emit_stringdef(FILE* oilfile, astree* node);
 void emit_vardef(FILE* oilfile, astree* node);
+void emit_vardecl(FILE* oilfile, astree* node);
 
 void emit_function(FILE* oilfile, astree* node);
 

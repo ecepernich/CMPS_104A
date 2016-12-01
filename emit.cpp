@@ -4,8 +4,6 @@ int stringcon_nr=1;
 int intcon_nr=1;
 int charcon_nr=1;
 
-
-
 void emit_header(FILE* oilfile)  //DONE
 {
     fprintf(oilfile,"#define __OCLIB_C__\n");
@@ -24,9 +22,27 @@ void emit_stringdef(FILE* oilfile, astree* node)
       emit_stringdef(oilfile, child);
     }
 }
+
 void emit_vardef(FILE* oilfile, astree* node)
 {
+    emit_vardecl(oilfile, node);
+    for (astree* child: node->children) 
+    {
+      emit_vardecl(oilfile, child);
+    }
+}
 
+void emit_vardecl(FILE* oilfile, astree* node)
+{
+    if (node->symbol==TOK_VARDECL)
+    {
+        astree* left=nullptr;
+        astree* left2=nullptr;
+        if (node->children.size()>=1)
+        {
+            printf("WOOOOOOOOO\n");
+        }
+    }
 }
 
 void emit_function(FILE* oilfile, astree* node)
@@ -44,7 +60,6 @@ void emit_function(FILE* oilfile, astree* node)
         emit_function_body(oilfile, node);
     }
 }
-
 
 void emit_stringcon(FILE* oilfile, astree* node)
 {
@@ -172,3 +187,4 @@ void emit_everything(FILE* oilfile, astree* root)
     emit_program(oilfile, root);
     emit_main(oilfile, root);
 }
+
