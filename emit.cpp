@@ -124,7 +124,6 @@ void emit(FILE* oilfile, astree* node)
     {
         case TOK_PROTOTYPE:
         {
-            fprintf(oilfile, "We hit prototype.\n");
             break;
         }
         case TOK_STRINGCON: 
