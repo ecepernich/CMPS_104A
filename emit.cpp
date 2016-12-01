@@ -186,6 +186,9 @@ void emit(FILE* oilfile, astree* node)
             break;
             //expected result:__puts(s1)
         }
+        case TOK_WHILE:
+        case TOK_IF:
+        case TOK_IFELSE:
         default:
         {
             break;
