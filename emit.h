@@ -13,6 +13,8 @@ void emit_header(FILE* oilfile);
 
 void emit_program(FILE* oilfile, astree* node);
 
+void emit_type(FILE* oilfile, astree* node);
+
 void emit_structdef(FILE* oilfile, astree* node);
 void emit_structdecl(FILE* oilfile, astree* node);
 
