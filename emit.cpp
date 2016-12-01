@@ -4,12 +4,7 @@ int stringcon_nr=0;
 int intcon_nr=0;
 int charcon_nr=0;
 
-void emit_everything(oilfile, astree* root)
-{
-    emit_header(oilfile); //DONE
-    emit_program(oilfile, root);
-    emit_main(oilfile, root);
-}
+
 
 void emit_header(FILE* oilfile)  //DONE
 {
@@ -54,11 +49,6 @@ void emit_function(FILE* oilfile, astre* node)
     }
 }
 
-void emit_function_name(FILE* oilfile, astree* node)
-{
-    astree* left=node->children[0];
-    fprintf(oilfile, "__%s ", lexinfo->c_str());
-}
 
 void emit_stringcon(FILE* oilfile, astree* node)
 {
@@ -94,6 +84,12 @@ void emit_charcon(FILE* oilfile, astree* node)
     fprintf(oilfile, "char* %s = %s", node->emit_code, node->lexinfo->c_str());
 }
 
+// FUNCTION METHODS
+void emit_function_name(FILE* oilfile, astree* node) //DONE
+{
+    astree* left=node->children[0];
+    fprintf(oilfile, "__%s ", lexinfo->c_str());
+}
 void emit_params(astree* node, FILE* oilfile)
 {
     fprintf(oilfile, " (");
@@ -125,7 +121,6 @@ void emit_params(astree* node, FILE* oilfile)
     }
     fprintf(oilfile, ") ");
 }
-
 void emit_function_body(FILE* oilfile, astree* node)
 {
     //
@@ -141,18 +136,9 @@ void emit(astree* node, FILE* oilfile)
             break;
         }
         case TOK_STRINGCON: 
-        {
-            emit_stringcon(oilfile, node)
-            break;
-        }
         case TOK_INTINGCON: 
-        {
-            emit_intcon(oilfile, node)
-            break;
-        }
         case TOK_CHARCON: 
         {
-            emit_charcon(oilfile, node)
             break;
         }
         case TOK_FUNCTION:
@@ -164,7 +150,18 @@ void emit(astree* node, FILE* oilfile)
         }
         default:
             break;
+    }
+}
 
-                
- }
+void emit_main(FILE* oilfile, astree* root)
+{
+    fprintf(oilfile, "void --ocmain(void)\n");
+    emit(root);
+}
+
+void emit_everything(oilfile, astree* root)
+{
+    emit_header(oilfile); //DONE
+    emit_program(oilfile, root);
+    emit_main(oilfile, root);
 }
