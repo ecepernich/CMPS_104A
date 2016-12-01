@@ -28,7 +28,7 @@ void emit_vardef(FILE* oilfile, astree* node)
     emit_vardecl(oilfile, node);
     for (astree* child: node->children) 
     {
-      //emit_var(oilfile, child);
+      emit_vardecl(oilfile, child);
     }
 }
 
@@ -36,7 +36,7 @@ void emit_vardecl(FILE* oilfile, astree* node)
 {
     if (node->symbol==TOK_VARDECL)
     {
-        printf("%wooooo");
+        printf("wooooo");
     }
 }
 
