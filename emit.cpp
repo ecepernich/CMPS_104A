@@ -8,7 +8,7 @@ int charcon_nr=0;
 
 void emit_header(FILE* oilfile)  //DONE
 {
-    fprintf(oilfile,"define __OCLIB_C__\n");
+    fprintf(oilfile,"#define __OCLIB_C__\n");
     fprintf(oilfile, "#include \"oclib.oh\"\n\n");
 }
 
@@ -18,7 +18,11 @@ void emit_structdef(FILE* oilfile, astree* node)
 }
 void emit_stringdef(FILE* oilfile, astree* node)
 {
-
+    emit_stringcon(oilfile, node);
+    for (astree* child: node->children) 
+    {
+      emit_stringdef(oilfile, child);
+    }
 }
 void emit_vardef(FILE* oilfile, astree* node)
 {
@@ -46,12 +50,15 @@ void emit_stringcon(FILE* oilfile, astree* node)
 {
     //expected result:
     //char* s1 = "Hello World!\n"
-    stringcon_nr++;
-    string varname = "s";
-    cout << varname << stringcon_nr << endl;
-    node->emit_code=varname.c_str();
+    if (node->symbol==TOK_STRONGCON)
+    {
+        stringcon_nr++;
+        string varname = "s";
+        cout << varname << stringcon_nr << endl;
+        node->emit_code=varname.c_str();
 
-    fprintf(oilfile, "char* %s = %s", node->emit_code, node->lexinfo->c_str());
+        fprintf(oilfile, "char* %s = %s", node->emit_code, node->lexinfo->c_str());
+    }
 }
 void emit_intcon(FILE* oilfile, astree* node)
 {
