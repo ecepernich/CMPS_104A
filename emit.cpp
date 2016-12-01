@@ -149,13 +149,13 @@ void emit(FILE* oilfile, astree* node)
 
 void emit_main(FILE* oilfile, astree* root)
 {
-    fprintf(oilfile, "void --ocmain(void)\n{");
+    fprintf(oilfile, "void --ocmain(void)\n{\n");
     for (astree* child: root->children) 
     {
       emit(oilfile, child);
     }
     emit(oilfile, root);
-    fprintf(oilfile, "\n}");
+    fprintf(oilfile, "}\n");
 
 }
 
