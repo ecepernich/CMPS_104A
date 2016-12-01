@@ -1,3 +1,10 @@
+#include <string>
+#include <iostream>
+#include <libgen.h>
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "emit.h"
 
 int stringcon_nr=1;
@@ -27,10 +34,32 @@ void emit_structdecl(FILE* oilfile, astree* node)
         if (node->children.size()>=1)
         {
             left=node->children[0];
-            fprintf(oilfile, "struct __%s {", left->lexinfo->c_str());
+            fprintf(oilfile, "struct s_%s {\n", left->lexinfo->c_str());
+            std::string structname="s_";
+            structname.append(left->lexinfo->c_str());
+            node->emit_code=structname.c_str();
             if (node->children.size()>=2)
             {
                 right=node->children[1];
+                astree* rleft=nullptr;
+                if (right->children.size()>=1)
+                {
+                    while(right!=nullptr)
+                    {
+                        rleft=right->children[0];
+                        printf("We got %s\n", rleft->lexinfo->c_str());
+
+                        if (right->children.size()>=2)
+                        {
+                            right=right->children[1];
+                        }
+                        else
+                        {
+                            right=nullptr;
+                        }
+                    }
+
+                }
             }   
             fprintf(oilfile, "\n}\n");    
         }
