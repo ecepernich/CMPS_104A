@@ -4,6 +4,10 @@
 #include "auxlib.h"
 #include <string>
 #include <iostream>
+#include <libgen.h>
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 void emit_header(FILE* oilfile);
 
