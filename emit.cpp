@@ -40,7 +40,13 @@ void emit_vardecl(FILE* oilfile, astree* node)
         astree* left2=nullptr;
         if (node->children.size()>=1)
         {
-            printf("WOOOOOOOOO\n");
+            left=node->children[0];
+            if (left->children.size()>=1)
+            {
+                left2=left->children[0];
+                fprintf(oilfile, "%s __%s;\n", left->lexinfo->c_str(), 
+                                               left2->lexinfo->c_str());
+            }
         }
     }
 }
