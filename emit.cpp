@@ -50,7 +50,7 @@ void emit_stringcon(FILE* oilfile, astree* node)
 {
     //expected result:
     //char* s1 = "Hello World!\n"
-    if (node->symbol==TOK_STRONGCON)
+    if (node->symbol==TOK_STRINGCON)
     {
         stringcon_nr++;
         string varname = "s";
