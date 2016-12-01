@@ -285,6 +285,12 @@ void emit_everything(FILE* oilfile, astree* root)
     emit_program(oilfile, root);
     emit_main(oilfile, root);
 }
+int emit_operands(astree* node){
+    return 
+      node->symbol == TOK_IDENT
+    ||node->symbol == TOK_INTCON
+    ||node->symbol == TOK_CHARCON;
+}
 
 
 
