@@ -33,6 +33,7 @@ void emit_structdecl(FILE* oilfile, astree* node)
                 right=node->children[1];
             }   
             fprintf(oilfile, "\n}\n");    
+        }
     }
 }
 }
@@ -65,8 +66,8 @@ void emit_vardecl(FILE* oilfile, astree* node)
             if (left->children.size()>=1)
             {
                 left2=left->children[0];
-                fprintf(oilfile, "%s __%s;\n", left->lexinfo->c_str(), 
-                                               left2->lexinfo->c_str());
+                fprintf(oilfile, "%s __%s;\n", left->lexinfo->c_str(),
+                                             left2->lexinfo->c_str());
             }
         }
     }
