@@ -27,10 +27,28 @@ void emit_structdecl(FILE* oilfile, astree* node)
         if (node->children.size()>=1)
         {
             left=node->children[0];
-            fprintf(oilfile, "struct __%s {", left->lexinfo->c_str());
+            fprintf(oilfile, "struct s_%s {\n", left->lexinfo->c_str());
             if (node->children.size()>=2)
             {
                 right=node->children[1];
+                if (right->children.size()>=1)
+                {
+                    while(right!=nullptr)
+                    {
+                        left=right->children[0];
+                        printf("We got %s\n", left->lexinfo->c_str());
+
+                        if (right->children.size()>=2)
+                        {
+                            right=right->children[1];
+                        }
+                        else
+                        {
+                            right=nullptr;
+                        }
+                    }
+
+                }
             }   
             fprintf(oilfile, "\n}\n");    
         }
