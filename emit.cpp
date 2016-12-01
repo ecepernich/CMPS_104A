@@ -149,13 +149,19 @@ void emit(astree* node, FILE* oilfile)
             //expected result:__puts(s1)
         }
         default:
+        {
             break;
+        }
     }
 }
 
 void emit_main(FILE* oilfile, astree* root)
 {
     fprintf(oilfile, "void --ocmain(void)\n");
+    for (astree* child: root->children) 
+    {
+      emit(oilfile, child);
+    }
     emit(root);
 }
 
