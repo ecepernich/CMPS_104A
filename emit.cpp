@@ -47,6 +47,7 @@ void emit_structdecl(FILE* oilfile, astree* node)
                     while(right!=nullptr)
                     {
                         rleft=right->children[0];
+                        printf("We got %s\n", rleft->lexinfo->c_str());
                         std::string fieldname="f_";
                         fieldname.append(left->lexinfo->c_str());
                         fieldname.append("_");
@@ -202,7 +203,16 @@ void emit_function_body(FILE* oilfile, astree* node)
 }
 
 void whileloop(FILE* oilfile, astree* node){
-    fprintf(oilfile, "while_%zd_%zd_%zd:;", 
+    fprintf(oilfile, "while_%zd_%zd_%zd:;\n", 
+        node->lloc.filenr, node->lloc.linenr, node->lloc.offset);
+    emit(oilfile, node->children[0]);
+    fprintf(oilfile, "\t__%s (!if%s) go to break_%zd_%zd_%zd:;\n", 
+        node->child[0]->lexinfo->c_str(),
+        node->lloc.filenr, node->lloc.linenr, node->lloc.offset);
+    emit(oilfile,node->children[1]);
+    fprintf(oilfile, "\t__%s goto while_%zd_%zd_%zd:;",
+        node->lloc.filenr, node->lloc.linenr, node->lloc.offset);
+    fprintf(oilfile, "%sbreak_%zd_%zd_%zd:;\n", 
         node->lloc.filenr, node->lloc.linenr, node->lloc.offset);
 }
 
@@ -284,6 +294,7 @@ void emit_everything(FILE* oilfile, astree* root)
     emit_program(oilfile, root);
     emit_main(oilfile, root);
 }
+//helps tp check and see if operand is a child
 int emit_operands(astree* node){
     return 
       node->symbol == TOK_IDENT
