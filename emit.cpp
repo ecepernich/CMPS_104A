@@ -25,7 +25,7 @@ void emit_stringdef(FILE* oilfile, astree* node)
 
 void emit_vardef(FILE* oilfile, astree* node)
 {
-    //emit_var(oilfile, node);
+    emit_vardecl(oilfile, node);
     for (astree* child: node->children) 
     {
       //emit_var(oilfile, child);
@@ -34,7 +34,7 @@ void emit_vardef(FILE* oilfile, astree* node)
 
 void emit_vardecl(FILE* oilfile, astree* node)
 {
-    
+
 }
 
 void emit_function(FILE* oilfile, astree* node)
