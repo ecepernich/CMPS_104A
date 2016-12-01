@@ -28,9 +28,9 @@ void emit_structdecl(FILE* oilfile, astree* node)
         {
             left=node->children[0];
             fprintf(oilfile, "struct s_%s {\n", left->lexinfo->c_str());
-            std::string structname = "s_";
-            structname += std::to_string(left->lexinfo);
-            node->emit_code=structname.c_str();
+            const char* structname = "s_";
+            strcat(structname,left->lexinfo->c_str());
+            node->emit_code=structname;
             if (node->children.size()>=2)
             {
                 right=node->children[1];
