@@ -57,7 +57,7 @@ void emit_stringcon(FILE* oilfile, astree* node)
         cout << varname << stringcon_nr << endl;
         node->emit_code=varname.c_str();
 
-        fprintf(oilfile, "char* %s = %s", node->emit_code, node->lexinfo->c_str());
+        fprintf(oilfile, "char* %s = %s \n", node->emit_code, node->lexinfo->c_str());
     }
 }
 void emit_intcon(FILE* oilfile, astree* node)
@@ -69,7 +69,7 @@ void emit_intcon(FILE* oilfile, astree* node)
     cout << varname << intcon_nr << endl;
     node->emit_code=varname.c_str();
 
-    fprintf(oilfile, "int* %s = %s", node->emit_code, node->lexinfo->c_str());
+    fprintf(oilfile, "int* %s = %s\n ", node->emit_code, node->lexinfo->c_str());
 }
 void emit_charcon(FILE* oilfile, astree* node)
 {
