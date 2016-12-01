@@ -294,7 +294,6 @@ void emit(FILE* oilfile, astree* node)
         case TOK_IFELSE:
         {
 
-        
             ifelse(oilfile, node);
             break;
         }
@@ -324,12 +323,6 @@ void emit_program(FILE* oilfile, astree* node)
     //emit_function(oilfile, node);
 }
 
-void emit_everything(FILE* oilfile, astree* root)
-{
-    emit_header(oilfile); //DONE
-    emit_program(oilfile, root);
-    emit_main(oilfile, root);
-}
 //helps tp check and see if operand is a child
 int emit_operands(astree* node){
     return 
@@ -337,6 +330,14 @@ int emit_operands(astree* node){
     ||node->symbol == TOK_INTCON
     ||node->symbol == TOK_CHARCON;
 }
+
+void emit_everything(FILE* oilfile, astree* root)
+{
+    emit_header(oilfile); //DONE
+    emit_program(oilfile, root);
+    emit_main(oilfile, root);
+}
+
 
 
 
