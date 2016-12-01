@@ -55,6 +55,7 @@ void emit_structdecl(FILE* oilfile, astree* node)
                         fprintf(oilfile, "\t%s \n", right->emit_code);
 
 
+
                         if (right->children.size()>=2)
                         {
                             right=right->children[1];
@@ -200,6 +201,19 @@ void emit_function_body(FILE* oilfile, astree* node)
     //
 }
 
+void whileloop(FILE* oilfile, astree* node){
+    fprintf(oilfile, "while_%zd_%zd_%zd:;", 
+        node->lloc.filenr, node->lloc.linenr, node->lloc.offset);
+}
+
+void ifelse(FILE* oilfile, astree* node){
+
+}
+
+void if_(FILE* oilfile, astree* node){
+
+}
+
 void emit(FILE* oilfile, astree* node)
 {
     switch(node->symbol)
@@ -222,8 +236,22 @@ void emit(FILE* oilfile, astree* node)
             //expected result:__puts(s1)
         }
         case TOK_WHILE:
+        {
+            whileloop(oilfile, node);
+            break;
+        }
         case TOK_IF:
+        {
+            if_(oilfile, node);
+            break;
+        }
         case TOK_IFELSE:
+        {
+
+        
+            ifelse(oilfile, node);
+            break;
+        }
         default:
         {
             break;
@@ -256,4 +284,12 @@ void emit_everything(FILE* oilfile, astree* root)
     emit_program(oilfile, root);
     emit_main(oilfile, root);
 }
+int emit_operands(astree* node){
+    return 
+      node->symbol == TOK_IDENT
+    ||node->symbol == TOK_INTCON
+    ||node->symbol == TOK_CHARCON;
+}
+
+
 
