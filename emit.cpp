@@ -168,6 +168,6 @@ void emit_program(FILE* oilfile, astree* node)
 void emit_everything(FILE* oilfile, astree* root)
 {
     emit_header(oilfile); //DONE
-    emit_program(oilfile, root);
+    //emit_program(oilfile, root);
     emit_main(oilfile, root);
 }
