@@ -49,7 +49,7 @@ void emit_stringcon(FILE* oilfile, astree* node)
     stringcon_nr++;
     string varname = "s";
     cout << varname << stringcon_nr << endl;
-    node->emit_code=varname->c_str();
+    node->emit_code=varname.c_str();
 
     fprintf(oilfile, "char* %s = %s", node->emit_code, node->lexinfo->c_str());
 }
@@ -60,7 +60,7 @@ void emit_intcon(FILE* oilfile, astree* node)
     intcon_nr++;
     string varname = "a";
     cout << varname << intcon_nr << endl;
-    node->emit_code=varname->c_str();
+    node->emit_code=varname.c_str();
 
     fprintf(oilfile, "int* %s = %s", node->emit_code, node->lexinfo->c_str());
 }
@@ -71,7 +71,7 @@ void emit_charcon(FILE* oilfile, astree* node)
     charcon_nr++;
     string varname = "c";
     cout << varname << charon_nr << endl;
-    node->emit_code=varname->c_str();
+    node->emit_code=varname.c_str();
 
     fprintf(oilfile, "char* %s = %s", node->emit_code, node->lexinfo->c_str());
 }
@@ -80,7 +80,7 @@ void emit_charcon(FILE* oilfile, astree* node)
 void emit_function_name(FILE* oilfile, astree* node) //DONE
 {
     astree* left=node->children[0];
-    fprintf(oilfile, "__%s ", lexinfo->c_str());
+    fprintf(oilfile, "__%s ",node->lexinfo->c_str());
 }
 void emit_params(astree* node, FILE* oilfile)
 {
@@ -128,7 +128,7 @@ void emit(FILE* oilfile, astree* node)
             break;
         }
         case TOK_STRINGCON: 
-        case TOK_INTINGCON: 
+        case TOK_INTCON: 
         case TOK_CHARCON: 
         {
             break;
