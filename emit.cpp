@@ -1,3 +1,10 @@
+#include <string>
+#include <iostream>
+#include <libgen.h>
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "emit.h"
 
 int stringcon_nr=1;
