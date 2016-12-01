@@ -34,7 +34,10 @@ void emit_vardef(FILE* oilfile, astree* node)
 
 void emit_vardecl(FILE* oilfile, astree* node)
 {
-
+    if (node->symbol==TOK_VARDECL)
+    {
+        printf("%wooooo");
+    }
 }
 
 void emit_function(FILE* oilfile, astree* node)
