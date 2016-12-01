@@ -9,7 +9,7 @@ int charcon_nr=0;
 void emit_header(FILE* oilfile)  //DONE
 {
     fprintf(oilfile,"define __OCLIB_C__\n");
-    fprintf(oilfile, "#include \"oclib.oh\"\n");
+    fprintf(oilfile, "#include \"oclib.oh\"\n\n");
 }
 
 void emit_structdef(FILE* oilfile, astree* node)
@@ -111,7 +111,7 @@ void emit_params(FILE* oilfile, astree* node)
             }
         }
     }
-    fprintf(oilfile, ") ");
+    fprintf(oilfile, ") \n");
 }
 void emit_function_body(FILE* oilfile, astree* node)
 {
@@ -149,12 +149,14 @@ void emit(FILE* oilfile, astree* node)
 
 void emit_main(FILE* oilfile, astree* root)
 {
-    fprintf(oilfile, "void --ocmain(void)\n");
+    fprintf(oilfile, "void --ocmain(void)\n{");
     for (astree* child: root->children) 
     {
       emit(oilfile, child);
     }
     emit(oilfile, root);
+    fprintf(oilfile, "\n}");
+
 }
 
 void emit_program(FILE* oilfile, astree* node)
