@@ -1,8 +1,8 @@
 #include "emit.h"
 
-int stringcon_nr=0;
-int intcon_nr=0;
-int charcon_nr=0;
+int stringcon_nr=1;
+int intcon_nr=1;
+int charcon_nr=1;
 
 
 
@@ -48,40 +48,33 @@ void emit_function(FILE* oilfile, astree* node)
 
 void emit_stringcon(FILE* oilfile, astree* node)
 {
-    //expected result:
-    //char* s1 = "Hello World!\n"
     if (node->symbol==TOK_STRINGCON)
     {
-        stringcon_nr++;
         std::string varname = "s";
         varname += std::to_string(stringcon_nr);
-        cout << varname << stringcon_nr << endl;
         node->emit_code=varname.c_str();
 
         fprintf(oilfile, "char* %s = %s \n", node->emit_code, node->lexinfo->c_str());
+        stringcon_nr++;
     }
 }
 void emit_intcon(FILE* oilfile, astree* node)
 {
-    //expected result:
-    //char* s1 = "Hello World!\n"
-    intcon_nr++;
     string varname = "a";
-    cout << varname << intcon_nr << endl;
+    varname += std::to_string(intcon_nr);
     node->emit_code=varname.c_str();
 
     fprintf(oilfile, "int* %s = %s\n ", node->emit_code, node->lexinfo->c_str());
+    intcon_nr++;
 }
 void emit_charcon(FILE* oilfile, astree* node)
 {
-    //expected result:
-    //char* s1 = "Hello World!\n"
-    charcon_nr++;
     string varname = "c";
-    cout << varname << charcon_nr << endl;
+    varname += std::to_string(charcon_nr);
     node->emit_code=varname.c_str();
 
     fprintf(oilfile, "char* %s = %s", node->emit_code, node->lexinfo->c_str());
+    charcon_nr++;
 }
 
 // FUNCTION METHODS
