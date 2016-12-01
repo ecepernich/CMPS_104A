@@ -53,7 +53,8 @@ void emit_stringcon(FILE* oilfile, astree* node)
     if (node->symbol==TOK_STRINGCON)
     {
         stringcon_nr++;
-        string varname = "s";
+        std::string varname = "s";
+        varname += std::to_string(stringcon_nr);
         cout << varname << stringcon_nr << endl;
         node->emit_code=varname.c_str();
 
