@@ -170,12 +170,12 @@ void emit_program(FILE* oilfile, astree* node)
     emit_structdef(oilfile, node);
     emit_stringdef(oilfile, node);
     emit_vardef(oilfile, node);
-    emit_function(oilfile, node);
+    //emit_function(oilfile, node);
 }
 
 void emit_everything(FILE* oilfile, astree* root)
 {
     emit_header(oilfile); //DONE
-    //emit_program(oilfile, root);
+    emit_program(oilfile, root);
     emit_main(oilfile, root);
 }
