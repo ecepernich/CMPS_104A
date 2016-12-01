@@ -32,6 +32,11 @@ void emit_vardef(FILE* oilfile, astree* node)
     }
 }
 
+void emit_vardecl(FILE* oilfile, astree* node)
+{
+    
+}
+
 void emit_function(FILE* oilfile, astree* node)
 {
     if (node->children.size()>=1)
