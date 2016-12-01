@@ -17,6 +17,11 @@ void emit_header(FILE* oilfile)  //DONE
     fprintf(oilfile, "#include \"oclib.oh\"\n\n");
 }
 
+void emit_type(FILE* oilfile, astree* node)
+{
+    
+}
+
 void emit_structdef(FILE* oilfile, astree* root)
 {
     emit_structdecl(oilfile, root);
