@@ -23,7 +23,7 @@ using namespace std;
 #include "symstack.h"
 #include "symtable.h"
 #include "typecheck.h"
-//#include "emit.h"
+#include "emit.h"
 
 /*public values*/
 

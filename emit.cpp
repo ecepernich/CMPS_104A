@@ -12,14 +12,6 @@ void emit_header(FILE* oilfile)  //DONE
     fprintf(oilfile, "#include \"oclib.oh\"\n");
 }
 
-void emit_program(FILE* oilfile, astree* node)
-{
-    emit_stuctdef(oilfile, node);
-    emit_stringdef(oilfile, node);
-    emit_vardef(oilfile, node);
-    emit_function(oilfile, node);
-}
-
 void emit_structdef(FILE* oilfile, astree* node)
 {
 
@@ -33,7 +25,7 @@ void emit_vardef(FILE* oilfile, astree* node)
 
 }
 
-void emit_function(FILE* oilfile, astre* node)
+void emit_function(FILE* oilfile, astree* node)
 {
     if (node->children.size()>=1)
     {
@@ -126,7 +118,7 @@ void emit_function_body(FILE* oilfile, astree* node)
     //
 }
 
-void emit(astree* node, FILE* oilfile)
+void emit(FILE* oilfile, astree* node)
 {
     switch(node->symbol)
     {
@@ -162,10 +154,18 @@ void emit_main(FILE* oilfile, astree* root)
     {
       emit(oilfile, child);
     }
-    emit(root);
+    emit(oilfile, root);
 }
 
-void emit_everything(oilfile, astree* root)
+void emit_program(FILE* oilfile, astree* node)
+{
+    emit_stuctdef(oilfile, node);
+    emit_stringdef(oilfile, node);
+    emit_vardef(oilfile, node);
+    emit_function(oilfile, node);
+}
+
+void emit_everything(FILE* oilfile, astree* root)
 {
     emit_header(oilfile); //DONE
     emit_program(oilfile, root);
