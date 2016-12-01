@@ -156,7 +156,6 @@ void emit_main(FILE* oilfile, astree* root)
     }
     emit(oilfile, root);
     fprintf(oilfile, "}\n");
-
 }
 
 void emit_program(FILE* oilfile, astree* node)

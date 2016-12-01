@@ -1,5 +1,6 @@
 
- Assignment 4 
+ Assignment 5 - .oil file
+
  This program was completed using pair programming.
  Partner: Elizabeth Cepernich (eceperni@ucsc.edu)
  Partner: Leah Langford (llangfor@ucsc.edu)
@@ -12,11 +13,11 @@
  together, learning from each other, not to divide the work into
  two pieces with each partner working on a different piece.
 
- Elizabeth Cepernich spent 8 hours working alone.
- Leah Langford spent 8 hours working alone.
- We spent 20 hours working together.
- Elizabeth Cepernich spent 10 hours driving.
- Leah Langford spent 10 hours driving.
+ Elizabeth Cepernich spent 2 hours working alone.
+ Leah Langford spent 2 hours working alone.
+ We spent 10 hours working together.
+ Elizabeth Cepernich spent 7 hours driving.
+ Leah Langford spent 3 hours driving.
 
  Please grade the work submitted by eceperni@ucsc.edu
  and not the work submitted by llangfor@ucsc.edu.
@@ -26,9 +27,7 @@
  https://bitbucket.org/leahlang4d/cmps_104a We have made 
  it public, so if you want to look at it, it should be accessible. 
 
- We didn't manage to complete the program on time (as I'm sure many 
- other students didn't either) but we believe we have most, if not
- all, of the code in place. We're submitting assignment 4 code with
- the knowledge that we will have to go back and fix it for the next
- due date. We think all the parts for the build section of grading
- are there, whether or not any of the test files work. 
+ Last week we didn't complete assignment 4, but since then, we have
+ gotten it to compile and run correctly, so the .sym file and the 
+ .ast files should now have correct output as well. 
+ 
