@@ -183,6 +183,8 @@ void emit_function_params(FILE* oilfile, astree* node)
         paramhead = node->children[1]->children[0];
         fprintf(oilfile, "%s",paramhead->emit_code);
         astree* plist=nullptr;
+        astree* nexthead=nullptr;
+        int i=1;
 
         if (paramhead->children.size()>=1)
         {
@@ -196,21 +198,23 @@ void emit_function_params(FILE* oilfile, astree* node)
 
         if (paramhead->children.size()>=2)
         {
-            while(paramhead!=nullptr)
+            nexthead=paramhead->children[i];
+            while(nexthead!=nullptr)
             {
-                plist=paramhead->children[0];
+                plist=nexthead->children[0];
                 fprintf(oilfile, "\t%s _%d_%s",
-                    paramhead->lexinfo->c_str(),
-                    paramhead->block_nr, plist->lexinfo->c_str());
+                    nexthead->lexinfo->c_str(),
+                    nexthead->block_nr, plist->lexinfo->c_str());
 
-                if (paramhead->children.size()>=2)
+                if (paramhead->children.size()>=i+1)
                 {
                     fprintf(oilfile, ";\n");
-                    paramhead=paramhead->children[1];
+                    i++;
+                    nexthead=paramhead->children[i];
                 }
                 else
                 {
-                    paramhead=nullptr;
+                    nexthead=nullptr;
                 }
             }
         }
