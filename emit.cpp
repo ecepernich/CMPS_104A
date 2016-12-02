@@ -18,10 +18,10 @@ void emit_header(FILE* oilfile)  //DONE
     fprintf(oilfile, "#include \"oclib.oh\"\n\n");
 }
 
-void emit_typedef(FILE* oilfile, astree* node)
+void emit_typedef(FILE* oilfile, astree* node, astree* parent)
 {
     
-    if (node->lexinfo->c_str=="int")
+    if (strcmp(node->lexinfo->c_str(),"int")==0)
     {
         fprintf(oilfile, "int");
         if (node->attr[ATTR_array])
@@ -30,7 +30,7 @@ void emit_typedef(FILE* oilfile, astree* node)
         }
         fprintf(oilfile, " ");
     }
-    else if (node->lexinfo->c_str=="string")
+    else if (strcmp(node->lexinfo->c_str(),"string")==0)
     {
         fprintf(oilfile, "char*");
         if (node->attr[ATTR_array])
@@ -41,7 +41,7 @@ void emit_typedef(FILE* oilfile, astree* node)
     }
     else
     {
-        fprintf(oilfile, "struct");
+        fprintf(oilfile, "struct %s", parent->emit_code);
         if (node->attr[ATTR_array])
         {
             fprintf(oilfile, "*");
@@ -80,14 +80,15 @@ void emit_structdecl(FILE* oilfile, astree* node)
                 {
                     while(right!=nullptr)
                     {
+                        fprintf(oilfile, "\t");
                         rleft=right->children[0];
-                        printf("We got %s\n", rleft->lexinfo->c_str());
+                        emit_typedef(oilfile, right, node);
                         std::string fieldname="f_";
                         fieldname.append(left->lexinfo->c_str());
                         fieldname.append("_");
                         fieldname.append(rleft->lexinfo->c_str());
                         right->emit_code=fieldname.c_str();
-                        fprintf(oilfile, "\t%s \n", right->emit_code);
+                        fprintf(oilfile, "%s \n", right->emit_code);
 
 
 
