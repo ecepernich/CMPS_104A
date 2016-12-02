@@ -153,7 +153,6 @@ void emit_vardecl(FILE* oilfile, astree* node)
         astree* left=nullptr;
         astree* left2=nullptr;
         std::string varname="__";
-        varname.append(left->lexinfo->c_str());
         if (node->children.size()>=1)
         {
             left=node->children[0];
