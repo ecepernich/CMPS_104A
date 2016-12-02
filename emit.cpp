@@ -160,7 +160,7 @@ void emit_vardecl(FILE* oilfile, astree* node)
             varname += std::to_string(stringcon_nr);
             if (left->symbol==TOK_INT)
             {
-                varname = "i"
+                varname = "i";
                 varname += std::to_string(intcon_nr);
                 intcon_nr++;
             }
@@ -178,6 +178,7 @@ void emit_vardecl(FILE* oilfile, astree* node)
             if (left->children.size()>=1)
             {
                 left2=left->children[0];
+                left2->emit_code=varname.c_str();
                 fprintf(oilfile, "%s __%s;\n", left->lexinfo->c_str(),
                                              left2->lexinfo->c_str());
             }
