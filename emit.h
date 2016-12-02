@@ -29,7 +29,7 @@ void emit_charcon(FILE* oilfile, astree* node);
 // FUNCTION METHODS
 void emit_function(FILE* oilfile, astree* node);
 void emit_function_name(FILE* oilfile, astree* node);
-void emit_params(FILE* oilfile, astree* node);
+void emit_function_params(FILE* oilfile, astree* node);
 void emit_function_body(FILE* oilfile, astree* node);
 
 void emit_call_name(FILE* oilfile, astree* node);
