@@ -13,8 +13,8 @@
  together, learning from each other, not to divide the work into
  two pieces with each partner working on a different piece.
 
- Elizabeth Cepernich spent 2 hours working alone.
- Leah Langford spent 2 hours working alone.
+ Elizabeth Cepernich spent 4 hours working alone.
+ Leah Langford spent 3 hours working alone.
  We spent 10 hours working together.
  Elizabeth Cepernich spent 7 hours driving.
  Leah Langford spent 3 hours driving.
@@ -29,5 +29,5 @@
 
  Last week we didn't complete assignment 4, but since then, we have
  gotten it to compile and run correctly, so the .sym file and the 
- .ast files should now have correct output as well. 
+ .ast file should now have correct output as well. 
  
