@@ -155,12 +155,10 @@ void emit_function(FILE* oilfile, astree* node)
         }
         if (node->children.size()>=2)
         {
-            printf("We're at params.\n");
              emit_function_params(oilfile, node);
         }
         if (node->children.size()>=3)
         {
-            printf("We're at body.\n");
             emit_function_body(oilfile, node);
         }
     }
@@ -183,11 +181,14 @@ void emit_function_params(FILE* oilfile, astree* node)
     {
         fprintf(oilfile, "\n");
         paramhead = node->children[1]->children[0];
+        printf("We're at paramhead\n");
         fprintf(oilfile, "%s",paramhead->emit_code);
         int i=0;
         astree* plist=nullptr;
         if (paramhead->children.size()>=1)
         {
+            printf("We're at paramhead greater than 1\n");
+
             while(plist!=nullptr)
             {
                 fprintf(oilfile, ";\n %s",plist->emit_code);
