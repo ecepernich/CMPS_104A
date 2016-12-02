@@ -238,29 +238,30 @@ void whileloop(FILE* oilfile, astree* node){
     fprintf(oilfile, "while_%zd_%zd_%zd:;\n", 
         node->lloc.filenr, node->lloc.linenr, node->lloc.offset);
     emit(oilfile, node->children[0]);
-    fprintf(oilfile, "\t__%s (!if%s) go to break_%zd_%zd_%zd:;\n", 
+    fprintf(oilfile, "\t__(!if%s) go to break_%zd_%zd_%zd:;\n", 
         node->children[0]->lexinfo->c_str(),
         node->lloc.filenr, node->lloc.linenr, node->lloc.offset);
     emit(oilfile,node->children[1]);
-    fprintf(oilfile, "\t__%s goto while_%zd_%zd_%zd:;",
+    fprintf(oilfile, "\t__goto while_%zd_%zd_%zd:;",
         node->lloc.filenr, node->lloc.linenr, node->lloc.offset);
-    fprintf(oilfile, "%sbreak_%zd_%zd_%zd:;\n", 
+    fprintf(oilfile, "break_%zd_%zd_%zd:;\n", 
         node->lloc.filenr, node->lloc.linenr, node->lloc.offset);
 }
 
 void ifelse(FILE* oilfile, astree* node){
     emit(oilfile, node->children[0]);
-    //fr 
+    //fprintf(oilfile, "\t__%s(!if%s) go to else_%zd_%zd_%zd:;\n", );
+    
 
 }
 
 void if_(FILE* oilfile, astree* node){
     emit(oilfile, node-> children[0]);
-    fprintf(oilfile, "\t__%s(!if%s) go to fi_%zd_%zd_%zd\n",
+    fprintf(oilfile, "\t__(!if%s) go to fi_%zd_%zd_%zd;\n",
         node->children[0]->lexinfo->c_str(),
         node->lloc.filenr,node->lloc.linenr, node->lloc.offset);
     emit(oilfile, node->children[2]);
-        fprintf(oilfile, "%sfi_%zd_%zd_%zd\n",
+        fprintf(oilfile, "fi_%zd_%zd_%zd\n",
         node->lloc.filenr, node->lloc.linenr, node->lloc.offset);
 
 }
