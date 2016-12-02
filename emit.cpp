@@ -171,7 +171,8 @@ void emit_function(FILE* oilfile, astree* node)
 void emit_function_name(FILE* oilfile, astree* node)
 {
     astree* left=node->children[0];
-    fprintf(oilfile, "%s __%s (",node->lexinfo->c_str(), left->lexinfo->c_str());
+    astree* left2=left->children[0];
+    fprintf(oilfile, "%s __%s (",left->lexinfo->c_str(), left2->lexinfo->c_str());
 }
 void emit_function_params(FILE* oilfile, astree* node)
 {
