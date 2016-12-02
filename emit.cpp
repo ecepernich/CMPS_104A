@@ -18,7 +18,7 @@ void emit_header(FILE* oilfile)  //DONE
     fprintf(oilfile, "#include \"oclib.oh\"\n\n");
 }
 
-void emit_typedef(FILE* oilfile, astree* node)
+void emit_typedef(FILE* oilfile, astree* node, astree* parent)
 {
     
     if (strcmp(node->lexinfo->c_str(),"int")==0)
@@ -41,7 +41,7 @@ void emit_typedef(FILE* oilfile, astree* node)
     }
     else
     {
-        fprintf(oilfile, "struct");
+        fprintf(oilfile, "struct %s", parent->emit_code);
         if (node->attr[ATTR_array])
         {
             fprintf(oilfile, "*");
@@ -80,8 +80,9 @@ void emit_structdecl(FILE* oilfile, astree* node)
                 {
                     while(right!=nullptr)
                     {
+                        fprintf(oilfile, "\t");
                         rleft=right->children[0];
-                        emit_typedef(oilfile, right);
+                        emit_typedef(oilfile, right, node);
                         std::string fieldname="f_";
                         fieldname.append(left->lexinfo->c_str());
                         fieldname.append("_");
