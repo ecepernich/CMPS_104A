@@ -253,6 +253,7 @@ void emit_function_body(FILE* oilfile, astree* node)
     fprintf(oilfile, "}\n");
 }
 
+// More types
 void emit_intcon(FILE* oilfile, astree* node)
 {
     string varname = "a";
@@ -312,6 +313,7 @@ void emit_call_params(FILE* oilfile, astree* node)
     fprintf(oilfile, ") \n");
 }
 
+// IF-ELSE-WHILE methods
 void whileloop(FILE* oilfile, astree* node){
     fprintf(oilfile, "while_%zd_%zd_%zd:;\n", 
         node->lloc.filenr, node->lloc.linenr, node->lloc.offset);
@@ -395,6 +397,7 @@ void emit(FILE* oilfile, astree* node)
     }
 }
 
+// EMIT MAIN for emit_everything
 void emit_main(FILE* oilfile, astree* root)
 {
     fprintf(oilfile, "\nvoid __ocmain(void)\n{ \n");
@@ -406,11 +409,12 @@ void emit_main(FILE* oilfile, astree* root)
     fprintf(oilfile, "}\n");
 }
 
+// EMIT PROGRAM for emit_everything
 void emit_program(FILE* oilfile, astree* node)
 {
     emit_structdef(oilfile, node);
-    emit_vardef(oilfile, node);
     emit_stringdef(oilfile, node);
+    emit_vardef(oilfile, node);
     emit_function(oilfile, node);
 }
 
@@ -422,6 +426,7 @@ int emit_operands(astree* node){
     ||node->symbol == TOK_CHARCON;
 }
 
+// main function call 
 void emit_everything(FILE* oilfile, astree* root)
 {
     emit_header(oilfile);
