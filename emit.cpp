@@ -156,6 +156,7 @@ void emit_vardecl(FILE* oilfile, astree* node)
 
         if (node->children.size()>=1)
         {
+            left=node->children[0];
             if (left->children.size()>=1)
             {
                 left2=left->children[0];
