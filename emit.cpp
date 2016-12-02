@@ -19,34 +19,35 @@ void emit_header(FILE* oilfile)  //DONE
 
 void emit_type(FILE* oilfile, astree* node)
 {
-    switch(node->lexinfo->c_str())
+    
+    if (strcmp(node->lexinfo->c_str,"int")==0)
     {
-        case "int": {
-
-            break;
-        }
-        case "string": {
-
-            break;
-        }
-        case "char": {
-
-            break;
-        }
-        case "bool": {
-
-            break;
-        }
-        case "void": {
-
-            break;
-        }
-        default:
+        fprintf(oilfile, "int");
+        if (node->attr[ATTR_array])
         {
-
-            break;
+            fprintf(oilfile, "*");
         }
+        fprintf(oilfile, " ");
     }
+    else if (strcmp(node->lexinfo->c_str,"string")==0)
+    {
+        fprintf(oilfile, "char*");
+        if (node->attr[ATTR_array])
+        {
+            fprintf(oilfile, "*");
+        }
+        fprintf(oilfile, " ");
+    }
+    else
+    {
+        fprintf(oilfile, "struct");
+        if (node->attr[ATTR_array])
+        {
+            fprintf(oilfile, "*");
+        }
+        fprintf(oilfile, " ");
+    }
+
 }
 
 void emit_structdef(FILE* oilfile, astree* root)
