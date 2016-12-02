@@ -181,6 +181,8 @@ void typecheck_function(FILE* symfile, astree* node,
                 if (middle->children.size()>=2)
                 {
                     middle=middle->children[1];
+                    left->block_nr=middle->block_nr+1;
+
                 }
                 else { middle=nullptr; }
             }
