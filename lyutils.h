@@ -1,7 +1,7 @@
 // Elizabeth Cepernich (eceperni@ucsc.edu)
 // Leah Langford (llangfor@ucsc.edu)
 // CMPS 104A Fall 2016
-// Assignment 3: .ast file
+// Assignment 5: .oil file
 
 // $Id: lyutils.h,v 1.6 2016-10-06 16:13:39-07 - - $
 

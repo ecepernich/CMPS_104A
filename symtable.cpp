@@ -1,7 +1,7 @@
-//Elizabeth Cepernich (eceperni@ucsc.edu)
+// Elizabeth Cepernich (eceperni@ucsc.edu)
 // Leah Langford (llangfor@ucsc.edu)
 // CMPS 104A Fall 2016
-// Assignment 4: .sym file
+// Assignment 5: .oil file
 
 //implementing figure 2 in PDF
 //1.We want to insert symbol into table

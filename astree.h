@@ -1,7 +1,7 @@
 // Elizabeth Cepernich (eceperni@ucsc.edu)
 // Leah Langford (llangfor@ucsc.edu)
 // CMPS 104A Fall 2016
-// Assignment 3: .ast file
+// Assignment 5: .oil file
 
 #ifndef __ASTREE_H__
 #define __ASTREE_H__

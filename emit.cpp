@@ -1,3 +1,8 @@
+// Elizabeth Cepernich (eceperni@ucsc.edu)
+// Leah Langford (llangfor@ucsc.edu)
+// CMPS 104A Fall 2016
+// Assignment 5: .oil file
+
 #include <string>
 #include <string.h>
 #include <iostream>
@@ -194,8 +199,6 @@ void emit_function_params(FILE* oilfile, astree* node)
                     paramhead->block_nr, plist->lexinfo->c_str());
         }
 
-
-
         if (paramhead->children.size()>=2)
         {
             nexthead=paramhead->children[i];
@@ -204,7 +207,7 @@ void emit_function_params(FILE* oilfile, astree* node)
                 plist=nexthead->children[0];
                 fprintf(oilfile, ";\n\t%s _%d_%s",
                     nexthead->lexinfo->c_str(),
-                    nexthead->block_nr, plist->lexinfo->c_str());
+                    nexthead->block_nr,plist->lexinfo->c_str());
 
                 if (paramhead->children.size()>=i+1)
                 {
