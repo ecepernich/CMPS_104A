@@ -253,6 +253,17 @@ void emit_function_body(FILE* oilfile, astree* node)
     fprintf(oilfile, "}\n");
 }
 
+void emit_binop(FILE* oilfile, astree* node)
+{
+    astree* left=node->children[0];
+    astree* right=node->children[1];
+}
+
+void emit_expression(FILE* oilfile, astree* node)
+{
+
+}
+
 // More types
 void emit_intcon(FILE* oilfile, astree* node)
 {

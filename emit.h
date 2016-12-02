@@ -27,6 +27,9 @@ void emit_stringdef(FILE* oilfile, astree* node);
 void emit_vardef(FILE* oilfile, astree* node);
 void emit_vardecl(FILE* oilfile, astree* node);
 
+void emit_expression(FILE* oilfile, astree* node);
+void emit_binop(FILE* oilfile, astree* node);
+
 void emit_stringcon(FILE* oilfile, astree* node);
 void emit_intcon(FILE* oilfile, astree* node);
 void emit_charcon(FILE* oilfile, astree* node);
