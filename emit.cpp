@@ -91,8 +91,6 @@ void emit_structdecl(FILE* oilfile, astree* node)
                         right->emit_code=fieldname.c_str();
                         fprintf(oilfile, "%s \n", right->emit_code);
 
-
-
                         if (right->children.size()>=2)
                         {
                             right=right->children[1];
@@ -162,6 +160,19 @@ void emit_function(FILE* oilfile, astree* node)
     }
 }
 
+void emit_function_name(FILE* oilfile, astree* node)
+{
+
+}
+void emit_params(FILE* oilfile, astree* node)
+{
+
+}
+void emit_function_body(FILE* oilfile, astree* node)
+{
+
+}
+
 void emit_stringcon(FILE* oilfile, astree* node)
 {
     if (node->symbol==TOK_STRINGCON)
@@ -197,12 +208,12 @@ void emit_charcon(FILE* oilfile, astree* node)
 }
 
 // FUNCTION METHODS
-void emit_function_name(FILE* oilfile, astree* node) //DONE
+void emit_call_name(FILE* oilfile, astree* node) //DONE
 {
     astree* left=node->children[0];
     fprintf(oilfile, "\t__%s",left->lexinfo->c_str());
 }
-void emit_params(FILE* oilfile, astree* node)
+void emit_call_params(FILE* oilfile, astree* node)
 {
     fprintf(oilfile, "(");
     astree* paramhead = nullptr;
@@ -232,10 +243,6 @@ void emit_params(FILE* oilfile, astree* node)
         }
     }
     fprintf(oilfile, ") \n");
-}
-void emit_function_body(FILE* oilfile, astree* node)
-{
-    //
 }
 
 void whileloop(FILE* oilfile, astree* node){
@@ -285,19 +292,19 @@ void emit(FILE* oilfile, astree* node)
     switch(node->symbol)
     {
         case TOK_PROTOTYPE:
-        {
-            break;
-        }
         case TOK_STRINGCON: 
         case TOK_INTCON: 
         case TOK_CHARCON: 
         {
             break;
         }
-        case TOK_FUNCTION:
+        case TOK_FUNCTION: {
+            break;
+        }
         case TOK_CALL: 
         {
-            emit_function(oilfile, node);
+            emit_call_name(oilfile, node);
+            emit_call_params(oilfile, node);
             break;
             //expected result:__puts(s1)
         }
@@ -313,7 +320,6 @@ void emit(FILE* oilfile, astree* node)
         }
         case TOK_IFELSE:
         {
-
             ifelse(oilfile, node);
             break;
         }

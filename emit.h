@@ -14,7 +14,6 @@ void emit_header(FILE* oilfile);
 void emit_program(FILE* oilfile, astree* node);
 
 void emit_typedef(FILE* oilfile, astree* node, astree* parent);
-
 void emit_structdef(FILE* oilfile, astree* node);
 void emit_structdecl(FILE* oilfile, astree* node);
 
@@ -23,17 +22,18 @@ void emit_stringdef(FILE* oilfile, astree* node);
 void emit_vardef(FILE* oilfile, astree* node);
 void emit_vardecl(FILE* oilfile, astree* node);
 
-void emit_function(FILE* oilfile, astree* node);
-
-
 void emit_stringcon(FILE* oilfile, astree* node);
 void emit_intcon(FILE* oilfile, astree* node);
 void emit_charcon(FILE* oilfile, astree* node);
 
 // FUNCTION METHODS
+void emit_function(FILE* oilfile, astree* node);
 void emit_function_name(FILE* oilfile, astree* node);
 void emit_params(FILE* oilfile, astree* node);
 void emit_function_body(FILE* oilfile, astree* node);
+
+void emit_call_name(FILE* oilfile, astree* node);
+void emit_call_params(FILE* oilfile, astree* node);
 
 void emit(FILE* oilfile, astree* node);
 
