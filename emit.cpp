@@ -199,7 +199,7 @@ void emit_function_params(FILE* oilfile, astree* node)
                 }
                 else
                 {
-                    plist=nullptr;
+                    paramhead=nullptr;
                 }
             }
         }
