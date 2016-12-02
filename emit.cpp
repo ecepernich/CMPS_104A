@@ -248,6 +248,8 @@ void emit_function_params(FILE* oilfile, astree* node)
 void emit_function_body(FILE* oilfile, astree* node)
 {
     fprintf(oilfile, "{\n");
+    astree* head=node->children[2];
+
     fprintf(oilfile, "}\n");
 }
 
@@ -407,8 +409,8 @@ void emit_main(FILE* oilfile, astree* root)
 void emit_program(FILE* oilfile, astree* node)
 {
     emit_structdef(oilfile, node);
-    emit_stringdef(oilfile, node);
     emit_vardef(oilfile, node);
+    emit_stringdef(oilfile, node);
     emit_function(oilfile, node);
 }
 
