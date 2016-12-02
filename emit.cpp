@@ -181,24 +181,21 @@ void emit_function_params(FILE* oilfile, astree* node)
     {
         fprintf(oilfile, "\n");
         paramhead = node->children[1]->children[0];
-        printf("We're at paramhead\n");
         fprintf(oilfile, "%s",paramhead->emit_code);
         int i=0;
         astree* plist=nullptr;
         if (paramhead->children.size()>=1)
         {
             plist=paramhead->children[0];
-            printf("We're at paramhead greater than 1\n");
 
             while(plist!=nullptr)
             {
-                printf("We're at plist not null\n");
-
-                fprintf(oilfile, ";\n %s",plist->emit_code);
+                fprintf(oilfile, "%s",plist->lexinfo->c_str());
                 //maybe switch 
                 i++;
                 if (plist->children.size()>=2)
                 {
+                    fprintf(oilfile, ";\n\t");
                     plist=plist->children[1];
                 }
                 else
@@ -209,7 +206,6 @@ void emit_function_params(FILE* oilfile, astree* node)
         }
     }
     fprintf(oilfile, ") \n");
-    printf("We're at the end\n");
 
 }
 void emit_function_body(FILE* oilfile, astree* node)
