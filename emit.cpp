@@ -253,7 +253,7 @@ void emit_function_body(FILE* oilfile, astree* node)
     fprintf(oilfile, "}\n");
 }
 
-void emit_binop(FILE* oilfile, astree* node)
+void emit_binop(FILE* oilfile, astree* node) //WIP
 {
     astree* left=node->children[0];
     astree* right=node->children[1];
@@ -261,7 +261,58 @@ void emit_binop(FILE* oilfile, astree* node)
 
 void emit_expression(FILE* oilfile, astree* node)
 {
-
+    switch(node->symbol)
+    {
+        case '+': {
+            emit_binop(oilfile, node);
+            break;
+        }
+        case '-': { 
+            emit_binop(oilfile, node);
+            break;
+        }
+        case '*': {
+            emit_binop(oilfile, node);
+            break;
+        }
+        case '/': {
+            emit_binop(oilfile, node);
+            break;
+        }
+        case '%': {
+            emit_binop(oilfile, node);
+            break;
+        }
+        case TOK_GT: {
+            emit_binop(oilfile, node);
+            break;
+        }
+        case TOK_LT: {
+            emit_binop(oilfile, node);
+            break;
+        }
+        case TOK_GE: {
+            emit_binop(oilfile, node);
+            break;
+        }
+        case TOK_LE: {
+            emit_binop(oilfile, node);
+            break;
+        }        
+        case TOK_EQ: {
+            emit_binop(oilfile, node);
+            break;
+        }
+        case TOK_NE: {
+            emit_binop(oilfile, node);
+            break;
+        }
+        case '=': {
+            emit_binop(oilfile, node);
+            break;
+        }
+        default: break;
+    }
 }
 
 // More types
