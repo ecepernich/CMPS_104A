@@ -81,7 +81,7 @@ void emit_structdecl(FILE* oilfile, astree* node)
                     while(right!=nullptr)
                     {
                         rleft=right->children[0];
-                        fprintf(oilfile, "\t%s ", right);
+                        emit_typedef(oilfile, right);
                         std::string fieldname="f_";
                         fieldname.append(left->lexinfo->c_str());
                         fieldname.append("_");
