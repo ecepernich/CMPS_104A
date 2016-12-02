@@ -153,7 +153,7 @@ void emit_vardecl(FILE* oilfile, astree* node)
         astree* left=nullptr;
         astree* left2=nullptr;
         char* varname = NULL;
-        strcat(varname, "__");
+        //strcat(varname, "__");
 
         if (node->children.size()>=1)
         {
