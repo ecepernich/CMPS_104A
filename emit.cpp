@@ -185,13 +185,13 @@ void emit_function_params(FILE* oilfile, astree* node)
         astree* plist=nullptr;
         if (paramhead->children.size()>=1)
         {
-            plist=paramhead->children[0];
-
             while(paramhead!=nullptr)
             {
-                fprintf(oilfile, "\t%s _%d_%s",paramhead->lexinfo->c_str(),
+                plist=paramhead->children[0];
+                fprintf(oilfile, "\t%s _%d_%s",
+                    paramhead->lexinfo->c_str(),
                     paramhead->block_nr, plist->lexinfo->c_str());
-                //maybe switch 
+
                 if (paramhead->children.size()>=2)
                 {
                     fprintf(oilfile, ";\n");
