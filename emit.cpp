@@ -30,7 +30,7 @@ void emit_typedef(FILE* oilfile, astree* node)
         }
         fprintf(oilfile, " ");
     }
-    else if (node->lexinfo->c_str()=="string")
+    else if (strcmp(node->lexinfo->c_str(),"string")==0)
     {
         fprintf(oilfile, "char*");
         if (node->attr[ATTR_array])
