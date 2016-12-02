@@ -152,7 +152,7 @@ void emit_function(FILE* oilfile, astree* node)
     }
     if (node->children.size()>=2)
     {
-        emit_params(oilfile, node);
+        emit_function_params(oilfile, node);
     }
     if (node->children.size()>=3 && node->symbol==TOK_FUNCTION)
     {
