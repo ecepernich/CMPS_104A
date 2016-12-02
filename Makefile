@@ -86,6 +86,13 @@ tests : ${EXECBIN}
 
 again :
 	gmake --no-print-directory spotless deps ci all lis
+
+submit :
+	submit cmps104a-wm.f16 asg5 astree.cpp astree.h auxlib.cpp \
+	auxlib.h emit.cpp emit.h lyutils.cpp lyutils.h main.cpp \
+	Makefile parser.y PARTNER README scanner.l string_set.cpp \
+	string_set.h symstack.cpp symstack.h symtable.cpp symtable.h \
+	typecheck.cpp typecheck.h
 	
 ifeq "${NEEDINCL}" ""
 include ${DEPSFILE}
