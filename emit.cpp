@@ -180,7 +180,7 @@ void emit_vardecl(FILE* oilfile, astree* node)
                 left2=left->children[0];
                 left2->emit_code=varname.c_str();
                 fprintf(oilfile, "%s __%s;\n", left->lexinfo->c_str(),
-                                             left2->lexinfo->c_str());
+                                             left2->emit_code);
             }
         }
     }
