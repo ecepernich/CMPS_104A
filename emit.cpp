@@ -41,7 +41,7 @@ void emit_typedef(FILE* oilfile, astree* node, astree* parent)
     }
     else
     {
-        fprintf(oilfile, "struct %s", parent->emit_code);
+        fprintf(oilfile, "struct %s*", parent->emit_code);
         if (node->attr[ATTR_array])
         {
             fprintf(oilfile, "*");
