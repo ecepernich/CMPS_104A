@@ -146,13 +146,19 @@ void emit_vardecl(FILE* oilfile, astree* node)
 
 void emit_function(FILE* oilfile, astree* node)
 {
-    if (node->children.size()>=1)
+    emit_function(oilfile, node);
+    for (astree* child: node->children) 
+    {
+      emit_function(oilfile, child);
+    }
+
+    if (node->children.size()>=1 && node->symbol==TOK_FUNCTION)
     {
         emit_function_name(oilfile, node);
     }
-    if (node->children.size()>=2)
+    if (node->children.size()>=2 && node->symbol==TOK_FUNCTION)
     {
-        emit_function_params(oilfile, node);
+         emit_function_params(oilfile, node);
     }
     if (node->children.size()>=3 && node->symbol==TOK_FUNCTION)
     {
@@ -373,7 +379,7 @@ void emit_program(FILE* oilfile, astree* node)
     emit_structdef(oilfile, node);
     emit_stringdef(oilfile, node);
     emit_vardef(oilfile, node);
-    //emit_function(oilfile, node);
+    emit_function(oilfile, node);
 }
 
 //helps tp check and see if operand is a child
