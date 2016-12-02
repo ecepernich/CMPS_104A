@@ -56,6 +56,7 @@ void emit_typedef(FILE* oilfile, astree* node, astree* parent)
 
 }
 
+// EMIT STRUCTDEF
 void emit_structdef(FILE* oilfile, astree* root)
 {
     emit_structdecl(oilfile, root);
@@ -113,6 +114,7 @@ void emit_structdecl(FILE* oilfile, astree* node)
     }
 }
 
+// EMIT STRINGDEF
 void emit_stringdef(FILE* oilfile, astree* node){
     emit_stringcon(oilfile, node);
     for (astree* child: node->children) 
@@ -120,7 +122,21 @@ void emit_stringdef(FILE* oilfile, astree* node){
       emit_stringdef(oilfile, child);
     }
 }
+void emit_stringcon(FILE* oilfile, astree* node)
+{
+    if (node->symbol==TOK_STRINGCON)
+    {
+        std::string varname = "s";
+        varname += std::to_string(stringcon_nr);
+        node->emit_code=varname.c_str();
 
+        fprintf(oilfile, "char* %s = %s \n", node->emit_code, 
+                                             node->lexinfo->c_str());
+        stringcon_nr++;
+    }
+}
+
+// EMIT VARDEF
 void emit_vardef(FILE* oilfile, astree* node)
 {
     emit_vardecl(oilfile, node);
@@ -149,6 +165,7 @@ void emit_vardecl(FILE* oilfile, astree* node)
     }
 }
 
+// EMIT FUNCTION
 void emit_function(FILE* oilfile, astree* node)
 {
     //emit_function(oilfile, node);
@@ -172,12 +189,12 @@ void emit_function(FILE* oilfile, astree* node)
       emit_function(oilfile, child);
     }
 }
-
 void emit_function_name(FILE* oilfile, astree* node)
 {
     astree* left=node->children[0];
     astree* left2=left->children[0];
-    fprintf(oilfile, "%s __%s (",left->lexinfo->c_str(), left2->lexinfo->c_str());
+    fprintf(oilfile, "%s __%s (",left->lexinfo->c_str(), 
+                                 left2->lexinfo->c_str());
 }
 void emit_function_params(FILE* oilfile, astree* node)
 {
@@ -229,19 +246,6 @@ void emit_function_body(FILE* oilfile, astree* node)
 
 }
 
-void emit_stringcon(FILE* oilfile, astree* node)
-{
-    if (node->symbol==TOK_STRINGCON)
-    {
-        std::string varname = "s";
-        varname += std::to_string(stringcon_nr);
-        node->emit_code=varname.c_str();
-
-        fprintf(oilfile, "char* %s = %s \n", node->emit_code, 
-                                             node->lexinfo->c_str());
-        stringcon_nr++;
-    }
-}
 void emit_intcon(FILE* oilfile, astree* node)
 {
     string varname = "a";
@@ -263,7 +267,7 @@ void emit_charcon(FILE* oilfile, astree* node)
     charcon_nr++;
 }
 
-// FUNCTION METHODS
+// CALL METHODS
 void emit_call_name(FILE* oilfile, astree* node) //DONE
 {
     astree* left=node->children[0];
@@ -328,8 +332,6 @@ void ifelse(FILE* oilfile, astree* node){
     emit(oilfile, node->children[2]);
     fprintf(oilfile, "fi_%zd_%zd_%zd\n",
     node->lloc.filenr, node->lloc.linenr, node -> lloc.offset);
-    
-
 }
 
 void if_(FILE* oilfile, astree* node){
@@ -389,11 +391,11 @@ void emit(FILE* oilfile, astree* node)
 void emit_main(FILE* oilfile, astree* root)
 {
     fprintf(oilfile, "\nvoid __ocmain(void)\n{ \n");
+    emit(oilfile, root);
     for (astree* child: root->children) 
     {
       emit(oilfile, child);
     }
-    emit(oilfile, root);
     fprintf(oilfile, "}\n");
 }
 
@@ -415,7 +417,7 @@ int emit_operands(astree* node){
 
 void emit_everything(FILE* oilfile, astree* root)
 {
-    emit_header(oilfile); //DONE
+    emit_header(oilfile);
     emit_program(oilfile, root);
     emit_main(oilfile, root);
 }
