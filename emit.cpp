@@ -146,23 +146,25 @@ void emit_vardecl(FILE* oilfile, astree* node)
 
 void emit_function(FILE* oilfile, astree* node)
 {
-    emit_function(oilfile, node);
+    //emit_function(oilfile, node);
+    if (node->symbol==TOK_FUNCTION)
+    {
+        if (node->children.size()>=1)
+        {
+            emit_function_name(oilfile, node);
+        }
+        if (node->children.size()>=2)
+        {
+             emit_function_params(oilfile, node);
+        }
+        if (node->children.size()>=3)
+        {
+            emit_function_body(oilfile, node);
+        }
+    }
     for (astree* child: node->children) 
     {
       emit_function(oilfile, child);
-    }
-
-    if (node->children.size()>=1 && node->symbol==TOK_FUNCTION)
-    {
-        emit_function_name(oilfile, node);
-    }
-    if (node->children.size()>=2 && node->symbol==TOK_FUNCTION)
-    {
-         emit_function_params(oilfile, node);
-    }
-    if (node->children.size()>=3 && node->symbol==TOK_FUNCTION)
-    {
-        emit_function_body(oilfile, node);
     }
 }
 
