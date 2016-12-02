@@ -18,6 +18,38 @@ void emit_header(FILE* oilfile)  //DONE
     fprintf(oilfile, "#include \"oclib.oh\"\n\n");
 }
 
+void emit_typedef(FILE* oilfile, astree* node)
+{
+    
+    if (strcmp(node->lexinfo->c_str(),"int")==0)
+    {
+        fprintf(oilfile, "int");
+        if (node->attr[ATTR_array])
+        {
+            fprintf(oilfile, "*");
+        }
+        fprintf(oilfile, " ");
+    }
+    else if (node->lexinfo->c_str()=="string")
+    {
+        fprintf(oilfile, "char*");
+        if (node->attr[ATTR_array])
+        {
+            fprintf(oilfile, "*");
+        }
+        fprintf(oilfile, " ");
+    }
+    else
+    {
+        fprintf(oilfile, "struct");
+        if (node->attr[ATTR_array])
+        {
+            fprintf(oilfile, "*");
+        }
+        fprintf(oilfile, " ");
+    }
+
+}
 
 void emit_structdef(FILE* oilfile, astree* root)
 {
@@ -75,40 +107,6 @@ void emit_structdecl(FILE* oilfile, astree* node)
         }
     }
 }
-
-void emit_typedef(FILE* oilfile, astree* node)
-{
-    
-    if (strcmp(node->lexinfo->c_str(),"int")==0)
-    {
-        fprintf(oilfile, "int");
-        if (node->attr[ATTR_array])
-        {
-            fprintf(oilfile, "*");
-        }
-        fprintf(oilfile, " ");
-    }
-    else if (node->lexinfo->c_str()=="string")
-    {
-        fprintf(oilfile, "char*");
-        if (node->attr[ATTR_array])
-        {
-            fprintf(oilfile, "*");
-        }
-        fprintf(oilfile, " ");
-    }
-    else
-    {
-        fprintf(oilfile, "struct");
-        if (node->attr[ATTR_array])
-        {
-            fprintf(oilfile, "*");
-        }
-        fprintf(oilfile, " ");
-    }
-
-}
-
 
 void emit_stringdef(FILE* oilfile, astree* node){
     emit_stringcon(oilfile, node);
