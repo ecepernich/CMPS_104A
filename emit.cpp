@@ -202,13 +202,12 @@ void emit_function_params(FILE* oilfile, astree* node)
             while(nexthead!=nullptr)
             {
                 plist=nexthead->children[0];
-                fprintf(oilfile, "\t%s _%d_%s",
+                fprintf(oilfile, ";\n\t%s _%d_%s",
                     nexthead->lexinfo->c_str(),
                     nexthead->block_nr, plist->lexinfo->c_str());
 
                 if (paramhead->children.size()>=i+1)
                 {
-                    fprintf(oilfile, ";\n");
                     i++;
                     nexthead=paramhead->children[i];
                 }
