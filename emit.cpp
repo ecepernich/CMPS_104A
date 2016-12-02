@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <cstring>
 
 #include "emit.h"
 
@@ -17,7 +18,7 @@ void emit_header(FILE* oilfile)  //DONE
     fprintf(oilfile, "#include \"oclib.oh\"\n\n");
 }
 
-void emit_type(FILE* oilfile, astree* node)
+void emit_typedef(FILE* oilfile, astree* node)
 {
     
     if (strcmp(node->lexinfo->c_str,"int")==0)
