@@ -191,6 +191,8 @@ void emit_function_params(FILE* oilfile, astree* node)
 
             while(plist!=nullptr)
             {
+                printf("We're at plist not null\n");
+
                 fprintf(oilfile, ";\n %s",plist->emit_code);
                 //maybe switch 
                 i++;
@@ -206,6 +208,8 @@ void emit_function_params(FILE* oilfile, astree* node)
         }
     }
     fprintf(oilfile, ") \n");
+    printf("We're at the end\n");
+
 }
 void emit_function_body(FILE* oilfile, astree* node)
 {
