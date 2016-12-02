@@ -259,6 +259,11 @@ void emit_binop(FILE* oilfile, astree* node) //WIP
     astree* right=node->children[1];
 }
 
+void emit_unop(FILE* oilfile, astree* node) //WIP
+{
+    astree* left=node->children[0];
+}
+
 void emit_expression(FILE* oilfile, astree* node)
 {
     switch(node->symbol)
@@ -309,6 +314,14 @@ void emit_expression(FILE* oilfile, astree* node)
         }
         case '=': {
             emit_binop(oilfile, node);
+            break;
+        }
+        case TOK_POS: {
+            emit_unop(oilfile, node);
+            break;
+        }
+        case TOK_NEG: {
+            emit_unop(oilfile, node);
             break;
         }
         default: break;

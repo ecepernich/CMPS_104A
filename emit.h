@@ -29,6 +29,7 @@ void emit_vardecl(FILE* oilfile, astree* node);
 
 void emit_expression(FILE* oilfile, astree* node);
 void emit_binop(FILE* oilfile, astree* node);
+void emit_unop(FILE* oilfile, astree* node);
 
 void emit_stringcon(FILE* oilfile, astree* node);
 void emit_intcon(FILE* oilfile, astree* node);
