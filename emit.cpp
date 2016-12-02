@@ -180,7 +180,7 @@ void emit_function_params(FILE* oilfile, astree* node)
     if(node->children.size()>=2)
     {
         fprintf(oilfile, "\n");
-        paramhead = node->children[1];
+        paramhead = node->children[1]->children[0];
         fprintf(oilfile, "%s",paramhead->emit_code);
         int i=0;
         astree* plist=nullptr;
