@@ -243,7 +243,8 @@ void emit_function_params(FILE* oilfile, astree* node)
 }
 void emit_function_body(FILE* oilfile, astree* node)
 {
-
+    fprintf(oilfile, "{\n");
+    fprintf(oilfile, "}\n");
 }
 
 void emit_intcon(FILE* oilfile, astree* node)
