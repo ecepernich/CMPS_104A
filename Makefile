@@ -1,7 +1,7 @@
 # Elizabeth Cepernich (eceperni@ucsc.edu)
 # Leah Langford (llangfor@ucsc.edu)
 # CMPS 104A Fall 2016
-# Assignment 2: .tok file
+# Assignment 4: .sym file
 
 MKFILE  = Makefile
 NOINCLUDE = ci clean spotless
@@ -11,8 +11,10 @@ MKDEPS    = g++ -MM -std=gnu++14
 GRIND     = valgrind --leak-check=full --show-reachable=yes
 BISON = bison --defines=${PARSEHDR} --output=${PARCECPP}
 
-HDRSRC = astree.h auxlib.h lyutils.h string_set.h
-CPPSRC = astree.cpp auxlib.cpp lyutils.cpp string_set.cpp main.cpp
+HDRSRC = astree.h auxlib.h lyutils.h string_set.h typecheck.h \
+           symstack.h symtable.h emit.h
+CPPSRC = astree.cpp auxlib.cpp lyutils.cpp string_set.cpp main.cpp \
+           typecheck.cpp symstack.cpp symtable.cpp emit.cpp
 LSOURCES  = scanner.l
 YSOURCES  = parser.y 
 HYGEN     = yyparse.h 
@@ -60,7 +62,7 @@ clean :
 	- rm ${OBJECTS} ${ALLGENS} ${REPORTS} checksource.log gmake.log
 
 spotless : clean
-	- rm ${EXECBIN} 
+	- rm ${EXECBIN} *.err *.out *.ast *.sym *.tok *.str *.oil
 
 checksource : ${ALLSRC}
 	checksource ${ALLSRC}
@@ -84,6 +86,13 @@ tests : ${EXECBIN}
 
 again :
 	gmake --no-print-directory spotless deps ci all lis
+
+submit :
+	submit cmps104a-wm.f16 asg5 astree.cpp astree.h auxlib.cpp \
+	auxlib.h emit.cpp emit.h lyutils.cpp lyutils.h main.cpp \
+	Makefile parser.y PARTNER README scanner.l string_set.cpp \
+	string_set.h symstack.cpp symstack.h symtable.cpp symtable.h \
+	typecheck.cpp typecheck.h
 	
 ifeq "${NEEDINCL}" ""
 include ${DEPSFILE}

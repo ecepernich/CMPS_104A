@@ -1,11 +1,15 @@
 %{
 
-//Elizabeth Cepernich (eceperni@ucsc.edu)
-//Leah Langford (llangfor@ucsc.edu)
+// Elizabeth Cepernich (eceperni@ucsc.edu)
+// Leah Langford (llangfor@ucsc.edu)
+// CMPS 104A Fall 2016
+// Assignment 3: .ast file
 
 #include "lyutils.h"
 #include "auxlib.h"
 #define YY_USER_ACTION { lexer::advance(); }
+
+
 
 %}
 

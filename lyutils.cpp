@@ -1,7 +1,7 @@
 // Elizabeth Cepernich (eceperni@ucsc.edu)
 // Leah Langford (llangfor@ucsc.edu)
 // CMPS 104A Fall 2016
-// Assignment 2: .tok file
+// Assignment 5: .oil file
 
 // $Id: lyutils.cpp,v 1.8 2016-10-06 16:13:39-07 - - $
 
@@ -21,6 +21,7 @@ size_t lexer::last_yyleng = 0;
 vector<string> lexer::filenames;
 
 astree* parser::root = nullptr;
+astree* yyparse_astree = nullptr;
 
 const string* lexer::filename (int filenr) {
    return &lexer::filenames.at(filenr);
@@ -51,14 +52,14 @@ void lexer::newline() {
 //token helper function
 int yylval_token(int symbol)
 { //make new astree with req values (w/ formatting)
-   astree* ast1=new astree(symbol, lexer::lloc, yytext);
-   fprintf(tokfile, "%zu \t %zu.%zu \t %i \t %12.12s \t\t (%s) \n",
+   yylval=new astree(symbol, lexer::lloc, yytext);
+   fprintf(tokfile, "%zu \t %zu.%zu \t %i \t %13.13s \t\t (%s) \n",
            lexer::lloc.filenr, //file#
            lexer::lloc.linenr, //line#
            lexer::lloc.offset, //offset
-           ast1->symbol, //symbol # code
+           yylval->symbol, //symbol # code
            parser::get_tname(symbol), //symbol
-           ast1->lexinfo->c_str()); //lexinfo
+           yylval->lexinfo->c_str()); //lexinfo
    return symbol; //end
 }
 
@@ -96,5 +97,11 @@ void lexer::include() {
 void yyerror (const char* message) {
    assert (not lexer::filenames.empty());
    errllocprintf (lexer::lloc, "%s\n", message);
+}
+
+astree* new_parseroot(void)
+{
+  yyparse_astree=new astree(TOK_ROOT, {0,0,0}, "root");
+  return yyparse_astree;
 }
 

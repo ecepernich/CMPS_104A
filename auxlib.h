@@ -1,7 +1,7 @@
 // Elizabeth Cepernich (eceperni@ucsc.edu)
 // Leah Langford (llangfor@ucsc.edu)
 // CMPS 104A Fall 2016
-// Assignment 2: .tok file
+// Assignment 5: .oil file
 
 #ifndef __AUXLIB_H__
 #define __AUXLIB_H__
